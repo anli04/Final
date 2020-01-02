@@ -5,8 +5,8 @@ Project Summary: Create a text-based rpg game with stat & equipment management, 
 ### User Interface and Project Details:
 * The majority of the game will ask for player input of either 1, 2, 3, ..., corresponding to the choices printed and labelled on the terminal.
 * Upon calling the program, it will ask to create a character or choose an existing character.
-* The character cannot be accessed by multiple main game processes, if attempted.
-* Characters also cannot have the same name (for a user)
+   * The character cannot be accessed by multiple main game processes, if attempted.
+   * Characters also cannot have the same name (for a user)
 * After creating or selecting a character, the player will be brought to a “menu” in which they can select between Training, Random Encounter, Inventory, Skills, and PvP.
 * Training: the player selects a stat to improve. The game executes a minigame program that may lead to the improvement of that stat onto the save file.
 * Random Encounter: the game process randomly selects an unequally chanced enemy. The game executes the combat program.
@@ -27,9 +27,9 @@ Project Summary: Create a text-based rpg game with stat & equipment management, 
 ### Data Structures and Algorithms:
 Data Structures:
 * Structs 
-* assigning stats and other info to characters/enemies
-* holding question/answer info for minigames that require it
-* stuff inside the player’s inventory/equipped
+   * assigning stats and other info to characters/enemies
+   * holding question/answer info for minigames that require it
+   * stuff inside the player’s inventory/equipped
 
 * Arrays 
     * basically pseudo-dictionaries, translates items from their ID number to understandable text
