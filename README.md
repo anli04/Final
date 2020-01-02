@@ -1,6 +1,6 @@
 # Systems Level Programming Final Project Proposal
-Team Members: Calvin Chu, Anthony Li, Jerry Lin
-Project Summary: Create a text-based rpg game with stat & equipment management, player vs computer combat, and player vs player combat. Also includes minigames (for stat improvements).
+Team Members: Calvin Chu, Anthony Li, Jerry Lin </br>
+Project Summary: Create a text-based rpg game with stat & equipment management, player vs computer combat, and player vs player combat. Also includes minigames (for stat improvements).</br>
 
 ### User Interface and Project Details:
 * The majority of the game will ask for player input of either 1, 2, 3, ..., corresponding to the choices printed and labelled on the terminal.
