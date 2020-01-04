@@ -31,6 +31,7 @@ int choose(char * choices){
         sscanf(args[i], "%d", &ans);
         return ans;
       }
+      i++
     }
     printf("Selection not recognized\n");
   }
