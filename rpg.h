@@ -19,10 +19,10 @@ struct character{
   int END;
   int INT;
   int LUK;
-  char * wep; //equipped weapon
-  char * armor; //equipped armor
-  char * helm; //equipped helm
-  char ** skills; //equipped skills, up to 5
+  int wep; //equipped weapon
+  int armor; //equipped armor
+  int helm; //equipped helm
+  int * skills; //equipped skills, up to 5. skills[0] is always Strike
   int * invI; // item inventory
   int * invS; // skill inventory
 };
