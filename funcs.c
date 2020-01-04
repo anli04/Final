@@ -22,7 +22,7 @@ int choose(char * choices){
   args[i] = NULL;
   while (1){
     i = 0;
-    fgets(input, 5, stdin);
+    fgets(input, 4, stdin);
     errcheck("with input");
     //char c;
     //while ((c = getc(stdin)) != '\n' && c != EOF) // clear stdin in case of excess chars
