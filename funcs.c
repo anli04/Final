@@ -12,13 +12,11 @@ void errcheck(char * m){
 }
 
 int choose(char * choices){
-  char selections[100]; // note that this number will inhibit inventory size
-  strcpy(selections, choices);
   char input[5]; // should be over the maximum chars needed to check for extra characters
   char * args[26]; //note inv space will be this num - 1
   int i = 0;
-  while (selections){
-    args[i] = strsep(&selections, ";");
+  while (choices){
+    args[i] = strsep(&choices, ";");
     i++;
   }
   args[i] = NULL;
