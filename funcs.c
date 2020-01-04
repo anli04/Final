@@ -12,7 +12,7 @@ void errcheck(char * m){ //error checking
   }
 }
 
-int select(char * choices){
+int choose(char * choices){
   char input[5]; // should be over the maximum chars needed to check for extra characters
   char ** args;
   int i = 0;
