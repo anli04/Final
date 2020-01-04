@@ -52,3 +52,7 @@ struct skill{
   int CD; // turn cooldown
   char * EXA; // additional changes to be interpreted. 0 if nothing
 };
+
+double rand_double(); // returns a value from 0 to 1.
+void errcheck(char * m); //error checking
+int choose(char * choices); // handles player input

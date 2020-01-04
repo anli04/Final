@@ -1,10 +1,10 @@
 #include "rpg.h"
 
-double rand_double(){ // returns a value from 0 to 1.
+double rand_double(){
   return (double) rand() / (double) RAND_MAX;
 }
 
-void errcheck(char * m){ //error checking
+void errcheck(char * m){
   if (errno){
     printf("Error %s: %d - %s\n", m, errno, strerror(errno));
     errno = 0;
