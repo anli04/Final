@@ -5,10 +5,10 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
-//#include <sys/sem.h>
-//#include <sys/ipc.h>
+#include <sys/sem.h>
+#include <sys/ipc.h>
 #include <sys/types.h>
-//#include <sys/wait.h>
+#include <sys/wait.h>
 #include <dirent.h>
 #include <signal.h>
 
