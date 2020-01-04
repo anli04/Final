@@ -5,10 +5,10 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/sem.h>
-#include <sys/ipc.h>
+//#include <sys/sem.h>
+//#include <sys/ipc.h>
 #include <sys/types.h>
-#include <sys/wait.h>
+//#include <sys/wait.h>
 #include <dirent.h>
 #include <signal.h>
 
@@ -52,5 +52,3 @@ struct skill{
   int CD; // turn cooldown
   char * EXA; // additional changes to be interpreted. 0 if nothing
 };
-
-double rand_double(); // returns a value from 0 to 1.
