@@ -8,7 +8,6 @@ void errcheck(char * m){ //error checking
   if (errno){
     printf("Error %s: %d - %s\n", m, errno, strerror(errno));
     errno = 0;
-
   }
 }
 
@@ -24,14 +23,16 @@ int choose(char * choices){
   while (1){
     i = 0;
     fgets(input, 5, stdin);
+    errcheck("with input");
     *strchr(input, '\n') = 0;
     for (; i < count; i++){
       if (!strcmp(input, args[i])){
         int ans = 0;
-        sscanf(args[i], "%d", ans);
+        sscanf(args[i], "%d", &ans);
         return ans;
       }
     }
+    printf("Selection not recognized\n");
   }
   printf("ERROR\n");
   return -1;
