@@ -7,11 +7,11 @@ endif
 all: game.o funcs.o
 	$(CC) -o game game.o funcs.o
 
-game.o: game.c funcs.h
+game.o: game.c rpg.h
 	$(CC) -c game.c
 
-funcs.o: game.c funcs.h
-	$(CC) -c game.c
+funcs.o: funcs.c rpg.h
+	$(CC) -c funcs.c
 
 run:
 	./game
