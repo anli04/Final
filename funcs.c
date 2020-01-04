@@ -24,8 +24,6 @@ int choose(char * choices){
     i = 0;
     fgets(input, 5, stdin);
     errcheck("with input");
-    char c;
-    while ((c = getc(stdin)) != '\n' && c != EOF) // clear stdin in case of excess chars
     input[4] = 0;
     if (strchr(input, '\n')) *strchr(input, '\n') = 0;
     while(args[i]){
