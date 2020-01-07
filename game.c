@@ -1,7 +1,6 @@
 #include "rpg.h"
 
 int readInt(FILE * c);
-void readArray(FILE * c, char *** copy);
 
 int main(){
   srand(time(NULL));
@@ -81,9 +80,12 @@ int main(){
   player.wep = readInt(c);
   player.armor = readInt(c);
   player.helm = readInt(c);
-  readArray(c, &player.skills);
-  readArray(c, &player.invI);
-  readArray(c, &player.invS);
+  fgets(buf, sizeof(buf), c);
+  strcpy(player.skills, buf);
+  fgets(buf, sizeof(buf), c);
+  strcpy(player.invI, buf);
+  fgets(buf, sizeof(buf), c);
+  strcpy(player.invS, buf);
   /*while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
@@ -113,8 +115,7 @@ int main(){
     }
   }*/
   printf("%s, %d %d %d %d %d, %d %d %d\n", player.NAME, player.STR, player.DEX, player.END, player.INT, player.LUK, player.wep, player.armor, player.helm);
-  int test = 0;
-  for (; test < 5; test++) printf("%s\n", player.skills[test]);
+  printf("%s, %s, %s\n", player.skills, player.invI, player.invS);
   return 0;
 }
 
@@ -125,17 +126,4 @@ int readInt(FILE * c){ // Up to four digits
   *strchr(buf, '\n') = 0;
   sscanf(buf, "%d", &x);
   return x;
-}
-
-void readArray(FILE * c, char *** copy){ // Up to four digits, 15 items
-  char buf[70];
-  fgets(buf, 70, c);
-  *strchr(buf, '\n') = 0;
-  char * temp = buf;
-  char ** copy2 = *copy;
-  int i = 0;
-  while (temp){
-    strcpy(copy2[i], strsep(&temp, ";"));
-    i++;
-  }
 }

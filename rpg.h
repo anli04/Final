@@ -22,9 +22,9 @@ struct character{
   int wep; //equipped weapon
   int armor; //equipped armor
   int helm; //equipped helm
-  char ** skills; //equipped skills, up to 5. skills[0] is always Strike.
-  char ** invI; // item inventory. Current max: 15.
-  char ** invS; // skill inventory. Current max: 15.
+  char * skills; //equipped skills, up to 5. skills[0] is always Strike.
+  char * invI; // item inventory. Current max: 15.
+  char * invS; // skill inventory. Current max: 15.
 };
 
 struct item{
