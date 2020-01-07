@@ -35,7 +35,6 @@ int main(){
           printf("Character already exists.\n");
           errno = 0;
         }
-        printf("checkpoint0\n");
         else x = 0;
         printf("checkpoint3\n");
       }
@@ -44,6 +43,7 @@ int main(){
       printf("checkpoint2\n");
       for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
       i = 0;
+      printf("checkpoint4\n");
       for (; i < 3; i++) write(fd, "0\n", strlen("0\n"));
       write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
       write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
