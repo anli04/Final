@@ -72,10 +72,7 @@ int main(){
     default: printf("Error");
       break;
   }
-  printf("Loading character..."); // update character struct
-  fgets(buf, 26, c);
-  *strchr(buf, '\n') = 0;
-  strcpy(player.NAME, buf);
+  printf("Loading character...\n"); // update character struct
   player.STR = readInt(c);
   player.DEX = readInt(c);
   player.END = readInt(c);
