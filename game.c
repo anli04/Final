@@ -70,6 +70,7 @@ int main(){
       break;
   }
   printf("Loading character...\n"); // update character struct
+  printf("checkpoint\n");
   player.STR = readInt(c);
   player.DEX = readInt(c);
   player.END = readInt(c);
@@ -78,8 +79,11 @@ int main(){
   player.wep = readInt(c);
   player.armor = readInt(c);
   player.helm = readInt(c);
+  printf("checkpoint2\n");
   fgets(player.skills, 1024, c);
+  printf("checkpoint3\n");
   *strchr(player.skills, '\n') = 0;
+  printf("checkpoint4\n");
   fgets(player.invI, 1024, c);
   *strchr(player.invI, '\n') = 0;
   fgets(player.invS, 1024, c);
