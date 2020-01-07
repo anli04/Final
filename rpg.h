@@ -14,18 +14,31 @@
 
 struct character{
   char * NAME;
+  struct stats stats;
+  struct inventory inventory;
+  struct equipped equipped;
+  int * skills; //equipped skills, up to 5. skills[0] is always Strike.
+};
+
+struct stats{
   int STR; //capitalized, but liable to change
   int DEX;
   int END;
   int INT;
   int LUK;
+};
+
+struct inventory{
+  int * invI; // item inventory. Current max: 15.
+  int * invS; // skill inventory. Current max: 15.
+};
+
+struct equipped{
   int wep; //equipped weapon
   int armor; //equipped armor
   int helm; //equipped helm
-  char * skills; //equipped skills, up to 5. skills[0] is always Strike.
-  char * invI; // item inventory. Current max: 15.
-  char * invS; // skill inventory. Current max: 15.
 };
+
 
 struct item{
   int ID;
