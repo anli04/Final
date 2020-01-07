@@ -135,7 +135,7 @@ void readArray(FILE * c, char *** copy){ // Up to four digits, 15 items
   char ** copy2 = *copy;
   int i = 0;
   while (temp){
-    copy2[i] = strsep(&temp, ";");
+    strcpy(copy2[i], strsep(&temp, ";"));
     i++;
   }
 }
