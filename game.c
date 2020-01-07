@@ -124,8 +124,10 @@ int readInt(FILE * c){ // Up to four digits
   int x;
   char buf[5];
   fgets(buf, 5, c);
+  printf("checkpoint5");
   *strchr(buf, '\n') = 0;
   sscanf(buf, "%d", &x);
+  printf("checkpoint6");
   return x;
 }
 
