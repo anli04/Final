@@ -36,21 +36,17 @@ int main(){
           errno = 0;
         }
         else x = 0;
-        printf("checkpoint3\n");
       }
-      printf("checkpoint1\n");
       int i = 0;
-      printf("checkpoint2\n");
       for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
       i = 0;
-      printf("checkpoint4\n");
       for (; i < 3; i++) write(fd, "0\n", strlen("0\n"));
       write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
       write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
       write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
       close(fd);
       c = fopen(n, "w");
-      player.NAME = n;
+      strcpy(player.NAME, n);
       break;
     /*case 2: // Select character file
       printf("Select a character:\n");
