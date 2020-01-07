@@ -1,7 +1,7 @@
 #include "rpg.h"
 
 int readInt(FILE * c);
-void readArray(FILE * c, char ** copy);
+void readArray(FILE * c, char *** copy);
 
 int main(){
   srand(time(NULL));
@@ -13,7 +13,7 @@ int main(){
   char choices[100]; // note that this number will inhibit inventory size
   printf("Welcome to [game name]\n");
   printf("Make selections by typing the number corresponding to your choice\n");
-  printf("1) Create Character\n2) Select Character\n3)Delete Character\n");
+  printf("1) Create Character\n2) Select Character\n3) Delete Character\n");
   strcpy(choices, "1;2;3");
   input = choose(choices);
   switch (input){ // Character creation/selection/deletion
@@ -83,9 +83,9 @@ int main(){
   player.wep = readInt(c);
   player.armor = readInt(c);
   player.helm = readInt(c);
-  readArray(c, player.skills);
-  readArray(c, player.invI);
-  readArray(c, player.invS);
+  readArray(c, &player.skills);
+  readArray(c, &player.invI);
+  readArray(c, &player.invS);
   /*while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
@@ -129,14 +129,14 @@ int readInt(FILE * c){ // Up to four digits
   return x;
 }
 
-void readArray(FILE * c, char ** copy){ // Up to four digits, 15 items
+void readArray(FILE * c, char *** copy){ // Up to four digits, 15 items
   char buf[70];
   fgets(buf, 70, c);
   *strchr(buf, '\n') = 0;
   char * temp = buf;
   int i = 0;
   while (buf){
-    copy[i] = strsep(&temp, ";");
+    *copy[i] = strsep(&temp, ";");
     i++;
   }
 }
