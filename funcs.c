@@ -13,7 +13,7 @@ void errcheck(char * m){
 
 int choose(char * choices){
   char input[5]; // should be over the maximum chars needed to check for extra characters
-  char * args[26]; //note max inv space will be this num - 1
+  char ** args[26]; //note max inv space will be this num - 1
   int i = 0;
   while (choices){
     args[i] = strsep(&choices, ";");

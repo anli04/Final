@@ -1,9 +1,14 @@
 #include "rpg.h"
 
+int readInt(FILE * c);
+void readArray(FILE * c, char ** copy);
+
 int main(){
   srand(time(NULL));
   struct character player;
   int input = 0;
+  char buf[1024]; // for string and file stuff
+  int temp; // for random int needs
   FILE * c;
   char choices[100]; // note that this number will inhibit inventory size
   printf("Welcome to [game name]\n");
@@ -24,7 +29,6 @@ int main(){
         if (errno) printf("Character already exists\n");
         else x = 0;
       }
-      char buf[1024];
       int i = 0;
       for (; i < 5, i++){
         strcpy(buf, "1\n");
@@ -43,43 +47,65 @@ int main(){
       write(fd, buf, strlen(buf));
       close(fd);
       c = fopen(n, "w");
+      player.NAME = n;
       break;
-    case 2: // Select character file
+    /*case 2: // Select character file
       printf("Select a character:\n");
-      /* Insert character select code. Selection 0 is back
+      // Insert character select code. Selection 0 is back
 
 
 
 
-      */
+
+
       break;
     case 3: // Delete character file(s)
       printf("Select a character to delete:\n");
-      /* Insert character select code to delete. Selection 0 is back
+      // Insert character select code to delete. Selection 0 is back
 
 
 
 
-      */
-      break;
+
+      break;*/
     default:
       printf("Error");
   }
-  printf("Loading character...");
-  //Insert char struct update stuff by reading from FILE * c
-
-
-  while (1){
-    printf("");
+  printf("Loading character..."); // update character struct
+  fgets(buf, 26, c);
+  *strchr(input, '\n') = 0;
+  strcpy(player.NAME, buf);
+  player.STR = readInt(c);
+  player.DEX = readInt(c);
+  player.END = readInt(c);
+  player.INT = readInt(c);
+  player.LUK = readInt(c);
+  player.wep = readInt(c);
+  player.armor = readInt(c);
+  player.helm = readInt(c);
+  readArray(c, player.skills);
+  readArray(c, player.invI);
+  readArray(c, player.invS);
+  /*while (1){
+    printf("1) Character Info\n");
+    printf("2) Training\n");
+    printf("3) Inventory\n");
+    printf("4) Skills\n");
+    printf("5) Random Encounter\n");
+    printf("6) PvP\n");
+    printf("7) Exit Game\n");
     strcpy(choices, "1;2;3;4;5;6;7");
     input = choose(choices);
     switch (input){
-      case 1: //Character info
-      /* more cases
+      case 1: //Display character info
+      // more cases
 
 
 
-      */
+
+
+
+
       case 7: // exit
         // Be sure to have the sighandler stuff somewhere for saving
 
@@ -87,6 +113,29 @@ int main(){
         return 0;
       default: printf("Error");
     }
-  }
+  }*/
+  printf("%s, %d %d %d %d %d, %d %d %d\n", player.NAME, player.STR, player.DEX, player.END, player.INT, player.LUK, player.wep, player.armor, player.helm);
+  int test = 0;
+  for (; test < 5) printf("%s\n", player.skills[test]);
   return 0;
+}
+
+int readInt(FILE * c){ // Up to four digits
+  int x;
+  char buf[5];
+  fgets(buf, 5, c);
+  *strchr(input, '\n') = 0;
+  sscanf(buf, "&d", x);
+  return x;
+}
+
+void readArray(FILE * c, char ** copy){ // Up to four digits, 15 items
+  char buf[70];
+  fgets(buf, 70, c);
+  *strchr(buf, '\n') = 0;
+  int i = 0;
+  while (buf){
+    copy[i] = strsep(&buf, ";");
+    i++;
+  }
 }
