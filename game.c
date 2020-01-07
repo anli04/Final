@@ -18,7 +18,7 @@ int main(){
   input = choose(choices);
   switch (input){ // Character creation/selection/deletion
     case 1: // Create character file
-      printf("Enter a character name (max 24 alphanumerical characters):\n")
+      printf("Enter a character name (max 24 alphanumerical characters):\n");
       char n[26];
       int x = 1;
       int fd;
@@ -30,12 +30,12 @@ int main(){
         else x = 0;
       }
       int i = 0;
-      for (; i < 5, i++){
+      for (; i < 5; i++){
         strcpy(buf, "1\n");
         write(fd, buf, strlen(buf));
       }
-      int i = 0;
-      for (; i < 3, i++){
+      i = 0;
+      for (; i < 3; i++){
         strcpy(buf, "0\n");
         write(fd, buf, strlen(buf));
       }
@@ -73,7 +73,7 @@ int main(){
   }
   printf("Loading character..."); // update character struct
   fgets(buf, 26, c);
-  *strchr(input, '\n') = 0;
+  *strchr(buf, '\n') = 0;
   strcpy(player.NAME, buf);
   player.STR = readInt(c);
   player.DEX = readInt(c);
@@ -116,7 +116,7 @@ int main(){
   }*/
   printf("%s, %d %d %d %d %d, %d %d %d\n", player.NAME, player.STR, player.DEX, player.END, player.INT, player.LUK, player.wep, player.armor, player.helm);
   int test = 0;
-  for (; test < 5) printf("%s\n", player.skills[test]);
+  for (; test < 5; test++) printf("%s\n", player.skills[test]);
   return 0;
 }
 
@@ -124,8 +124,8 @@ int readInt(FILE * c){ // Up to four digits
   int x;
   char buf[5];
   fgets(buf, 5, c);
-  *strchr(input, '\n') = 0;
-  sscanf(buf, "&d", x);
+  *strchr(buf, '\n') = 0;
+  sscanf(buf, "%d", x);
   return x;
 }
 
@@ -133,9 +133,10 @@ void readArray(FILE * c, char ** copy){ // Up to four digits, 15 items
   char buf[70];
   fgets(buf, 70, c);
   *strchr(buf, '\n') = 0;
+  char * temp = buf;
   int i = 0;
   while (buf){
-    copy[i] = strsep(&buf, ";");
+    copy[i] = strsep(&temp, ";");
     i++;
   }
 }
