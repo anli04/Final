@@ -11,13 +11,18 @@ int main(){
   int temp; // for random int needs
   FILE * c;
   char choices[100]; // note that this number will inhibit inventory size
-  printf("Welcome to [game name]\n");
-  printf("Make selections by typing the number corresponding to your choice\n");
+  printf("Welcome to [game name]!\n");
+  printf("Make selections by typing the number corresponding to your choice.\n");
   printf("1) Create Character\n2) Select Character\n3) Delete Character\n");
   strcpy(choices, "1;2;3");
   input = choose(choices);
   switch (input){ // Character creation/selection/deletion
     case 1: // Create character file
+
+
+      //add dirent stuff to move character to proper place
+
+
       printf("Enter a character name (max 24 alphanumerical characters):\n");
       char n[26];
       int x = 1;
@@ -27,27 +32,18 @@ int main(){
         *strchr(n, '\n') = 0;
         fd = open(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
         if (errno){
-          printf("Character already exists\n");
+          printf("Character already exists.\n");
           errno = 0;
         }
         else x = 0;
       }
       int i = 0;
-      for (; i < 5; i++){
-        strcpy(buf, "1\n");
-        write(fd, buf, strlen(buf));
-      }
+      for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
       i = 0;
-      for (; i < 3; i++){
-        strcpy(buf, "0\n");
-        write(fd, buf, strlen(buf));
-      }
-      strcpy(buf, "0;-1;-1;-1;-1\n");
-      write(fd, buf, strlen(buf));
-      strcpy(buf, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n");
-      write(fd, buf, strlen(buf));
-      strcpy(buf, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n");
-      write(fd, buf, strlen(buf));
+      for (; i < 3; i++) write(fd, "0\n", strlen("0\n"));
+      write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
+      write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
+      write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
       close(fd);
       c = fopen(n, "w");
       player.NAME = n;
