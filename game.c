@@ -35,9 +35,13 @@ int main(){
           printf("Character already exists.\n");
           errno = 0;
         }
+        printf("checkpoint0\n");
         else x = 0;
+        printf("checkpoint3\n");
       }
+      printf("checkpoint1\n");
       int i = 0;
+      printf("checkpoint2\n");
       for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
       i = 0;
       for (; i < 3; i++) write(fd, "0\n", strlen("0\n"));
