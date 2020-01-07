@@ -79,14 +79,15 @@ int main(){
   player.wep = readInt(c);
   player.armor = readInt(c);
   player.helm = readInt(c);
-  printf("%d", player.helm)
+  printf("%d\n", player.helm);
   printf("checkpoint2\n");
   fgets(player.skills, 1024, c);
   printf("checkpoint3\n");
   *strchr(player.skills, '\n') = 0;
   printf("checkpoint4\n");
   fgets(player.invI, 1024, c);
-  printf("checkpoint5\n");
+  printf("checkpoin
+  t5\n");
   *strchr(player.invI, '\n') = 0;
   printf("checkpoint6\n");
   fgets(player.invS, 1024, c);
