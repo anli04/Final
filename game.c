@@ -132,9 +132,10 @@ void readArray(FILE * c, char *** copy){ // Up to four digits, 15 items
   fgets(buf, 70, c);
   *strchr(buf, '\n') = 0;
   char * temp = buf;
+  char ** copy2 = *copy;
   int i = 0;
   while (buf){
-    *copy[i] = strsep(&temp, ";");
+    copy2[i] = strsep(&temp, ";");
     i++;
   }
 }
