@@ -85,9 +85,13 @@ int main(){
   *strchr(player.skills, '\n') = 0;
   printf("checkpoint4\n");
   fgets(player.invI, 1024, c);
+  printf("checkpoint5\n");
   *strchr(player.invI, '\n') = 0;
+  printf("checkpoint6\n");
   fgets(player.invS, 1024, c);
+  printf("checkpoint7\n");
   *strchr(player.invS, '\n') = 0;
+  printf("checkpoint8\n");
   /*while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
