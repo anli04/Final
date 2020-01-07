@@ -125,7 +125,7 @@ int readInt(FILE * c){ // Up to four digits
   char buf[5];
   fgets(buf, 5, c);
   *strchr(buf, '\n') = 0;
-  sscanf(buf, "%d", x);
+  sscanf(buf, "%d", &x);
   return x;
 }
 
