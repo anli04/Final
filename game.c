@@ -46,12 +46,9 @@ int main(){
       write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
       errcheck("creating character file defaults");
       close(fd);
-      printf("checkpoint1\n");
       c = fopen(n, "w");
       errcheck("opening character file");
-      printf("checkpoint2\n");
       strcpy(player.NAME, n);
-      printf("checkpoint3\n");
       break;
     /*case 2: // Select character file
       printf("Select a character:\n");
@@ -72,8 +69,8 @@ int main(){
 
 
       break;*/
-    default:
-      printf("Error");
+    default: printf("Error");
+      break;
   }
   printf("Loading character..."); // update character struct
   fgets(buf, 26, c);
