@@ -38,7 +38,7 @@ int main(){
       for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
       i = 0;
       for (; i < 3; i++) write(fd, "0\n", strlen("0\n"));
-      write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
+      write(fd, "0;-1;-1;-1;-1filler characters\n", strlen("0;-1;-1;-1;-1filler characters\n"));
       write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
       write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
       errcheck("creating character file defaults");
@@ -70,7 +70,6 @@ int main(){
       break;
   }
   printf("Loading character...\n"); // update character struct
-  printf("checkpoint\n");
   player.STR = readInt(c);
   player.DEX = readInt(c);
   player.END = readInt(c);
@@ -82,9 +81,7 @@ int main(){
   printf("checkpoint2\n");
   fgets(player.skills, 1024, c);
   printf("checkpoint3\n");
-  printf("%s\n", player.skills);
   *strchr(player.skills, '\n') = 0;
-  printf("%s\n", player.skills);
   printf("checkpoint4\n");
   fgets(player.invI, 1024, c);
   printf("checkpoint5\n");
@@ -118,7 +115,7 @@ int main(){
       case 7: // exit
         // Be sure to have the sighandler stuff somewhere for saving
 
-        fclose(c);
+
         return 0;
       default: printf("Error");
     }
