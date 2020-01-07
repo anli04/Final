@@ -25,8 +25,11 @@ int main(){
       while (x){
         fgets(n, 26, stdin);
         *strchr(n, '\n') = 0;
-        fd = open(n, O_CREAT | O_EXCL, 0644);
-        if (errno) printf("Character already exists\n");
+        fd = open(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
+        if (errno){
+          printf("Character already exists\n");
+          errno = 0;
+        }
         else x = 0;
       }
       int i = 0;
