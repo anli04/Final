@@ -81,9 +81,11 @@ int main(){
   player.wep = readInt(c);
   player.armor = readInt(c);
   player.helm = readInt(c);
+  printf("checkpoint1");
   readArray(c, &player.skills);
   readArray(c, &player.invI);
   readArray(c, &player.invS);
+  printf("checkpoint2");
   /*while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
@@ -132,7 +134,9 @@ void readArray(FILE * c, char *** copy){ // Up to four digits, 15 items
   fgets(buf, 70, c);
   *strchr(buf, '\n') = 0;
   char * temp = buf;
+  printf("checkpoint3");
   char ** copy2 = *copy;
+  printf("checkpoint4");
   int i = 0;
   while (buf){
     copy2[i] = strsep(&temp, ";");
