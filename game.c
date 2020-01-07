@@ -82,6 +82,7 @@ int main(){
   printf("checkpoint2\n");
   fgets(player.skills, 1024, c);
   printf("checkpoint3\n");
+  printf("%s\n", player.skills);
   *strchr(player.skills, '\n') = 0;
   printf("%s\n", player.skills);
   printf("checkpoint4\n");
