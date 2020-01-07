@@ -6,8 +6,6 @@ int main(){
   srand(time(NULL));
   struct character player;
   int input = 0;
-  char buf[1024]; // for string and file stuff
-  int temp; // for random int needs
   FILE * c;
   char choices[100]; // note that this number will inhibit inventory size
   printf("Welcome to [game name]!\n");
@@ -80,15 +78,12 @@ int main(){
   player.wep = readInt(c);
   player.armor = readInt(c);
   player.helm = readInt(c);
-  fgets(buf, sizeof(buf), c);
-  *strchr(buf, '\n') = 0;
-  strcpy(player.skills, buf);
-  fgets(buf, sizeof(buf), c);
-  *strchr(buf, '\n') = 0;
-  strcpy(player.invI, buf);
-  fgets(buf, sizeof(buf), c);
-  *strchr(buf, '\n') = 0;
-  strcpy(player.invS, buf);
+  fgets(player.skills, 1024, c);
+  *strchr(player.skills, '\n') = 0;
+  fgets(player.invI, 1024, c);
+  *strchr(player.invI, '\n') = 0;
+  fgets(player.invS, 1024, c);
+  *strchr(player.invS, '\n') = 0;
   /*while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
