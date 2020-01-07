@@ -81,10 +81,13 @@ int main(){
   player.armor = readInt(c);
   player.helm = readInt(c);
   fgets(buf, sizeof(buf), c);
+  *strchr(buf, '\n') = 0;
   strcpy(player.skills, buf);
   fgets(buf, sizeof(buf), c);
+  *strchr(buf, '\n') = 0;
   strcpy(player.invI, buf);
   fgets(buf, sizeof(buf), c);
+  *strchr(buf, '\n') = 0;
   strcpy(player.invS, buf);
   /*while (1){
     printf("1) Character Info\n");
