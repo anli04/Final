@@ -39,3 +39,17 @@ int choose(char * choices){
   printf("ERROR\n");
   return -1;
 }
+
+
+char ** parse_args(char * line,char * s) {
+    char * copy = strdup(line);
+    char ** args = malloc(sizeof(char)*1024);
+    int i = 0;
+    char * iter;
+    while((iter = strsep(&copy,s)) != NULL) {
+        args[i] = malloc(sizeof(char)*32);
+        strcpy(args[i],iter);
+        i++;
+    }
+    return args;
+}

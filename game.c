@@ -72,26 +72,26 @@ int main(){
       break;
   }
   printf("Loading character...\n"); // update character struct
-  player.STR = readInt(c);
-  player.DEX = readInt(c);
-  player.END = readInt(c);
-  player.INT = readInt(c);
-  player.LUK = readInt(c);
-  player.wep = readInt(c);
-  player.armor = readInt(c);
-  player.helm = readInt(c);
+  player.stats.STR = readInt(c);
+  player.stats.DEX = readInt(c);
+  player.stats.END = readInt(c);
+  player.stats.INT = readInt(c);
+  player.stats.LUK = readInt(c);
+  player.equipped.wep = readInt(c);
+  player.equipped.armor = readInt(c);
+  player.equipped.helm = readInt(c);
   printf("checkpoint2\n");
   fgets(player.skills, 1024, c);
   printf("checkpoint3\n");
   *strchr(player.skills, '\n') = 0;
   printf("checkpoint4\n");
-  fgets(player.invI, 1024, c);
+  fgets(player.inventory.invI, 1024, c);
   printf("checkpoint5\n");
-  *strchr(player.invI, '\n') = 0;
+  *strchr(player.inventory.invI, '\n') = 0;
   printf("checkpoint6\n");
-  fgets(player.invS, 1024, c);
+  fgets(player.inventory.invS, 1024, c);
   printf("checkpoint7\n");
-  *strchr(player.invS, '\n') = 0;
+  *strchr(player.inventory.invS, '\n') = 0;
   printf("checkpoint8\n");
   fclose(c);
   /*while (1){
@@ -122,8 +122,8 @@ int main(){
       default: printf("Error");
     }
   }*/
-  printf("%s, %d %d %d %d %d, %d %d %d\n", player.NAME, player.STR, player.DEX, player.END, player.INT, player.LUK, player.wep, player.armor, player.helm);
-  printf("%s, %s, %s\n", player.skills, player.invI, player.invS);
+  printf("%s, %d %d %d %d %d, %d %d %d\n", player.NAME, player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK, player.equipped.wp, player.equipped.armor, player.equipped.helm);
+  printf("%s, %s, %s\n", player.skills, player.inventory.invI, player.inventory.invS);
   return 0;
 }
 
