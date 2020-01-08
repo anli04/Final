@@ -11,6 +11,9 @@
 #include <sys/wait.h>
 #include <dirent.h>
 #include <signal.h>
+#include <math.h>
+
+#define KEY 2473842
 
 struct character{
   char * NAME;

@@ -53,3 +53,74 @@ char ** parse_args(char * line,char * s) {
     }
     return args;
 }
+
+double nextNum(char * f, int idx, struct character player){ // For use in solve, mainly.
+  char num[10];
+  num[0] = '0';
+  num[1] = '\0';
+  double n;
+  while (f[idx]){
+    if (strchr("0123456789.", f[idx])) strncat(num, &f[idx], 1);
+    else if (strchr("S", f[idx])) return player.STR;
+    else if (strchr("D", f[idx])) return player.DEX;
+    else if (strchr("E", f[idx])) return player.END;
+    else if (strchr("I", f[idx])) return player.INT;
+    else if (strchr("L", f[idx])) return player.LUK;
+    else{
+      sscanf(num, "%lf", &n);
+      return n;
+    }
+    idx++;
+  }
+  sscanf(num, "%lf", &n);
+  return n;
+}
+double solve(char * f, int idx, struct character player){
+  double ans = nextNum(f, idx, player);
+  double n;
+  char op = '\0';
+  while (f[idx]){
+    n = 0;
+    op = '\0';
+    if (idx == 0 && ans == 0) op = '+';
+    char * p = strchr("+-*/^", f[idx]);
+    if (p){
+      op = *p;
+      idx++;
+    }
+    switch(f[idx]){
+      case 'l':
+        n = log(solve(f, idx + 2, player));
+        while (f[idx] != ')') idx++;
+        break;
+      case ')':
+        return ans;
+        break;
+      case '(':
+        idx++;
+        n = solve(f, idx, player);
+        int counter = 1;
+        while (counter > 0){
+          switch (f[idx]){
+            case '(': counter++; break;
+            case ')': counter--; break;
+          }
+          idx++;
+        }
+        idx--;
+        break;
+      default:
+        n = nextNum(f, idx, player);
+        break;
+    }
+    switch(op){
+      case '+': ans += n; break;
+      case '-': ans -= n; break;
+      case '*': ans *= n; break;
+      case '/': ans /= n; break;
+      case '^': ans = pow(ans, n); break;
+    }
+    idx++;
+  }
+  return ans;
+}
