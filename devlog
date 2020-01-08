@@ -4,3 +4,5 @@
     - created some basic helpful functions such as handling player input.
 1/6/20:
   - (Anthony) began framework of the game, i.e. what the program does.
+1/7/20:
+  - (Anthony) created function-from-string calculator function.
