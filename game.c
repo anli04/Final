@@ -1,10 +1,14 @@
 #include "rpg.h"
 
 int readInt(FILE * c);
+void iteminfo(struct item object, int id);
 
 int main(){
   srand(time(NULL));
   struct character player;
+  player.NAME = malloc(sizeof(char) * 25);
+  struct item object;
+  object.NAME = malloc(sizeof(char) * 25);
   int input = 0;
   FILE * c;
   char choices[100]; // note that this number will inhibit inventory size
@@ -27,7 +31,7 @@ int main(){
       while (x){
         fgets(n, 26, stdin);
         *strchr(n, '\n') = 0;
-        fd = open(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
+        fd = optem.NAME;en(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
         if (errno){
           printf("Character already exists.\n");
           errno = 0;
@@ -70,7 +74,12 @@ int main(){
       break;
   }
   printf("Loading character...\n"); // update character struct
-  player.stats.STR = readInt(c);
+
+  // Fix this
+
+
+
+  /*player.stats.STR = readInt(c);
   player.stats.DEX = readInt(c);
   player.stats.END = readInt(c);
   player.stats.INT = readInt(c);
@@ -91,8 +100,9 @@ int main(){
   printf("checkpoint7\n");
   *strchr(player.inventory.invS, '\n') = 0;
   printf("checkpoint8\n");
-  fclose(c);
-  /*while (1){
+  fclose(c);*/
+
+  while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
     printf("3) Inventory\n");
@@ -104,12 +114,19 @@ int main(){
     input = choose(choices);
     switch (input){
       case 1: //Display character info
+      printf("%s\n", player.NAME);
+      printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
+      printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", )
       // more cases
 
 
 
+      case 5:
 
 
+
+
+      // more cases
 
 
       case 7: // exit
@@ -119,9 +136,7 @@ int main(){
         return 0;
       default: printf("Error");
     }
-  }*/
-  printf("%s, %d %d %d %d %d, %d %d %d\n", player.NAME, player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK, player.equipped.wp, player.equipped.armor, player.equipped.helm);
-  printf("%s, %s, %s\n", player.skills, player.inventory.invI, player.inventory.invS);
+  }
   return 0;
 }
 
@@ -132,4 +147,24 @@ int readInt(FILE * c){ // Up to four digits
   *strchr(buf, '\n') = 0;
   sscanf(buf, "%d", &x);
   return x;
+}
+
+void iteminfo(struct item object, int id, struct character player){
+  char buf[32];
+  sprintf(buf, "%d", id);
+  FILE * f = fopen(buf, "r");
+  object.ID = id;
+  fgets(buf, sizeof(buf), f);
+  sscanf(buf, "%d", object.type);
+  fgets(item.NAME, sizeof(item.NAME), f);
+  fgets(buf, sizeof(buf), f);
+  double HIT = solve(buf, 0, player.stats);
+  fgets(buf, sizeof(buf), f);
+  double DMG = solve(buf, 0, player.stats);
+  double VAR; // damage variance or modifier
+  double DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
+  double DODGE; // dodge chance (additive)
+  int * STAT; // stat adjustments
+  int * REQ; // stat requirement to equip
+  fclose(f);
 }

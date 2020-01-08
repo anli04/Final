@@ -3,6 +3,7 @@
 #define KEY 2473842
 
 int main(){
+  int victory = 0;
   int sem;
   sem = semget(KEY, 1, 0);
   errcheck("getting semaphore");
@@ -30,5 +31,5 @@ int main(){
     semop(sem, &sb, 1);
     errcheck("releasing semaphore");
   }
-  return 0;
+  return victory;
 }

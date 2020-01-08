@@ -45,8 +45,8 @@ struct equipped{
 
 struct item{
   int ID;
-  int type; //wep, helm, armor. W, H, A respectively.
   char * NAME;
+  int type; //wep, helm, armor. W, H, A respectively.
   double HIT; // hit chance modifier. modifiers are multiplicative
   double DMG; // average damage or modifier
   double VAR; // damage variance or modifier
@@ -72,3 +72,5 @@ struct skill{
 double rand_double(); // returns a value from 0 to 1.
 void errcheck(char * m); //error checking
 int choose(char * choices); // handles player input
+double nextNum(char * f, int idx, struct stats s); // mainly for use in solve
+double solve(char * f, int idx, struct stats s); // see info for info
