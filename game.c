@@ -1,7 +1,5 @@
 #include "rpg.h"
 
-#define KEY 2473842
-
 int readInt(FILE * c);
 
 int main(){
