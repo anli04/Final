@@ -114,14 +114,16 @@ int main(){
     input = choose(choices);
     switch (input){
       case 1: //Display character info
-      printf("%s\n", player.NAME);
-      printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
-      printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", )
-      // more cases
+        printf("%s\n", player.NAME);
+        printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
+        printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
+        // more cases
 
 
 
       case 5:
+        printf("")
+        int f =
 
 
 
