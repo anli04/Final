@@ -1,6 +1,6 @@
 #include "rpg.h"
 
-double rand_double(){
+double rand_double(){ // returns a double between 0 and 1
   return (double) rand() / (double) RAND_MAX;
 }
 

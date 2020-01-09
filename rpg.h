@@ -78,10 +78,14 @@ average damage
 damage variance
 damage reduction
 dodge chance
-skill id and associated name
-skill id and associated name
-skill id and associated name
-skill id and associated name
+skill id
+skill id
+skill id
+skill id
+associated name 1
+associated name 2
+associated name 3
+associated name 4
 */
 
 struct turn{ // transmit this info through combat.

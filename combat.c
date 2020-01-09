@@ -2,14 +2,53 @@
 
 #define KEY 2473842
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]){ // combat <character file or encounter id> <"1" if encounter, nothing otherwise>
   int victory = 0; // win or lose. 1 or 0
   int sem;
   sem = semget(KEY, 1, 0);
   errcheck("getting semaphore");
   struct sembuf sb;
   sb.sem_num = 0;
-  // Pipe over a struct character OR take in as argument
+  char NAME[25];
+  int hp;
+  double HIT;
+  double DMG;
+  double VAR;
+  double DMGRED;
+  double DODGE;
+  int skills[4];
+  char * skillnames[5];
+  double buffs[4]; // hitmod, dmgmod, dmgred add, dodge add.
+  double bufftime[4]; // respective to buffs, how long it last.
+  int i;
+  for (; i < 4; i++){
+    buffs[i] = 0;
+    bufftime[i] = 0;
+  }
+  struct turn update;
+  update.action = malloc(sizeof(char) * 256);
+  FILE * f = fopen(argv[1], "r");
+  char temp[256];
+  if (argc > 2){
+    fgets(NAME, sizeof(NAME), f);
+    sscanf(fgets(temp, 256, f), "%d", hp);
+    double hpmod;
+    sscanf(fgets(temp, 256, f), "%lf", hpmod);
+    hp *= (rand_double() * 2 - 1) * hpmod + 1;
+    sscanf(fgets(temp, 256, f), "%lf", HIT);
+    sscanf(fgets(temp, 256, f), "%lf", DMG);
+    sscanf(fgets(temp, 256, f), "%lf", VAR);
+    sscanf(fgets(temp, 256, f), "%lf", DMGRED);
+    sscanf(fgets(temp, 256, f), "%lf", DODGE);
+    sscanf(fgets(temp, 256, f), "%lf", DODGE);
+    for (i = 0; i < 4; i++) sscanf(fgets(temp, 256, f), "%d", skills[i]);
+    for (i = 0; i < 4; i++) sscanf(fgets(temp, 256, f), "%d", skills[i]);
+  }
+  else{
+
+    // player stuff
+  }
+  fclose(f);
 
 
 
