@@ -10,8 +10,21 @@ int main(int argc, char *argv[]){
   struct sembuf sb;
   sb.sem_num = 0;
   // Pipe over a struct character OR take in as argument
-
-
+  struct turn t;
+  mkfifo("CombatToCombat", 0666);
+  char in[500];
+  char out[500];
+  char arr[10][50];
+  int fd;
+  while (1) {
+    fd = open("CombatToCombat", O_RDONLY);
+    read(fd, in, sizeof(in));
+    close(fd);
+    fd = open("CombatToCombat", O_WRONLY);
+    fgets(out, 500, stdin);
+    write(fd, out, strlen(out)+1);
+    close(fd);
+  }
 
 
   int input = 0;
