@@ -47,7 +47,7 @@ struct item{
   int ID;
   char * NAME;
   int type; //wep, helm, armor. W, H, A respectively.
-  double HIT; // hit chance modifier. modifiers are multiplicative
+  double HIT; // hit chance modifier. modifiers and variance are multiplicative
   double DMG; // average damage or modifier
   double VAR; // damage variance or modifier
   double DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
@@ -67,6 +67,30 @@ struct skill{
   int TURNS; // number of turns it lasts. 1 ends on your next turn. 0 for no effects
   int CD; // turn cooldown
   char * EXA; // additional changes to be interpreted. 0 if nothing
+};
+
+/* Encounter file:
+name
+average hp
+hp variance // around round hp up when determining the int.
+hit chance
+average damage
+damage variance
+damage reduction
+dodge chance
+skill id and associated name
+skill id and associated name
+skill id and associated name
+skill id and associated name
+*/
+
+struct turn{ // transmit this info through combat.
+  int dmg; // hp change to enemy. + means damage
+  int heal; // hp change to self. - means damage
+  char * action; // description the opponent will see of what happened.
+  char debuff; // code for debuffs
+  int t; // number of turns debuff lasts.
+  // buffs info is not transmitted.
 };
 
 double rand_double(); // returns a value from 0 to 1.

@@ -2,8 +2,8 @@
 
 #define KEY 2473842
 
-int main(){
-  int victory = 0;
+int main(int argc, char *argv[]){
+  int victory = 0; // win or lose. 1 or 0
   int sem;
   sem = semget(KEY, 1, 0);
   errcheck("getting semaphore");
