@@ -18,23 +18,23 @@ int game() {
 
   while(1) {
     system("clear");
-    printf("\n%s",f1);
+    printf("\nPress a key and click Enter to do a rep. Click Enter to finish.\n%s\nReps: %d\n",f1,reps);
 
     fgets(temp,32,stdin);
-    if(strcmp(temp,"]\n") == 0) {
-      reps++;
+    if(strcmp(temp,"\n") == 0) {
+      break;
     }
     else {
-      break;
+      reps++;
     }
     system("clear");
-    printf("\n%s",f2);
+    printf("\nPress a key and click Enter to do a rep. Click Enter to finish.\n%s\nReps: %d\n",f2,reps);
     fgets(temp,32,stdin);
-    if(strcmp(temp,"]\n") == 0) {
-      reps++;
+    if(strcmp(temp,"\n") == 0) {
+      break;
     }
     else {
-      break;
+      reps++;
     }
 
 
