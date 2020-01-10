@@ -122,8 +122,12 @@ int main(){
 
 
       case 5:
-        printf("")
-        int f =
+        printf("");
+        struct turn t;
+        mkfifo("CombatToCombat", 0666);
+        char in[500];
+        char out[500];
+        char arr[10][50];
 
 
 

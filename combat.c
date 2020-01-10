@@ -49,11 +49,6 @@ int main(int argc, char *argv[]){
     // player stuff
   }
   fclose(f);
-  struct turn t;
-  mkfifo("CombatToCombat", 0666);
-  char in[500];
-  char out[500];
-  char arr[10][50];
   int fd;
 
   //Note: merge the following stuff below
