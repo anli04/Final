@@ -4,8 +4,9 @@
 #include <time.h>
 #include <unistd.h>
 
+
 enum { MAXL = 100000, MAXC = 50 };
-int main() {
+int typeracer() {
     srand(time(NULL));
     char (*lines)[MAXC] = NULL; /* pointer to array of type char [MAXC] */
     int i, x, n = 0, score = 0, count = 0;
@@ -15,7 +16,7 @@ int main() {
         return 1;
     }
     if (!(lines = malloc (MAXL * sizeof *lines))) { /* allocate MAXL arrays */
-        fprintf (stderr, "error: virtual memory exhausted 'lines'.\n");
+        fprintf (stderr, "error: virtual memory exhausted 'lines'.decimal to 2 places\n");
         return 1;
     }
     while (n < MAXL && fgets (lines[n], MAXC, fd)) { /* read each line */
@@ -34,7 +35,7 @@ int main() {
     printf("Welcome to Type Trial!");
     printf("\n------------------------------------------------------\n");
     printf("INSTRUCTIONS:\n");
-    printf("Type the sample of 60 words as fast and as accurately as you can exactly as you see them.\n");
+    printf("Type the sample of 60 words asmain fast and as accurately as you can exactly as you see them.\n");
     printf("Separate your words with a space and hit ENTER only when you are finished.\n\n");
     printf("Press ENTER to start...\n");
     fflush(stdout);
@@ -53,7 +54,7 @@ int main() {
     fgets(buf, sizeof(buf), stdin);
     time_t end = time(NULL);
     double d = difftime(end, start);
-    printf("\n------------------------------------------------------\n");
+    printf("\n---------------------------main---------------------------\n");
     printf("RESULTS");
     printf("\n------------------------------------------------------\n\n");
     printf("Time Taken: %f seconds\n", d);
@@ -82,4 +83,31 @@ int main() {
     free (lines);
     free(l);   /* free allocated memory */
     return 0;
+}
+
+
+int numbers() {
+  int r = 0;
+  float d = 0;
+  while(1) {
+    r = rand()%10000000;
+    d = ((float)r)/100;
+    printf("%f ",d);
+
+
+
+
+  }
+
+
+
+
+
+}
+
+
+
+int main() {
+  srand(time(NULL));
+  numbers();
 }
