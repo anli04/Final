@@ -31,7 +31,7 @@ int main(){
       while (x){
         fgets(n, 26, stdin);
         *strchr(n, '\n') = 0;
-        fd = optem.NAME;en(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
+        fd = open(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
         if (errno){
           printf("Character already exists.\n");
           errno = 0;
