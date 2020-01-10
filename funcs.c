@@ -41,7 +41,7 @@ int choose(char * choices){
 }
 
 
-char ** parse_args(char * line,char * s) {
+char ** parse_args(char * line, char * s) {
     char * copy = strdup(line);
     char ** args = malloc(sizeof(char)*1024);
     int i = 0;

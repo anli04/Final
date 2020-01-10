@@ -156,13 +156,10 @@ void iteminfo(struct item object, int id, struct character player){
   sprintf(buf, "%d", id);
   FILE * f = fopen(buf, "r");
   object.ID = id;
-  fgets(buf, sizeof(buf), f);
-  sscanf(buf, "%d", object.type);
+  sscanf(fgets(buf, sizeof(buf), f), "%d", object.type);
   fgets(item.NAME, sizeof(item.NAME), f);
-  fgets(buf, sizeof(buf), f);
-  double HIT = solve(buf, 0, player.stats);
-  fgets(buf, sizeof(buf), f);
-  double DMG = solve(buf, 0, player.stats);
+  double HIT = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
+  double DMG = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
   double VAR; // damage variance or modifier
   double DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
   double DODGE; // dodge chance (additive)
