@@ -54,21 +54,10 @@ int main(){
     /*case 2: // Select character file
       printf("Select a character:\n");
       // Insert character select code. Selection 0 is back
-
-
-
-
-
-
       break;
     case 3: // Delete character file(s)
       printf("Select a character to delete:\n");
       // Insert character select code to delete. Selection 0 is back
-
-
-
-
-
       break;*/
     default: printf("Error");
       break;
@@ -160,14 +149,14 @@ void iteminfo(struct item object, int id, struct character player){
   sprintf(buf, "%d", id);
   FILE * f = fopen(buf, "r");
   object.ID = id;
-  sscanf(fgets(buf, sizeof(buf), f), "%d", object.type);
   fgets(item.NAME, sizeof(item.NAME), f);
-  double HIT = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
-  double DMG = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
-  double VAR; // damage variance or modifier
-  double DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
-  double DODGE; // dodge chance (additive)
-  int * STAT; // stat adjustments
-  int * REQ; // stat requirement to equip
+  sscanf(fgets(buf, sizeof(buf), f), "%d", object.type);
+  object.HIT = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
+  object.DMG = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf", object.VAR);
+  object.DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
+  object.DODGE; // dodge chance (additive)
+  object.STAT; // stat adjustments
+  object.REQ; // stat requirement to equip
   fclose(f);
 }

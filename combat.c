@@ -2,7 +2,7 @@
 
 #define KEY 2473842
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. Fourth is if cpu controlled
   int victory = 0; // win or lose. 1 or 0
   int sem;
   sem = semget(KEY, 1, 0);
@@ -25,11 +25,10 @@ int main(int argc, char *argv[]){
     buffs[i] = 0;
     bufftime[i] = 0;
   }
-  struct turn update;
-  update.action = malloc(sizeof(char) * 256);
+  struct turn * update;
   FILE * f = fopen(argv[1], "r");
   char temp[256];
-  if (argc > 2){
+  if (argc > 3){
     fgets(NAME, sizeof(NAME), f);
     sscanf(fgets(temp, 256, f), "%d", hp);
     double hpmod;
@@ -50,33 +49,48 @@ int main(int argc, char *argv[]){
   }
   fclose(f);
   int fd;
-
-  //Note: merge the following stuff below
-
-  while (1) {
-    fd = open("CombatToCombat", O_RDONLY);
-    read(fd, in, sizeof(in));
-    close(fd);
-    fd = open("CombatToCombat", O_WRONLY);
-    fgets(out, 500, stdin);
-    write(fd, out, strlen(out)+1);
-    close(fd);
-  }
-
-
   int input = 0;
   while (1){
     sb.sem_op = -1;
     printf("Awaiting opponent...");
     semop(sem, &sb, 1);
     errcheck("getting semaphore");
-    // pipe in string of what opponent did
+    if (strcmp(argv[3], "0") == 0){
+      fd = open("CombatToCombat", O_RDONLY);
+      read(fd, update, sizeof(update));
+      close(fd);
+    }
+    else {
+      update = (turn *) malloc(sizeof(turn));
+      update->action = malloc(sizeof(char) * 256);
+      update->dmg = 0;
+      update->heal = 0;
+      update->debuff = '0';
+      update->t = 0;
+      update->end = 0;
+      strcpy(argv[3], "0");
+    }
+    if (end){
+      victory = 1;
+      break;
+    }
+    printf("You took %d damage.\n", update->dmg);
+    hp = hp - update->dmg;
+    printf("Current hp: %d.\n", hp);
+    if (hp <= 0){
+      printf("You died.\n");
+      update->end = 1;
+    }
+    else {
+      if (debuff != '0'){
+        // debuff decoding;
+      }
 
-
-
-
-
+    }
     // pipe out string of what you did, for opponent
+    fd = open("CombatToCombat", O_WRONLY);
+    write(fd, update, sizeof(update));
+    close(fd);
     sb.sem_op = 1;
     semop(sem, &sb, 1);
     errcheck("releasing semaphore");
