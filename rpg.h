@@ -62,6 +62,8 @@ struct skill{
   double HITMOD; // hit chance modifier
   double DMGMOD; // damage modifier
   double VARMOD; //variance modifier
+  double HITBUFF; // hit chance buff
+  double DMGBUFF; // damage buff
   double REDPLUS; // additional damage reduction
   double DODGEPLUS; // additional dodge chance
   int TURNS; // number of turns it lasts. 1 ends on your next turn. 0 for no effects
@@ -100,6 +102,7 @@ struct turn{ // transmit this info through combat.
 };
 
 double rand_double(); // returns a value from 0 to 1.
+double min(double n, double m); // returns smallest of two doubles
 void errcheck(char * m); //error checking
 int choose(char * choices); // handles player input
 double nextNum(char * f, int idx, struct stats s); // mainly for use in solve

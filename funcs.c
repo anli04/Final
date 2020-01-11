@@ -4,6 +4,11 @@ double rand_double(){ // returns a double between 0 and 1
   return (double) rand() / (double) RAND_MAX;
 }
 
+double min(double n, double m){
+  if (n < m) return n;
+  return m;
+}
+
 void errcheck(char * m){
   if (errno){
     printf("Error %s: %d - %s\n", m, errno, strerror(errno));
@@ -139,6 +144,10 @@ void skillinfo(struct item move, int id, struct stats s){
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   move.DMGMOD = solve(buf, 0, s);
   sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move.VAR);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  move.HITBUFF = solve(buf, 0, s);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  move.DMGBUFF = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   move.REDPLUS = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;

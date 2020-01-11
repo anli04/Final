@@ -12,6 +12,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   sb.sem_num = 0;
   int input;
   char NAME[25];
+  int HPMAX;
   int hp;
   double HIT;
   double DMG;
@@ -34,26 +35,27 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   move.EXA = malloc(sizeof(char) * 10);
   struct stats stat;
   FILE * f; // for all the fopens.
-  char temp[256]; // for temporary string holding for functions
+  char temp[512; // for temporary string holding for functions
   if (argc != 3){ // == 3 for non cpu
 
     // do the proper dirent stuff
 
     f = fopen(argv[1], "r");
     fgets(NAME, sizeof(NAME), f);
-    sscanf(fgets(temp, 256, f), "%d\n", hp);
+    sscanf(fgets(temp, 512, f), "%d\n", hp);
     double hpmod;
-    sscanf(fgets(temp, 256, f), "%lf\n", hpmod);
+    sscanf(fgets(temp, 512, f), "%lf\n", hpmod);
     hp *= (rand_double() * 2 - 1) * hpmod + 1;
-    sscanf(fgets(temp, 256, f), "%lf\n", HIT);
-    sscanf(fgets(temp, 256, f), "%lf\n", DMG);
-    sscanf(fgets(temp, 256, f), "%lf\n", VAR);
-    sscanf(fgets(temp, 256, f), "%lf\n", DMGRED);
-    sscanf(fgets(temp, 256, f), "%lf\n", DODGE);
-    for (i = 0; i < 5; i++) sscanf(fgets(temp, 256, f), "%d\n", skills[i]);
+    HPMAX = hp;
+    sscanf(fgets(temp, 512, f), "%lf\n", HIT);
+    sscanf(fgets(temp, 512, f), "%lf\n", DMG);
+    sscanf(fgets(temp, 512, f), "%lf\n", VAR);
+    sscanf(fgets(temp, 512, f), "%lf\n", DMGRED);
+    sscanf(fgets(temp, 512, f), "%lf\n", DODGE);
+    for (i = 0; i < 5; i++) sscanf(fgets(temp, 512, f), "%d\n", skills[i]);
     for (i = 0; i < 5; i++) {
       if (skills[i] >= 0){
-        *strchr(fgets(temp, 256, f), 0, player.stats, '\n') = 0;
+        *strchr(fgets(temp, 512, f), 0, player.stats, '\n') = 0;
         skillnames[i] = temp;
       }
     }
@@ -80,6 +82,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sscanf(fgets(temp, 5, f), "%d\n", eq.helm);
     fclose();
     hp = stat.END * 5;
+    HPMAX = hp;
     sprintf(temp, )
     f = fopen(eq.wep, )
   }
@@ -92,7 +95,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       // do the dirent stuff
 
       skillinfo(move, skills[i], stat);
-      skillCD[i] = move.CD;
+      if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
     }
   }
   while (1){
@@ -107,7 +110,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     else {
       update = (turn *) malloc(sizeof(turn));
-      update->action = malloc(sizeof(char) * 256);
+      update->action = malloc(sizeof(char) * 512);
       update->dmg = 0;
       update->heal = 0;
       for (i = 0; i < 4; i++) {
@@ -125,30 +128,30 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       break;
     }
     if (argc == 4) printf(update->action); // what happened
-    strcpy(update->action, "\0"); //overwrite action
+    strcpy(update->action, ""); //overwrite action
     if (update->dmg){
-      if (rand_double() > DODGE){
-        if (exa[0] = "F"){
+      if (d > min(DODGE + buffs[3], 0.7)){
+        if (strchr(update->exa, 'F') || strchr(update->exa,'P')){
           if (argc == 4) printf("You took %d irreducible damage.\n", update->dmg); // damage taken
           hp -= update.dmg;
         }
         else{
-          if (argc == 4) printf("You took %d damage.\n", update->dmg); // damage taken
-          hp = hp - (int)(update->dmg * (1. - DMGRED));
+          if (argc == 4) printf("You took %d damage.\n", (int)(update->dmg * (1. - min(DMGRED + buffs[2], 0.85)))); // damage taken
+          hp = hp - (int)(update->dmg * (1. - min(DMGRED + buffs[2], 0.85)));
         }
         if (argc == 4) printf("Current hp: %d.\n", hp);
       }
       else{
-        if (exa[0] = 'H'){
+        if (strchr(update->exa,'H')){
           if (argc == 4) printf("You dodged the attack, but still took half damage\n");
-          if (argc == 4) printf("You took %d damage.\n", update->dmg / 2);
-          hp = hp - (int)((update->dmg * (1. - DMGRED)) / 2);
+          if (argc == 4) printf("You took %d damage.\n", (int)((update->dmg * (1. - min(DMGRED + buffs[2], 0.85))) / 2));
+          hp = hp - (int)((update->dmg * (1. - min(DMGRED + buffs[2], 0.85))) / 2);
           if (argc == 4) printf("Current hp: %d.\n", hp);
           strcat(update->action, "Your opponent dodged the last attack!\n");
         }
-        else if (exa[0] = 'P'){
+        else if (strchr(update->exa,'P')){
           if (argc == 4) printf("You are unable to dodge or reduce the damage from the attack\n");
-          if (argc == 4) printf("You took %d damage.\n", update->dmg;
+          if (argc == 4) printf("You took %d irreducible damage.\n", update->dmg;
           hp -= update->dmg;
           if (argc == 4) printf("Current hp: %d.\n", hp);
           strcat(update->action, "Your opponent could not dodge the last attack!\n");
@@ -159,11 +162,15 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         }
       }
     }
-    if (update->heal && argc == 4) printf("Your opponent healed for %d.\n", update->heal);
+    update->dmg = 0;
+    if (update->heal && argc == 4){
+      printf("Your opponent healed for %d.\n", update->heal);
+      update->heal = 0;
+    }
     if (hp <= 0){ // dead or alve
       if (argc == 4) printf("You died.\n");
       printf("\n");
-      stcpy(update->action, "Your opponent died\n"); //note it overwrites dodge
+      strcpy(update->action, "Your opponent died\n"); //note it overwrites dodge
       update->end = 1;
     }
     else {
@@ -174,21 +181,21 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 4) printf("Your opponent has decreased your ");
           switch (i){
             case 0: if (argc == 4) printf("Hit Chance");
-              HIT /= -buffs[0];
               break;
             case 1: if (argc == 4) printf("Outgoing Damage");
-              DMG /= -buffs[1];
               break;
             case 2: if (argc == 4) printf("Damage Reduction");
-              DMGRED += buffs[2];
               break;
             case 3: if (argc == 4) printf("Dodge Chance");
-              DODGE += buffs[3];
               break;
           }
           if (argc == 4) printf(" by %lf%% for %d turns.\n", update->debuff[i] * 100, update->t[i]);
         }
+        update->debuff[i] = 0;
+        update->t[i] = 0;
       }
+      strcpy(update->exa, "");
+      printf("\n"); // start of interactable turn.
       if (argc == 4) printf("Current hp: %d.\n", hp);
       if (argc == 4) printf("Your turn:\n");
       int boolean = 0;
@@ -199,7 +206,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         for (i = 0; i < 5; i++){
           if (skills[i] != -1){
 
-            // get the skill name
+            // get the skill name for printf
 
             printf("%d) %s\n", i, );
             sprintf(choice, "%d;", i);
@@ -216,15 +223,113 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       else{ // cpu decision
         while (boolean){
           input = (int) (rand_double() * 5);
-          if (skills[randN] != -1 && skillCD[input] == 0) boolean = 1;
+          if (skills[input] != -1 && skillCD[input] == 0) boolean = 1;
         }
       }
       skillinfo(move, skills[input], stat);
-      strcpy(update->action, "Your opponent used ");
+      strcat(update->action, "Your opponent used ");
       strcat(update->action, move.NAME);
       strcat(update->action, ".\n");
-      update->dmg =
-
+      if (argc == 4) printf("You used %s.\n", move.NAME);
+      if (move.HIT > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
+        strcat(update->action, "Your opponent attacks!\n");
+        if (argc == 4) printf("You attack.\n");
+        if (rand_double() < HIT * move.HITMOD * buffs[0]){
+          update->dmg = (int)(DMG * move.DMGMOD * buffs[1] * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+          if (argc == 4) printf("You dealt %d damage!\n", update->dmg);
+          if (strchr(move.EXA, "V")){
+            update->heal = update->dmg;
+            hp = min(HPMAX, hp + update->heal);
+            if (argc == 4) printf("You healed for %d.\n", update->heal);
+          }
+        }
+        else{
+          if (argc == 4) printf("You missed!\n");
+          strcat(update->action, "Your opponent missed!\n");
+        }
+      }
+      if (strchr(move.EXA, "A")){
+        int attacks;
+        sscanf(*(strchr(move.EXA, "A") + 1), "%d", attacks);
+        attacks--;
+        int dtemp;
+        for (; attacks > 0; attacks--){
+          if (argc == 4) printf("You attack.\n");
+          strcat(update->action, "Your opponent attacks again!\n");
+          if (rand_double() < HIT * move.HITMOD * buffs[0]){
+            dtemp = (int)(DMG * move.DMGMOD * buffs[1] * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+            update->dmg += dtemp;
+            if (argc == 4) printf("You dealt %d damage!\n", dtemp);
+            if (strchr(move.EXA, "V")){
+              hp = min(HPMAX, hp + update->dmg - update->heal);
+              if (argc == 4) printf("You healed for %d.\n", update->dmg - update->heal);
+              update->heal += update->dmg;
+            }
+          }
+          else{
+            if (argc == 4) printf("You missed!\n");
+            strcat(update->action, "Your opponent missed!\n");
+          }
+        }
+      }
+      if (strchr(move.EXA, "h")){
+        update->heal = (int)(DMG * move.DMGMOD * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+        hp = min(HPMAX, hp + update->heal);
+        if (argc == 4) printf("You healed for %d.\n", update->heal);
+      }
+      if (move.HITBUFF){
+        if (strchr(move.EXA, "D")){
+          update.debuff[0] = move.HITBUFF;
+          update.t[0] = move.TURNS;
+          if (argc == 4) printf("You reduced your opponent's Hit Chance!\n");
+        }
+        else{
+          buffs[0] = move.HITBUFF;
+          bufftime[0] = move.TURNS + 1;
+          strcat(update.action, "Your opponent increased their Hit Chance!\n");
+          if (argc == 4) printf("You increased your Hit Chance!\n");
+        }
+      }
+      if (move.DMGBUFF){
+        if (strchr(move.EXA, "D")){
+          update.debuff[1] = move.DMGBUFF;
+          update.t[1] = move.TURNS;
+          if (argc == 4) printf("You reduced your opponent's Outgoing Damage!\n");
+        }
+        else{
+          buffs[1] = move.HITBUFF;
+          bufftime[1] = move.TURNS + 1;
+          strcat(update.action, "Your opponent increased their Outgoing Damage!\n");
+          if (argc == 4) printf("You increased your Outgoing Damage!\n");
+        }
+      }
+      if (move.REDPLUS){
+        if (strchr(move.EXA, "D")){
+          update.debuff[2] = move.REDPLUS;
+          update.t[2] = move.TURNS;
+          if (argc == 4) printf("You reduced your opponent's Damage Resistance!\n");
+        }
+        else{
+          buffs[2] = move.REDPLUS;
+          bufftime[2] = move.TURNS + 1;
+          strcat(update.action, "Your opponent increased their Damage Resistance!\n");
+          if (argc == 4) printf("You increased your Damage Resistance!\n");
+        }
+      }
+      if (move.DODGEPLUS){
+        if (strchr(move.EXA, "D")){
+          update.debuff[3] = move.DODGEPLUS;
+          update.t[3] = move.TURNS;
+          if (argc == 4) printf("You reduced your opponent's Dodge Chance!\n");
+        }
+        else{
+          buffs[3] = move.DODGEPLUS;
+          bufftime[3] = move.TURNS + 1;
+          strcat(update.action, "Your opponent increased their Dodge Chance!\n");
+          if (argc == 4) printf("You increased your Dodge Chance!\n");
+        }
+      }
+      printf("\n");
       for (i = 0; i < 4; i++){ //resolve buffs/debuffs at end of turn
         if (bufftime[i] > 0){
           bufftime[i]--;
@@ -232,18 +337,12 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
             if (argc == 4) printf("Your ");
             switch (i){
               case 0: if (argc == 4) printf("Hit Chance");
-                if (buffs[0] > 0) HIT /= buffs[0];
-                else HIT *= -buffs[0];
                 break;
               case 1: if (argc == 4) printf("Outgoing Damage");
-                if (buffs[0] > 0) DMG /= buffs[0];
-                else HIT *= -buffs[0];
                 break;
               case 2: if (argc == 4) printf("Damage Reduction");
-                DMGRED -= buffs[2];
                 break;
               case 3: if (argc == 4) printf("Dodge Chance");
-                DODGE -= buffs[3];
                 break;
             }
             if (argc == 4) printf(" has returned to normal.\n");
@@ -255,7 +354,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         if (skillCD[i] > 0){
           skillCD[i]--;
           if (!skillCD[i]){
-            if (argc == 4) printf("Your ");
 
             //get name of skill
 

@@ -1,6 +1,6 @@
 Hit points = 5 * END
 Luck increases drop rates, encounters, and affects many other stats.
-Final Damage when hit is always rounded down when converted to int, min 1.
+Final Damage when hit is always rounded down when converted to int.
 Damage reduction caps at 85%
 Dodge caps at 70%
 All chances are expressed as decimals
@@ -8,6 +8,9 @@ Max Stat Total: 150
 Max Stats: 50 each.
 In combat, buffs and debuffs for the same number (e.g. hit chance) will overwrite.
 CD activates at the start of combat, and then after you use the skill.
+Debuffs cannot be dodged. Only damage.
+Buffs do not lose a turn on the turn they are applied. Implemented by increasing turn length by 1 when used in combat.
+Healing is not affected by damage changes unless from health leech.
 Current inventory space: 15 for items, 15 for skills.
 Current menu options, ordered: Character Info, Training, Inventory, Skills, Random Encounter, PvP, Exit
 
@@ -34,9 +37,13 @@ examples:
 
 Skill "EXA" notation and notes:
 "An" = make n separate attacks. ex: "A2" = make two attacks
+"Q" = cooldown not set at beginning of combat.
+"D" = buffs are applied to enemy as debuffs. Positive becomes negative.
+"h" = heals damage to self.
+"V" = heals for damage dealt.
 "H" = deals half damage when dodged.
-"F" = cannot be reduced.
-"P" = cannot be dodged or reduced.
+"F" = damage cannot be reduced.
+"P" = damage cannot be dodged or reduced.
 
 Item Compendium:
 0 = unarmed (weapon)
