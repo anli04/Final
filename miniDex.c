@@ -87,13 +87,54 @@ int typeracer() {
 
 
 int numbers() {
+  system("clear");
+  int score = 0;
   int r = 0;
-  float d = 0;
+  char n[16];
+  char * d;
+  char full[16];
+  char input[16];
+  char history[4096];
+  d = malloc(sizeof(char)*16);
   while(1) {
     r = rand()%10000000;
-    d = ((float)r)/100;
-    printf("%f ",d);
+    sprintf(n,"%d",r);
+    *(n+strlen(n)-2) = '\0';
 
+    sprintf(d,"%d",r);
+    d += strlen(d)-2;
+
+    strcpy(full,n);
+    strcat(full,".");
+    strcat(full,d);
+
+    printf("%s\t\t",full);
+    if(strlen(full)<8) {
+      printf("\t");
+    }
+
+    fgets(input,16,stdin);
+
+    strcat(history,full);
+    strcat(history,"\t\t");
+    if(strlen(full)<8) {
+      strcat(history,"\t");
+    }
+    strcat(history,input);
+    history[strlen(history)-1] = '\0';
+
+    if(strcmp(input,full) == 10) {
+      score += 1;
+      strcat(history," ✔");
+    }
+    else {
+      strcat(history," ✗");
+    }
+
+    strcat(history,"\n");
+    system("clear");
+
+    printf("%s",history);
 
 
 
