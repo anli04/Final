@@ -6,6 +6,8 @@ Dodge caps at 70%
 All chances are expressed as decimals
 Max Stat Total: 150
 Max Stats: 50 each.
+In combat, buffs and debuffs for the same number (e.g. hit chance) will overwrite.
+CD activates at the start of combat, and then after you use the skill.
 Current inventory space: 15 for items, 15 for skills.
 Current menu options, ordered: Character Info, Training, Inventory, Skills, Random Encounter, PvP, Exit
 
@@ -32,6 +34,9 @@ examples:
 
 Skill "EXA" notation and notes:
 "An" = make n separate attacks. ex: "A2" = make two attacks
+"H" = deals half damage when dodged.
+"F" = cannot be reduced.
+"P" = cannot be dodged or reduced.
 
 Item Compendium:
 0 = unarmed (weapon)

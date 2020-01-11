@@ -59,7 +59,7 @@ struct item{
 struct skill{
   int ID;
   char * NAME;
-  double HIT; // hit chance modifier
+  double HITMOD; // hit chance modifier
   double DMGMOD; // damage modifier
   double VARMOD; //variance modifier
   double REDPLUS; // additional damage reduction
@@ -92,9 +92,11 @@ struct turn{ // transmit this info through combat.
   int dmg; // hp change to enemy. + means damage
   int heal; // hp change to self. - means damage
   char * action; // description the opponent will see of what happened.
-  char debuff; // code for debuffs
-  int t; // number of turns debuff lasts.
+  double debuff[4]; // code for debuffs
+  int t[4]; // number of turns debuff lasts.
   // buffs info is not transmitted.
+  char * exa; // extra info from skill used
+  int end;
 };
 
 double rand_double(); // returns a value from 0 to 1.
@@ -102,3 +104,4 @@ void errcheck(char * m); //error checking
 int choose(char * choices); // handles player input
 double nextNum(char * f, int idx, struct stats s); // mainly for use in solve
 double solve(char * f, int idx, struct stats s); // see info for info
+void skillinfo(struct skill move, int id, struct character player); // get skill info

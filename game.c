@@ -1,7 +1,7 @@
 #include "rpg.h"
 
 int readInt(FILE * c);
-void iteminfo(struct item object, int id);
+void iteminfo(struct item object, int id, struct stats s);
 
 int main(){
   srand(time(NULL));
@@ -144,19 +144,28 @@ int readInt(FILE * c){ // Up to four digits
   return x;
 }
 
-void iteminfo(struct item object, int id, struct character player){
+void iteminfo(struct item object, int id, struct stats s){
   char buf[32];
   sprintf(buf, "%d", id);
+
+  // Do the dirent Stuff
+
   FILE * f = fopen(buf, "r");
   object.ID = id;
-  fgets(item.NAME, sizeof(item.NAME), f);
-  sscanf(fgets(buf, sizeof(buf), f), "%d", object.type);
-  object.HIT = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
-  object.DMG = solve(fgets(buf, sizeof(buf), f), 0, player.stats);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf", object.VAR);
-  object.DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
-  object.DODGE; // dodge chance (additive)
-  object.STAT; // stat adjustments
-  object.REQ; // stat requirement to equip
+  fgets(object.NAME, sizeof(object.NAME), f);
+  sscanf(fgets(buf, sizeof(buf), f), "%d\n", object.type);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  object.HIT = solve(buf, 0, s);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  object.DMG = solve(buf, 0, s);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", object.VAR);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  object.DMGRED = solve(buf, 0, s);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  object.DODGE = solve(buf, 0, s);
+
+  // Do this parsing.
+  object.STAT;
+  object.REQ;
   fclose(f);
 }
