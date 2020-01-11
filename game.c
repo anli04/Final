@@ -111,8 +111,11 @@ int main(){
 
 
       case 5:
+
+
+        // Be sure to save char info before starting combat
+
         printf("");
-        struct turn t;
         mkfifo("CombatToCombat", 0666);
         char in[500];
         char out[500];

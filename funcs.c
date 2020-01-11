@@ -65,7 +65,7 @@ double nextNum(char * f, int idx, struct stats s){ // For use in solve, mainly.
   num[1] = '\0';
   double n;
   while (f[idx]){
-    if (strchr("0123456789.", f[idx])) strncat(num, &f[idx], 1);
+    if (strchr("0123456789._", f[idx])) strncat(num, &f[idx], 1);
     else if (strchr("S", f[idx])) return s.STR;
     else if (strchr("D", f[idx])) return s.DEX;
     else if (strchr("E", f[idx])) return s.END;

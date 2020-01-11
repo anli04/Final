@@ -19,6 +19,7 @@ Stuff in quotation marks are the strings being decoded.
 "n", "m" represents a number
 
 Algorithm notation and notes:
+For negative numbers, use _ instead of -
 Order of operations does not exist, except for parentheses (implement recursively).
 Do not put in spaces. No implicit multiplication (e.g. "7n").
 Division returns the exact value (double).
@@ -49,11 +50,22 @@ Item Compendium:
 0 = unarmed (weapon)
 1 = unarmored (armor)
 2 = helmless (helm)
+3 = Knife (weapon)
+4 = Leather Armor (armor)
+5 = Hat (helm)
 
 Skill Compendium:
 0 = Strike
 1 = Double Strike
 2 = Defend
+3 = Heal
+4 = Leech Life
+5 = Rage
+6 = Quadruple Strike
+7 = Frighten
+8 = Seeking Bolt
+9 = Fireball
+10 = Disintegrate
 
 Encounter Compendium:
 0 = Insect

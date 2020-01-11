@@ -231,7 +231,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       strcat(update->action, move.NAME);
       strcat(update->action, ".\n");
       if (argc == 4) printf("You used %s.\n", move.NAME);
-      if (move.HIT > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
+      if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update->action, "Your opponent attacks!\n");
         if (argc == 4) printf("You attack.\n");
         if (rand_double() < HIT * move.HITMOD * buffs[0]){
