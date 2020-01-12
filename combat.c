@@ -35,28 +35,26 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   move.EXA = malloc(sizeof(char) * 10);
   struct stats stat;
   FILE * f; // for all the fopens.
-  char temp[512; // for temporary string holding for functions
-  if (argc != 3){ // == 3 for non cpu
-
-    // do the proper dirent stuff
-
-    f = fopen(argv[1], "r");
+  char temp[512]; // for temporary string holding for functions
+  if (argc != 3){ // cpu encounter
+    sprintf(temp, "%s%s", EPATH, argv[1]);
+    f = fopen(temp, "r");
     fgets(NAME, sizeof(NAME), f);
-    sscanf(fgets(temp, 512, f), "%d\n", hp);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", hp);
     double hpmod;
-    sscanf(fgets(temp, 512, f), "%lf\n", hpmod);
+    sscanf(fgets(temp, sizeof(temp), f), "%lf\n", hpmod);
     hp *= (rand_double() * 2 - 1) * hpmod + 1;
     HPMAX = hp;
-    sscanf(fgets(temp, 512, f), "%lf\n", HIT);
-    sscanf(fgets(temp, 512, f), "%lf\n", DMG);
-    sscanf(fgets(temp, 512, f), "%lf\n", VAR);
-    sscanf(fgets(temp, 512, f), "%lf\n", DMGRED);
-    sscanf(fgets(temp, 512, f), "%lf\n", DODGE);
-    for (i = 0; i < 5; i++) sscanf(fgets(temp, 512, f), "%d\n", skills[i]);
+    sscanf(fgets(temp, sizeof(temp), f), "%lf\n", HIT);
+    sscanf(fgets(temp, sizeof(temp), f), "%lf\n", DMG);
+    sscanf(fgets(temp, sizeof(temp), f), "%lf\n", VAR);
+    sscanf(fgets(temp, sizeof(temp), f), "%lf\n", DMGRED);
+    sscanf(fgets(temp, sizeof(temp), f), "%lf\n", DODGE);
+    for (i = 0; i < 5; i++) sscanf(fgets(temp, sizeof(temp), f), "%d\n", skills[i]);
     for (i = 0; i < 5; i++) {
       if (skills[i] >= 0){
-        *strchr(fgets(temp, 512, f), 0, player.stats, '\n') = 0;
-        skillnames[i] = temp;
+        *strchr(fgets(temp, sizeof(temp), f), 0, player.stats, '\n') = 0;
+        strcpy(skillnames[i], temp);
       }
     }
     stat.STR = 50; // for the sake of skills
@@ -66,34 +64,68 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     stat.LUK = 50;
   }
   else{
-
-    // do the proper dirent stuff
-
+    sprintf(temp, "%s%s", CPATH, argv[1]);
+    f = fopen(temp, "r");
     strcpy(NAME, argv[1]);
     struct equipped eq;
-    f = fopen(argv[1], "r");
-    sscanf(fgets(temp, 5, f), "%d\n", stat.STR);
-    sscanf(fgets(temp, 5, f), "%d\n", stat.DEX);
-    sscanf(fgets(temp, 5, f), "%d\n", stat.END);
-    sscanf(fgets(temp, 5, f), "%d\n", stat.INT);
-    sscanf(fgets(temp, 5, f), "%d\n", stat.LUK);
-    sscanf(fgets(temp, 5, f), "%d\n", eq.wep);
-    sscanf(fgets(temp, 5, f), "%d\n", eq.armor);
-    sscanf(fgets(temp, 5, f), "%d\n", eq.helm);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", stat.STR);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", stat.DEX);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", stat.END);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", stat.INT);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", stat.LUK);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", eq.wep);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", eq.armor);
+    sscanf(fgets(temp, sizeof(temp), f), "%d\n", eq.helm);
+    fgets(temp, sizeof(temp), f);
+    char ** list = parse_args(temp, ";");
+    for (i = 0; i < 5; i++){
+      sprintf(list[i], "%d", skills[i]);
+      skillinfo(move, skills[i], stat);
+      strcpy(skillnames[i], move.NAME);
+    }
+    free(list);
     fclose();
     hp = stat.END * 5;
     HPMAX = hp;
-    sprintf(temp, )
-    f = fopen(eq.wep, )
+    sprintf(temp, "%s%d", EPATH, eq.wep);
+    f = fopen(temp, "r");
+    fgets(temp, sizeof(temp), f);
+    fgets(temp, sizeof(temp), f);
+    HIT = solve(fgets(temp, sizeof(temp), f));
+    DMG = solve(fgets(temp, sizeof(temp), f));
+    sscanf(fgets(temp, sizeof(temp), f), "%lf", VAR);
+    DMGRED = solve(fgets(temp, sizeof(temp), f));
+    DODGE = solve(fgets(temp, sizeof(temp), f));
+    fclose();
+    double tempvar;
+    sprintf(temp, "%s%d", EPATH, eq.armor);
+    f = fopen(temp, "r");
+    fgets(temp, sizeof(temp), f);
+    fgets(temp, sizeof(temp), f);
+    HIT *= solve(fgets(temp, sizeof(temp), f));
+    DMG *= solve(fgets(temp, sizeof(temp), f));
+    sscanf(fgets(temp, sizeof(temp), f), "%lf", tempvar);
+    VAR *= tempvar;
+    DMGRED += solve(fgets(temp, sizeof(temp), f));
+    DODGE += solve(fgets(temp, sizeof(temp), f));
+    fclose();
+    sprintf(temp, "%s%d", EPATH, eq.helm);
+    f = fopen(temp, "r");
+    fgets(temp, sizeof(temp), f);
+    fgets(temp, sizeof(temp), f);
+    HIT *= solve(fgets(temp, sizeof(temp), f));
+    DMG *= solve(fgets(temp, sizeof(temp), f));
+    sscanf(fgets(temp, sizeof(temp), f), "%lf", tempvar);
+    VAR *= tempvar;
+    DMGRED += solve(fgets(temp, sizeof(temp), f));
+    DODGE += solve(fgets(temp, sizeof(temp), f));
+    fclose();
   }
   fclose(f);
   int fd; //pipe
   int input = 0;
   for (i = 0; i < 5; i++){ // set skill CDs.
     if (skills[i] >= 0){
-
-      // do the dirent stuff
-
       skillinfo(move, skills[i], stat);
       if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
     }
@@ -205,10 +237,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         char choice[3];
         for (i = 0; i < 5; i++){
           if (skills[i] != -1){
-
-            // get the skill name for printf
-
-            printf("%d) %s\n", i, );
+            printf("%d) %s\n", i, skillnames[i]);
             sprintf(choice, "%d;", i);
             strcat(choices, choice);
           }
@@ -228,14 +257,14 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       }
       skillinfo(move, skills[input], stat);
       strcat(update->action, "Your opponent used ");
-      strcat(update->action, move.NAME);
+      strcat(update->action, .NAME);
       strcat(update->action, ".\n");
-      if (argc == 4) printf("You used %s.\n", move.NAME);
-      if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
+      if (argc == 4) printf("You used %s.\n", .NAME);
+      if (.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update->action, "Your opponent attacks!\n");
         if (argc == 4) printf("You attack.\n");
-        if (rand_double() < HIT * move.HITMOD * buffs[0]){
-          update->dmg = (int)(DMG * move.DMGMOD * buffs[1] * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+        if (rand_double() < HIT * .HITMOD * buffs[0]){
+          update->dmg = (int)(DMG * .DMGMOD * buffs[1] * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
           if (argc == 4) printf("You dealt %d damage!\n", update->dmg);
           if (strchr(move.EXA, "V")){
             update->heal = update->dmg;
@@ -354,10 +383,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         if (skillCD[i] > 0){
           skillCD[i]--;
           if (!skillCD[i]){
-
-            //get name of skill
-
-
+            printf("%s", skillnames[i]);
             if (argc == 4) printf(" has recharged.\n");
           }
         }

@@ -14,13 +14,17 @@
 #include <math.h>
 
 #define KEY 2473842
+#define CPATH "characters/"
+#define IPATH "items/"
+#define SPATH "skills/"
+#define EPATH "encounters/"
 
 struct character{
   char * NAME;
   struct stats stats;
-  struct inventory inventory;
   struct equipped equipped;
   int * skills; //equipped skills, up to 5. skills[0] is always Strike.
+  struct inventory inventory;
 };
 
 struct stats{

@@ -131,11 +131,8 @@ double solve(char * f, int idx, struct stats s){
 }
 
 void skillinfo(struct item move, int id, struct stats s){
-  char buf[32];
-  sprintf(buf, "%d", id);
-
-  // Do the dirent Stuff
-
+  char buf[64];
+  sprintf(buf, "%s%d", SPATH, id);
   FILE * f = fopen(buf, "r");
   move.ID = id;
   fgets(move.NAME, sizeof(move.NAME), f);
