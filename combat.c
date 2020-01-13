@@ -160,6 +160,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       break;
     }
     strcpy(update->action, ""); //overwrite action
+    sleep(1);
     if (update->dmg){
       if (rand_double() > min(DODGE + buffs[3], 0.7)){
         if (strchr(update->exa, 'F') || strchr(update->exa,'P')){
@@ -192,17 +193,20 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           strcat(update->action, "Your opponent dodged the last attack!\n");
         }
       }
+      sleep(1);
     }
     update->dmg = 0;
     if (update->heal && argc == 3){
       printf("Your opponent healed for %d.\n", update->heal);
       update->heal = 0;
+      sleep(1);
     }
     if (hp <= 0){ // dead or alve
       if (argc == 3) printf("You died.\n");
       printf("\n");
       strcpy(update->action, "Your opponent died\n"); //note it overwrites dodge
       update->end = 1;
+      sleep(1);
     }
     else {
       for (i = 0; i < 4; i++){ //debuff handling
@@ -224,6 +228,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         }
         update->debuff[i] = 0;
         update->t[i] = 0;
+        sleep(1);
       }
       strcpy(update->exa, "");
       printf("\n"); // start of interactable turn.
@@ -389,7 +394,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       }
     }
     // pipe out string of what you did, for opponent
-    fd = open("CombatToCombat", O_WRONLY);
+    fd = open("CombatToCombat", O_WRONLY | O_TRUNC);
     write(fd, update, sizeof(update));
     close(fd);
     sb.sem_op = 1;

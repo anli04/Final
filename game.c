@@ -10,6 +10,7 @@ union semun {
 
 int readInt(FILE * c);
 void iteminfo(struct item object, int id, struct stats s);
+void save(struct character player);
 
 int main(){
   srand(time(NULL));
@@ -17,8 +18,12 @@ int main(){
   player.NAME = malloc(sizeof(char) * 25);
   struct item object;
   object.NAME = malloc(sizeof(char) * 25);
+  struct skill move;
+  move.NAME = malloc(sizeof(char) * 25);
   int input = 0;
   FILE * c;
+  union semun su;
+  su.val = 1;
   char choices[100]; // note that this number will inhibit inventory size
   printf("Welcome to [game name]!\n");
   printf("Make selections by typing the number corresponding to your choice.\n");
@@ -106,8 +111,9 @@ int main(){
     printf("4) Skills\n");
     printf("5) Random Encounter\n");
     printf("6) PvP\n");
+    printf("7) Save\n")
     printf("7) Exit Game\n");
-    strcpy(choices, "1;2;3;4;5;6;7");
+    strcpy(choices, "1;2;3;4;5;6;7;8");
     input = choose(choices);
     switch (input){
       case 1: //Display character info
@@ -115,22 +121,36 @@ int main(){
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
         printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
         // more cases
-      case 3:
+        break;
+      case 2: // Training
+        // Training
+
+
+
+
+        break;
+      case 3: // Inventory (manage both)
         int index;
         // fd = fopen();
         // for (index = 0; x < )
 
 
+
+
+
+        break;
+      case 4: // select skills for use
+
+
+
+
+
+        break;
       case 5:
-
-
-        // Be sure to save char info before starting combat
-
+        save(player);
         printf("Preparing for combat...\n");
         mkfifo("CombatToCombat", 0666);
         int sem;
-        union semun su;
-        su.val = 1;
         sem = semget(KEY, 1, IPC_CREAT | 0644);
         errcheck("creating semaphore");
         printf("Semaphore created\n");
@@ -158,26 +178,88 @@ int main(){
             fclose(fenc);
             printf("You encounter a %s!\n", encs);
             execlp("combat", "combat", enc, coin2, 1);
+            errcheck("starting combat for cpu");
+            return -1;
           }
           int status;
           wait(&status);
+          sleep(1);
+          if (!WIFEXITED(status)){
+            kill(pidC, SIGKILL);
+            printf("You flee the encounter.\n");
+            // anything for fleeing here.
+            sleep(1);
+          }
+          else if (WEXITSTATUS(status) == 1){
+            printf("You win!\n");
+            sleep(1);
+            if (rand_double() < solve("L/250+0.2", 0, player.stats){ // 20% loot chance + Luck/2.5 %
+              int loot = 0;
+              if (rand_double() < 0.3){ // 30% for skill
+                loot = (int)(0.999999 + rand_double() * 10); // number of skills not including default.
+                int j = 0;
+                for (; j < sizeof(inventory.invI); j++){
+                  if (inventory.invI[j] == -1) break;
+                }
+                if (j == sizeof(inventory.invI)){
+                  printf("Your inventory is full.\n");
+                }
+                else{
+                  inventory.invI[j] = loot;
+                  iteminfo(object, loot, player.stats);
+                  printf("You looted a %s!\n", object.NAME);
+                }
+              }
+              else{
+                loot = (int)(2.999999 + rand_double() * 3); // number of equipment not including default.
+                int j = 0;
+                for (; j < sizeof(inventory.invS); j++){
+                  if (inventory.invS[j] == -1) break;
+                }
+                if (j == sizeof(inventory.invS)){
+                  printf("You know too many skills.\n");
+                }
+                else{
+                  inventory.invS[j] = loot;
+                  skillinfo(move, loot, player.stats);
+                  printf("You learned %s!\n", move.NAME);
+                }
+              }
+            }
+            else{
+              printf("You do not find any loot.");
+            }
+          }
+          else{
+            // Anything for losing here.
+          }
+          sleep(1);
         }
         else{
           execlp("combat", "combat", player.NAME, coin);
+          errcheck("starting combat for player");
+          return -1;
         }
+        unlink("CombatToCombat");
+        semctl(sem, IPC_RMID, 0);
+        errcheck("removing semaphore");
+        break;
+      case 6:
+        //Networking & PvP
 
 
 
 
-      // more cases
 
 
-      case 7: // exit
-        // Be sure to have the sighandler stuff somewhere for saving
-
-
+        break;
+      case 7: //save
+        save(player);
+        printf("Progress saved!\n");
+      case 8: // exit
+        save(player);
         return 0;
-      default: printf("Error");
+      default: printf("ERROR IN GAME\n");
     }
   }
   return 0;
@@ -242,5 +324,27 @@ void iteminfo(struct item object, int id, struct stats s){
   // for (i = 0; i < 5; i++) {
   //     printf("%d\n", object.REQ[i]);
   // }
+  fclose(f);
+}
+void save(struct character player){
+  FILE * f = fopen(player.NAME, "w");
+  fprintf(f, "%d\n", player.stats.STR);
+  fprintf(f, "%d\n", player.stats.DEX);
+  fprintf(f, "%d\n", player.stats.END);
+  fprintf(f, "%d\n", player.stats.INT);
+  fprintf(f, "%d\n", player.stats.LUK);
+  fprintf(f, "%d\n", player.equipped.wep);
+  fprintf(f, "%d\n", player.equipped.armor);
+  fprintf(f, "%d\n", player.equipped.helm);
+  int i = 1;
+  fprintf(f, "%d", player.skills[0]);
+  for (; i < sizeof(player.skills); i++) fprintf(f, ";%d", player.skills[i]);
+  fprintf(f, "\n");
+  fprintf(f, "%d", player.inventory.invI[0]);
+  for (i = 1; i < sizeof(player.inventory.invI); i++) fprintf(f, ";%d", player.inventory.invI[i]);
+  fprintf(f, "\n");
+  fprintf(f, "%d", player.inventory.invS[0]);
+  for (i = 1; i < sizeof(player.inventory.invS); i++) fprintf(f, ";%d", player.inventory.invS[i]);
+  fprintf(f, "\n");
   fclose(f);
 }
