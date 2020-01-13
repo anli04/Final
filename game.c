@@ -1,5 +1,13 @@
 #include "rpg.h"
 
+union semun {
+  int              val;    /* Value for SETVAL */
+  struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
+  unsigned short  *array;  /* Array for GETALL, SETALL */
+  struct seminfo  *__buf;  /* Buffer for IPC_INFO
+                              (Linux-specific) */
+};
+
 int readInt(FILE * c);
 void iteminfo(struct item object, int id, struct stats s);
 
@@ -107,7 +115,6 @@ int main(){
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
         printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
         // more cases
-      case 3:
 
 
 
@@ -116,11 +123,45 @@ int main(){
 
         // Be sure to save char info before starting combat
 
-        printf("");
+        printf("Preparing for combat...\n");
         mkfifo("CombatToCombat", 0666);
-        char in[500];
-        char out[500];
-        char arr[10][50];
+        int sem;
+        union semun su;
+        su.val = 1;
+        sem = semget(KEY, 1, IPC_CREAT | 0644);
+        errcheck("creating semaphore");
+        printf("Semaphore created\n");
+        semctl(sem, 0, SETVAL, su);
+        errcheck("setting semaphore");
+        char coin;
+        char coin2;
+        if (rand_double() < 0.5){
+          coin2 = '0';
+          coin = '1';
+        }
+        else{
+          coin = '0';
+          coin2 = '1';
+        }
+        pid_t pidU = fork(); // player
+        if (pidU > 0) { // main game process
+          pid_t pidC = fork(); // cpu
+          if (pidC <= 0){
+            int enc = (int)(rand_double() * 2); //unweighted random encounters.
+            char encs[50];
+            sprintf(encs, "%s%d", EPATH, enc);
+            int fenc = fopen(encs, "r");
+            fgets(encs, sizeof(encs), fenc);
+            fclose(fenc);
+            printf("You encounter a %s!\n", encs);
+            execlp("combat", "combat", enc, coin2, 1);
+          }
+          int status;
+          wait(&status);
+        }
+        else{
+          execlp("combat", "combat", player.NAME, coin);
+        }
 
 
 
@@ -167,34 +208,9 @@ void iteminfo(struct item object, int id, struct stats s){
   object.DMGRED = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.DODGE = solve(buf, 0, s);
-  char * token;
-  int l[5];
-  int count = 0;
-  fgets(buf, sizeof(buf), f);
-  char * rest = buf;
-  while (token = strtok_r(rest, ";", &rest)) {
-      int len = strlen(token);
-      if(token[len-1] == '\n') token[len-1] = 0;
-      sscanf(token, "%d", &l[count]);
-      count++;
-  }
-  object.STAT = l;
-  // int i;
-  // for (i = 0; i < 5; i++) {
-  //     printf("%d\n", object.STAT[i]);
-  // }
-  count = 0;
-  fgets(buf, sizeof(buf), f);
-  rest = buf;
-  while (token = strtok_r(rest, ";", &rest)) {
-      int len = strlen(token);
-      if(token[len-1] == '\n') token[len-1] = 0;
-      sscanf(token, "%d", &l[count]);
-      count++;
-  }
-  object.REQ = l;
-  // for (i = 0; i < 5; i++) {
-  //     printf("%d\n", object.REQ[i]);
-  // }
+
+  // Do this parsing.
+  object.STAT;
+  object.REQ;
   fclose(f);
 }

@@ -79,12 +79,12 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fgets(temp, sizeof(temp), f);
     char ** list = parse_args(temp, ";");
     for (i = 0; i < 5; i++){
-      sprintf(list[i], "%d", skills[i]);
+      sscanf(list[i], "%d", skills[i]);
       skillinfo(move, skills[i], stat);
       strcpy(skillnames[i], move.NAME);
     }
     free(list);
-    fclose();
+    fclose(f);
     hp = stat.END * 5;
     HPMAX = hp;
     sprintf(temp, "%s%d", EPATH, eq.wep);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sscanf(fgets(temp, sizeof(temp), f), "%lf", VAR);
     DMGRED = solve(fgets(temp, sizeof(temp), f));
     DODGE = solve(fgets(temp, sizeof(temp), f));
-    fclose();
+    fclose(f);
     double tempvar;
     sprintf(temp, "%s%d", EPATH, eq.armor);
     f = fopen(temp, "r");
@@ -108,7 +108,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     VAR *= tempvar;
     DMGRED += solve(fgets(temp, sizeof(temp), f));
     DODGE += solve(fgets(temp, sizeof(temp), f));
-    fclose();
+    fclose(f);
     sprintf(temp, "%s%d", EPATH, eq.helm);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     VAR *= tempvar;
     DMGRED += solve(fgets(temp, sizeof(temp), f));
     DODGE += solve(fgets(temp, sizeof(temp), f));
-    fclose();
+    fclose(f);
   }
   fclose(f);
   int fd; //pipe
