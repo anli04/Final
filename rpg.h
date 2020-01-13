@@ -19,14 +19,6 @@
 #define SPATH "skills/"
 #define EPATH "encounters/"
 
-struct character{
-  char * NAME;
-  struct stats stats;
-  struct equipped equipped;
-  int * skills; //equipped skills, up to 5. skills[0] is always Strike.
-  struct inventory inventory;
-};
-
 struct stats{
   int STR; //capitalized, but liable to change
   int DEX;
@@ -44,6 +36,14 @@ struct equipped{
   int wep; //equipped weapon
   int armor; //equipped armor
   int helm; //equipped helm
+};
+
+struct character{
+  char * NAME;
+  struct stats stats;
+  struct equipped equipped;
+  int * skills; //equipped skills, up to 5. skills[0] is always Strike.
+  struct inventory inventory;
 };
 
 
@@ -109,6 +109,7 @@ double rand_double(); // returns a value from 0 to 1.
 double min(double n, double m); // returns smallest of two doubles
 void errcheck(char * m); //error checking
 int choose(char * choices); // handles player input
+char ** parse_args(char * line, char * s);
 double nextNum(char * f, int idx, struct stats s); // mainly for use in solve
 double solve(char * f, int idx, struct stats s); // see info for info
-void skillinfo(struct skill move, int id, struct character player); // get skill info
+void skillinfo(struct skill * move, int id, struct stats s); // get skill info

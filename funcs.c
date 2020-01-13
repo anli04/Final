@@ -130,27 +130,27 @@ double solve(char * f, int idx, struct stats s){
   return ans;
 }
 
-void skillinfo(struct item move, int id, struct stats s){
+void skillinfo(struct item * move, int id, struct stats s){
   char buf[64];
   sprintf(buf, "%s%d", SPATH, id);
   FILE * f = fopen(buf, "r");
-  move.ID = id;
-  fgets(move.NAME, sizeof(move.NAME), f);
+  move->ID = id;
+  fgets(move->NAME, sizeof(move->NAME), f);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  move.HITMOD = solve(buf, 0, s);
+  move->HITMOD = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  move.DMGMOD = solve(buf, 0, s);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move.VAR);
+  move->DMGMOD = solve(buf, 0, s);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move->VAR);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  move.HITBUFF = solve(buf, 0, s);
+  move->HITBUFF = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  move.DMGBUFF = solve(buf, 0, s);
+  move->DMGBUFF = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  move.REDPLUS = solve(buf, 0, s);
+  move->REDPLUS = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  move.DODGEPLUS = solve(buf, 0, s);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move.TURNS);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move.CD);
-  fgets(move.EXA, sizeof(move.EXA), f);
+  move->DODGEPLUS = solve(buf, 0, s);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move->TURNS);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move->CD);
+  fgets(move->EXA, sizeof(move->EXA), f);
   fclose(f);
 }
