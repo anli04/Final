@@ -16,6 +16,9 @@ int main(){
   srand(time(NULL));
   struct character player;
   player.NAME = malloc(sizeof(char) * 25);
+  char * skillnames[sizeof(player.skills)];
+  char * invInames[sizeof(player.inventory.invI)];
+  char * invSnames[sizeof(player.inventory.invS)];
   struct item object;
   object.NAME = malloc(sizeof(char) * 25);
   struct skill move;
@@ -76,11 +79,6 @@ int main(){
       break;
   }
   printf("Loading character...\n"); // update character struct
-
-  // Fix this
-
-
-
   player.stats.STR = readInt(c);
   player.stats.DEX = readInt(c);
   player.stats.END = readInt(c);
@@ -89,6 +87,9 @@ int main(){
   player.equipped.wep = readInt(c);
   player.equipped.armor = readInt(c);
   player.equipped.helm = readInt(c);
+  // Fix this
+
+
   printf("checkpoint2\n");
   fgets(player.skills, 1024, c);
   printf("checkpoint3\n");
@@ -102,6 +103,12 @@ int main(){
   printf("checkpoint7\n");
   *strchr(player.inventory.invS, '\n') = 0;
   printf("checkpoint8\n");
+
+
+  // set skillnames and itemnames
+
+
+
   fclose(c);
 
   while (1){
@@ -120,7 +127,11 @@ int main(){
         printf("%s\n", player.NAME);
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
         printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
-        // more cases
+        printf("\nSkills:\n");
+        int j = 0;
+        for (; j < sizeof(player.skills); j++){
+          printf("%d. %s\n", j, skillnames[j]);
+        }
         break;
       case 2: // Training
         // Training
@@ -258,6 +269,9 @@ int main(){
         printf("Progress saved!\n");
       case 8: // exit
         save(player);
+        free(player.NAME);
+        free(object.NAME);
+        free(move.NAME);
         return 0;
       default: printf("ERROR IN GAME\n");
     }

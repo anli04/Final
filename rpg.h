@@ -28,8 +28,8 @@ struct stats{
 };
 
 struct inventory{
-  int * invI; // item inventory. Current max: 15.
-  int * invS; // skill inventory. Current max: 15.
+  int invI[15]; // item inventory. Current max: 15.
+  int invS[15]; // skill inventory. Current max: 15.
 };
 
 struct equipped{
@@ -42,7 +42,7 @@ struct character{
   char * NAME;
   struct stats stats;
   struct equipped equipped;
-  int * skills; //equipped skills, up to 5. skills[0] is always Strike.
+  int skills[5]; //equipped skills, up to 5. skills[0] is always Strike.
   struct inventory inventory;
 };
 
@@ -56,8 +56,8 @@ struct item{
   double VAR; // damage variance or modifier
   double DMGRED; // damage reduction. e.g. 0.1 = reduce by 10% (additive)
   double DODGE; // dodge chance (additive)
-  int * STAT; // stat adjustments
-  int * REQ; // stat requirement to equip
+  int STAT[5]; // stat adjustments
+  int REQ[5]; // stat requirement to equip
 };
 
 struct skill{
