@@ -76,7 +76,7 @@ int main(){
 
 
 
-  /*player.stats.STR = readInt(c);
+  player.stats.STR = readInt(c);
   player.stats.DEX = readInt(c);
   player.stats.END = readInt(c);
   player.stats.INT = readInt(c);
@@ -97,7 +97,7 @@ int main(){
   printf("checkpoint7\n");
   *strchr(player.inventory.invS, '\n') = 0;
   printf("checkpoint8\n");
-  fclose(c);*/
+  fclose(c);
 
   while (1){
     printf("1) Character Info\n");
@@ -115,7 +115,10 @@ int main(){
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
         printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
         // more cases
-
+      case 3:
+        int index;
+        // fd = fopen();
+        // for (index = 0; x < )
 
 
       case 5:
@@ -208,9 +211,36 @@ void iteminfo(struct item object, int id, struct stats s){
   object.DMGRED = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.DODGE = solve(buf, 0, s);
+  char * token;
 
+  int l[5];
   // Do this parsing.
-  object.STAT;
-  object.REQ;
+  int count = 0;
+  fgets(buf, sizeof(buf), f);
+  char * rest = buf;
+  while (token = strtok_r(rest, ";", &rest)) {
+      int len = strlen(token);
+      if(token[len-1] == '\n') token[len-1] = 0;
+      sscanf(token, "%d", &l[count]);
+      count++;
+  }
+  object.STAT = l;
+  // int i;
+  // for (i = 0; i < 5; i++) {
+  //     printf("%d\n", object.STAT[i]);
+  // }
+  count = 0;
+  fgets(buf, sizeof(buf), f);
+  rest = buf;
+  while (token = strtok_r(rest, ";", &rest)) {
+      int len = strlen(token);
+      if(token[len-1] == '\n') token[len-1] = 0;
+      sscanf(token, "%d", &l[count]);
+      count++;
+  }
+  object.REQ = l;
+  // for (i = 0; i < 5; i++) {
+  //     printf("%d\n", object.REQ[i]);
+  // }
   fclose(f);
 }
