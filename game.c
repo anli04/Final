@@ -117,8 +117,8 @@ int main(){
         // more cases
       case 3:
         int index;
-        fd = fopen();
-        for (index = 0; x < )
+        // fd = fopen();
+        // for (index = 0; x < )
 
 
       case 5:
