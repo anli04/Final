@@ -6,7 +6,13 @@
 #include "rpg.h"
 
 int lootbox(struct stats * stats) {
+  char buf[16];
   system("clear");
+  while(strcmp(buf,"r\n") != 0) {
+    system("clear");
+    printf("Give up 1 STR,DEX,INT,and END to try your LUK! Type r and enter to roll!\n");
+    fgets(buf,16,stdin);
+  }
   if(stats->STR >= 1 && stats->DEX >= 1 && stats->INT >= 1 && stats->END >= 1) {
     stats->STR -= 1;
     stats->DEX -= 1;
@@ -16,25 +22,31 @@ int lootbox(struct stats * stats) {
     int r = 0;
     int l = 0;
     int i = 0;
-    for(;i<50;i++) {
-      //system("clear");
+    int d = 1000;
+    for(;i<200;i++) {
+      d += d/40;
+      system("clear");
       r = (int)rand()%100000;
       if(r<5000) {
-        l = (int)rand()%15;
+        l = (int)rand()%20;
       }
       else if(r < 50000) {
-        l =  (int)rand()%6;
+        l =  (int)rand()%8;
       }
       else {
-        l = (int)rand()%3;
+        l = (int)rand()%6;
       }
-      printf("%d",l);
-      usleep(100000);
+      printf("\n\n\n--------\t%d\t--------\n\n\n",l);
+      usleep(d);
     }
     printf("\n");
 
 
     stats->LUK += l;
+  }
+  else {
+    system("clear");
+    printf("You don't have enough to roll.\n");
   }
 
 }
@@ -46,6 +58,6 @@ int main() {
   stats.STR = 1;
   stats.DEX = 1;
   stats.END = 1;
-  stats.INT = 1;
+  stats.INT = 0;
   lootbox(&stats);
 }
