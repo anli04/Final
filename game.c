@@ -17,8 +17,8 @@ int main(){
   struct character player;
   player.NAME = malloc(sizeof(char) * 25);
   char * skillnames[sizeof(player.skills)];
-  char * invInames[sizeof(player.inventory.invI)];
-  char * invSnames[sizeof(player.inventory.invS)];
+  char * itemDict[6] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat"};
+  char * skillDict[11] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate"};
   struct item object;
   object.NAME = malloc(sizeof(char) * 25);
   struct skill move;
