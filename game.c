@@ -141,9 +141,164 @@ int main(){
 
         break;
       case 3: // Inventory (manage both)
-        int index;
-        // fd = fopen();
-        // for (index = 0; x < )
+        int index, n;
+        for (index = 0; index < 5; index++) {
+          printf("%d) %s", index + 1, itemDict[player.inventory.invI[index]])
+        }
+        strcpy(choices, "1;2;3;4;5");
+        input = choose(choices);
+        switch(input) {
+          case 1:
+            iteminfo(object, player.inventory.invI[0], player.stats);
+            printf("%s: %d\n","ID", object.ID);
+            printf("%s: %s\n","Name", object.NAME);
+            printf("%s: %c\n","Type", object.TYPE + '0');
+            printf("%s: %lf\n","HIT", object.HIT);
+            printf("%s: %lf\n","DMG", object.DMG);
+            printf("%s: %lf\n","VAR", object.VAR);
+            printf("%s: %lf\n","DMGRED", object.DMGRED);
+            printf("%s: %lf\n","DODGE", object.DODGE);
+            printf("%s: \n", "STATS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.STAT[n]);
+            }
+            printf("%s: \n", "REQUIREMENTS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.REQ[n]);
+            }
+            printf("\n\n1) Equip\n");
+            printf("2) Go Back");
+            strcpy(choices, "1;2");
+            input = choose(choices);
+            switch(input) {
+              case 1:
+                if (object.TYPE + '0' == "W") player.equipped.wep = object.TYPE;
+                else if (object.TYPE + '0' == "A") player.equipped.armor = object.TYPE;
+                else if (object.TYPE + '0' == "H") player.equipped.helm = object.TYPE;
+              case 2:
+                printf("Going Back...");
+            }
+          case 2:
+            iteminfo(object, player.inventory.invI[1], player.stats);
+            printf("%s: %d\n","ID", object.ID);
+            printf("%s: %s\n","Name", object.NAME);
+            printf("%s: %c\n","Type", object.TYPE + '0');
+            printf("%s: %lf\n","HIT", object.HIT);
+            printf("%s: %lf\n","DMG", object.DMG);
+            printf("%s: %lf\n","VAR", object.VAR);
+            printf("%s: %lf\n","DMGRED", object.DMGRED);
+            printf("%s: %lf\n","DODGE", object.DODGE);
+            printf("%s: \n", "STATS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.STAT[n]);
+            }
+            printf("%s: \n", "REQUIREMENTS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.REQ[n]);
+            }
+            printf("\n\n1) Equip\n");
+            printf("2) Go Back");
+            strcpy(choices, "1;2");
+            input = choose(choices);
+            switch(input) {
+              case 1:
+                if (object.TYPE + '0' == "W") player.equipped.wep = object.TYPE;
+                else if (object.TYPE + '0' == "A") player.equipped.armor = object.TYPE;
+                else if (object.TYPE + '0' == "H") player.equipped.helm = object.TYPE;
+              case 2:
+                printf("Going Back...");
+            }
+          case 3:
+            iteminfo(object, player.inventory.invI[2], player.stats);
+            printf("%s: %d\n","ID", object.ID);
+            printf("%s: %s\n","Name", object.NAME);
+            printf("%s: %c\n","Type", object.TYPE + '0');
+            printf("%s: %lf\n","HIT", object.HIT);
+            printf("%s: %lf\n","DMG", object.DMG);
+            printf("%s: %lf\n","VAR", object.VAR);
+            printf("%s: %lf\n","DMGRED", object.DMGRED);
+            printf("%s: %lf\n","DODGE", object.DODGE);
+            printf("%s: \n", "STATS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.STAT[n]);
+            }
+            printf("%s: \n", "REQUIREMENTS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.REQ[n]);
+            }
+            printf("\n\n1) Equip\n");
+            printf("2) Go Back");
+            strcpy(choices, "1;2");
+            input = choose(choices);
+            switch(input) {
+              case 1:
+                if (object.TYPE + '0' == "W") player.equipped.wep = object.TYPE;
+                else if (object.TYPE + '0' == "A") player.equipped.armor = object.TYPE;
+                else if (object.TYPE + '0' == "H") player.equipped.helm = object.TYPE;
+              case 2:
+                printf("Going Back...");
+            }
+          case 4:
+          iteminfo(object, player.inventory.invI[3], player.stats);
+            printf("%s: %d\n","ID", object.ID);
+            printf("%s: %s\n","Name", object.NAME);
+            printf("%s: %c\n","Type", object.TYPE + '0');
+            printf("%s: %lf\n","HIT", object.HIT);
+            printf("%s: %lf\n","DMG", object.DMG);
+            printf("%s: %lf\n","VAR", object.VAR);
+            printf("%s: %lf\n","DMGRED", object.DMGRED);
+            printf("%s: %lf\n","DODGE", object.DODGE);
+            printf("%s: \n", "STATS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.STAT[n]);
+            }
+            printf("%s: \n", "REQUIREMENTS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.REQ[n]);
+            }
+            printf("\n\n1) Equip\n");
+            printf("2) Go Back");
+            strcpy(choices, "1;2");
+            input = choose(choices);
+            switch(input) {
+              case 1:
+                if (object.TYPE + '0' == "W") player.equipped.wep = object.TYPE;
+                else if (object.TYPE + '0' == "A") player.equipped.armor = object.TYPE;
+                else if (object.TYPE + '0' == "H") player.equipped.helm = object.TYPE;
+              case 2:
+                printf("Going Back...");
+            }
+          case 5:
+            iteminfo(object, player.inventory.invI[4], player.stats);
+            printf("%s: %d\n","ID", object.ID);
+            printf("%s: %s\n","Name", object.NAME);
+            printf("%s: %c\n","Type", object.TYPE + '0');
+            printf("%s: %lf\n","HIT", object.HIT);
+            printf("%s: %lf\n","DMG", object.DMG);
+            printf("%s: %lf\n","VAR", object.VAR);
+            printf("%s: %lf\n","DMGRED", object.DMGRED);
+            printf("%s: %lf\n","DODGE", object.DODGE);
+            printf("%s: \n", "STATS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.STAT[n]);
+            }
+            printf("%s: \n", "REQUIREMENTS");
+            for(int n = 0; n < 5; n++) {
+                printf("%d, ", object.REQ[n]);
+            }
+            printf("\n\n1) Equip\n");
+            printf("2) Go Back");
+            strcpy(choices, "1;2");
+            input = choose(choices);
+            switch(input) {
+              case 1:
+                if (object.TYPE + '0' == "W") player.equipped.wep = object.TYPE;
+                else if (object.TYPE + '0' == "A") player.equipped.armor = object.TYPE;
+                else if (object.TYPE + '0' == "H") player.equipped.helm = object.TYPE;
+              case 2:
+                printf("Going Back...");
+            }
+        }
 
 
 
