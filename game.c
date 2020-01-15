@@ -371,11 +371,11 @@ int main(){
             sprintf(encs, "%s%d", EPATH, enc);
             FILE * fenc = fopen(encs, "r");
             fgets(encs, sizeof(encs), fenc);
-            *strchr(encs, "\n") = 0;
+            *strchr(encs, '\n') = 0;
             fclose(fenc);
             printf("You encounter a(n) %s!\n", encs);
             char path[50];
-            sprintf(path, "%s%s", CPATH, enc);
+            sprintf(path, "%s%d", CPATH, enc);
             execlp("combat", "combat", enc, coin2, 1, NULL);
             errcheck("starting combat for cpu");
             return -1;
@@ -435,7 +435,7 @@ int main(){
           sleep(1);
         }
         else{
-          save();
+          save(player);
           char path[50];
           sprintf(path, "%s%s", CPATH, player.NAME);
           execlp("combat", "combat", path, coin, NULL);
@@ -505,7 +505,7 @@ void iteminfo(struct item object, int id, struct stats s){
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
       if(token[len-1] == '\n') token[len-1] = '\0';
-      sscanf(*token, "%d", &object.STAT[count]);
+      sscanf(token, "%d", &object.STAT[count]);
       count++;
   }
   count = 0;
@@ -549,6 +549,5 @@ void clear(){
   else{
     execlp("clear", "clear", NULL);
     if (errno) printf("ERROR CLEARING\n");
-    return 0;
   }
 }
