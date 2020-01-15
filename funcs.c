@@ -140,7 +140,7 @@ void skillinfo(struct skill * move, int id, struct stats s){
   move->HITMOD = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   move->DMGMOD = solve(buf, 0, s);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move->VAR);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", &move->VARMOD);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   move->HITBUFF = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
@@ -149,8 +149,8 @@ void skillinfo(struct skill * move, int id, struct stats s){
   move->REDPLUS = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   move->DODGEPLUS = solve(buf, 0, s);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move->TURNS);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", move->CD);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", &move->TURNS);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", &move->CD);
   fgets(move->EXA, sizeof(move->EXA), f);
   fclose(f);
 }
