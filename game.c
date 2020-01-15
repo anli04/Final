@@ -40,11 +40,11 @@ int main(){
     boolean = 0;
     int input1 = input;
     char n[40];
-    int x = 1;
+    int i = 1;
+    nt fd;
     switch (input1){ // Character creation/selection/deletion
       case 1: // Create character file
-        int fd;
-        while (x){
+        while (i){
           fgets(n, 26, stdin);
           *strchr(n, '\n') = 0;
           sprintf(n, "%s%s", CPATH, n);
@@ -53,7 +53,7 @@ int main(){
             printf("Character already exists.\n");
             errno = 0;
           }
-          else x = 0;
+          else i = 0;
         }
         int i = 0;
         for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
@@ -366,10 +366,10 @@ int main(){
               if (rand_double() < 0.3){ // 30% for skill
                 loot = (int)(0.999999 + rand_double() * 10); // number of skills not including default.
                 int j = 0;
-                for (; j < sizeof(inventory.invI); j++){
+                for (; j < sizeof(player.inventory.invI); j++){
                   if (inventory.invI[j] == -1) break;
                 }
-                if (j == sizeof(inventory.invI)){
+                if (j == sizeof(player.inventory.invI)){
                   printf("Your inventory is full.\n");
                 }
                 else{
@@ -468,7 +468,7 @@ void iteminfo(struct item object, int id, struct stats s){
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
       if(token[len-1] == '\n') token[len-1] = 0;
-      sscanf(token, "%d", &object.stat[count]);
+      sscanf(token, "%d", &object.STAT[count]);
       count++;
   }
   count = 0;
@@ -477,7 +477,7 @@ void iteminfo(struct item object, int id, struct stats s){
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
       if(token[len-1] == '\n') token[len-1] = 0;
-      sscanf(token, "%d", &objext.REQ[count]);
+      sscanf(token, "%d", &object.REQ[count]);
       count++;
   }
   fclose(f);
