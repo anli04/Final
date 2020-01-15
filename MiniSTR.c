@@ -18,6 +18,10 @@ int game() {
 
   while(1) {
     system("clear");
+    printf("\n------------------------------------------------------\n");
+    printf("Welcome to Strength Trial!");
+    printf("\n------------------------------------------------------\n");
+    printf("INSTRUCTIONS:\n");
     printf("\nPress a key and click Enter to do a rep. Click Enter to finish.\n%s\nReps: %d\n",f1,reps);
 
     fgets(temp,32,stdin);
@@ -28,6 +32,10 @@ int game() {
       reps++;
     }
     system("clear");
+    printf("\n------------------------------------------------------\n");
+    printf("Welcome to Strength Trial!");
+    printf("\n------------------------------------------------------\n");
+    printf("INSTRUCTIONS:\n");
     printf("\nPress a key and click Enter to do a rep. Click Enter to finish.\n%s\nReps: %d\n",f2,reps);
     fgets(temp,32,stdin);
     if(strcmp(temp,"\n") == 0) {

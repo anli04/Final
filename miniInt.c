@@ -59,13 +59,22 @@ int wordGame() {
       r_w2 = (int)rand()%s;
     }
 
-
-    printf("Name a word that starts with '%c%c' and ends with '%c', and is synonymous with %s\n",line[r_w2][0],line[r_w2][1],line[r_w2][strlen(line[r_w2])-1],line[r_w]);
+    printf("\n------------------------------------------------------\n");
+    printf("Welcome to Intelligence Trial!");
+    printf("\n------------------------------------------------------\n");
+    printf("INSTRUCTIONS:\n");
+    printf("Answer the prompt in lowercase letters. Type \'q\' to quit the game.\n\n");
+    printf("Name a word that starts with '%c%c' and ends with '%c', and is synonymous with %s.\n",line[r_w2][0],line[r_w2][1],line[r_w2][strlen(line[r_w2])-1],line[r_w]);
     fgets(buf,256,stdin);
 
     if(strcmp(buf,"q\n") != 0) {
       system("clear");
-      printf("Name a word that starts with '%c%c' and ends with '%c', and is synonymous with %s\n",line[r_w2][0],line[r_w2][1],line[r_w2][strlen(line[r_w2])-1],line[r_w]);
+      printf("\n------------------------------------------------------\n");
+      printf("Welcome to Intelligence Trial!");
+      printf("\n------------------------------------------------------\n");
+      printf("INSTRUCTIONS:\n");
+      printf("Answer the prompt in lowercase letters. Type \'q\' to quit the game.\n\n");
+      printf("Name a word that starts with '%c%c' and ends with '%c', and is synonymous with %s.\n",line[r_w2][0],line[r_w2][1],line[r_w2][strlen(line[r_w2])-1],line[r_w]);
       buf[strlen(buf)-1] = '\0';
       printf("%s ",buf);
       if(strcmp(buf,line[r_w2]) == 0) {

@@ -88,6 +88,16 @@ int typeracer() {
 
 int numbers() {
   system("clear");
+  printf("\n------------------------------------------------------\n");
+  printf("Welcome to Type Trial - Numbers!");
+  printf("\n------------------------------------------------------\n");
+  printf("INSTRUCTIONS:\n");
+  printf("Type the sample of numbers as fast and as accurately as you can exactly as you see them.\n");
+  printf("Hit ENTER to check each number. Type \'q\' when you are finished.\n\n");
+  printf("Press ENTER to start...\n");
+  fflush(stdout);
+  char detect[1000];
+  fgets(detect, sizeof(detect), stdin);
   int score = 0;
   int r = 0;
   char n[16];
@@ -133,7 +143,11 @@ int numbers() {
 
     strcat(history,"\n");
     system("clear");
-
+    printf("\n------------------------------------------------------\n");
+    printf("Welcome to Type Trial - Numbers!");
+    printf("\n------------------------------------------------------\n");
+    printf("INSTRUCTIONS:\n");
+    printf("Type the sample of numbers as fast and as accurately as you can exactly as you see them.\n");
     printf("%s",history);
 
 

@@ -10,7 +10,11 @@ int lootbox(struct stats * stats) {
   system("clear");
   while(strcmp(buf,"r\n") != 0) {
     system("clear");
-    printf("Give up 1 STR,DEX,INT,and END to try your LUK! Type r and enter to roll!\n");
+    printf("\n------------------------------------------------------\n");
+    printf("Welcome to Luck Trial!");
+    printf("\n------------------------------------------------------\n");
+    printf("INSTRUCTIONS:\n");
+    printf("Give up 1 STR, DEX, INT, and END to try your LUK! Type \'r\' and enter to roll!\n");
     fgets(buf,16,stdin);
   }
   if(stats->STR >= 1 && stats->DEX >= 1 && stats->INT >= 1 && stats->END >= 1) {
@@ -55,9 +59,9 @@ int lootbox(struct stats * stats) {
 int main() {
   srand(time(NULL));
   struct stats stats;
-  stats.STR = 1;
-  stats.DEX = 1;
-  stats.END = 1;
-  stats.INT = 0;
+  stats.STR = 10;
+  stats.DEX = 10;
+  stats.END = 10;
+  stats.INT = 10;
   lootbox(&stats);
 }

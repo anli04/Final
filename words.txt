@@ -1,0 +1,13 @@
+hooligan;criminal;delinquent;gangster
+good;great;amazing;exceptional
+church;chapel;cathedral;shrine
+enjoy;appreciate;relish;savor
+outline;plan;design;draft
+coach;mentor;teacher;trainer
+route;track;line;course
+authenticity;truth;legitimacy;validity
+peak;crest;pinnacle;summit
+prosper;bloom;flourish;thrive
+stay;remain;linger;wait
+charm;appeal;charisma;allure
+disorder;unrest;chaos;trouble
