@@ -68,7 +68,7 @@ int main(){
         close(fd);
         c = fopen(fn, "r");
         errcheck("opening character file");
-        strcpy(player.NAME, n);
+        strcpy(player.NAME, cn);
         break;
       default: // Select or delete character file
         if (input1 == 2) printf("Select a character:\n\n");
