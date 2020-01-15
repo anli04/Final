@@ -11,6 +11,7 @@ union semun {
 int readInt(FILE * c);
 void iteminfo(struct item object, int id, struct stats s);
 void save(struct character player);
+void clear(); // clear terminal print
 
 int main(){
   srand(time(NULL));
@@ -145,6 +146,7 @@ int main(){
   free(args);
   fclose(c);
   sleep(1);
+  clear();
   while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
@@ -157,6 +159,7 @@ int main(){
     printf("\n");
     strcpy(choices, "1;2;3;4;5;6;7;8");
     input = choose(choices);
+    clear();
     switch (input){
       case 1: //Display character info
         printf("%s\n", player.NAME);
@@ -168,7 +171,9 @@ int main(){
           if (player.skills[j] != -1) printf("%d. %s\n", j, skillnames[j]);
           else printf("%d.\n", j);
         }
-        sleep(1);
+        printf("0) Return to game\n");
+        strcpy(choices, "0");
+        input = choose(choices);
         break;
       case 2: // Training
         // Training
@@ -194,6 +199,7 @@ int main(){
           choices[strlen(choices) - 1] = '\0';
           input = choose(choices);
           if (input == 0) break;
+          clear();
           iteminfo(object, player.inventory.invI[input - 1], player.stats);
           printf("%s: %s\n","Name", object.NAME);
           printf("%s: %c\n","Type", object.type);
@@ -243,6 +249,7 @@ int main(){
               printf("Item Sold.\n");
               break;
           }
+          clear();
         }
         break;
       case 4: // manage skills
@@ -278,6 +285,7 @@ int main(){
             char code = move.EXA[n];
             if (code == '0') break;
             switch (code){
+              case '\n': break;
               case 'A':
                 n++;
                 printf("Makes %d attacks\n", move.EXA[n]);
@@ -319,6 +327,7 @@ int main(){
               break;
             case 2:
               printf("Going Back...\n");
+              clear();
               break;
             case 3:
               n = player.inventory.invS[input2];
@@ -329,6 +338,7 @@ int main(){
               printf("Skill forgotten.\n");
               break;
           }
+          clear();
         }
         break;
       case 5:
@@ -338,7 +348,6 @@ int main(){
         int sem;
         sem = semget(KEY, 1, IPC_CREAT | 0644);
         errcheck("creating semaphore");
-        printf("Semaphore created\n");
         semctl(sem, 0, SETVAL, su);
         errcheck("setting semaphore");
         char coin;
@@ -351,6 +360,7 @@ int main(){
           coin = '0';
           coin2 = '1';
         }
+        sleep(2);
         pid_t pidU = fork(); // player
         if (pidU > 0) { // main game process
           pid_t pidC = fork(); // cpu
@@ -451,6 +461,7 @@ int main(){
         return 0;
       default: printf("ERROR IN GAME\n");
     }
+    clear();
   }
   return 0;
 }
@@ -522,4 +533,13 @@ void save(struct character player){
   for (i = 1; i < sizeof(player.inventory.invS); i++) fprintf(f, ";%d", player.inventory.invS[i]);
   fprintf(f, "\n");
   fclose(f);
+}
+void clear(){
+  if (fork()){
+    int status = 0;
+    wait(status);
+  }
+  else{
+    execlp("clear", "clear", NULL);
+  }
 }
