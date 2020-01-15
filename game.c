@@ -39,16 +39,18 @@ int main(){
   while (boolean){
     boolean = 0;
     int input1 = input;
-    char n[40];
+    char cn[30];
+    char fn[40];
     int i = 1;
     int fd;
     switch (input1){ // Character creation/selection/deletion
       case 1: // Create character file
+        printf("Character name (max 25 alphanumerical letters):\n");
         while (i){
-          fgets(n, 26, stdin);
-          *strchr(n, '\n') = 0;
-          sprintf(n, "%s%s", CPATH, n);
-          fd = open(n, O_WRONLY | O_CREAT | O_EXCL, 0644);
+          fgets(cn, 26, stdin);
+          *strchr(cn, '\n') = 0;
+          sprintf(fn, "%s%s", CPATH, cn);
+          fd = open(fn, O_WRONLY | O_CREAT | O_EXCL, 0644);
           if (errno){
             printf("Character already exists.\n");
             errno = 0;
@@ -79,10 +81,12 @@ int main(){
         printf("0) Go Back\n\n");
         char choice[4];
         while (pc = readdir(pcs)){
-          printf("%d) %s\n", ccount, pc->d_name);
-          strcpy(names[ccount], pc->d_name);
-          sprintf(choice, "%d;", ccount);
-          strcat(choices, choice);
+          if (pc->d_name[0] != '.'){
+            printf("%d) %s\n", ccount, pc->d_name);
+            strcpy(names[ccount], pc->d_name);
+            sprintf(choice, "%d;", ccount);
+            strcat(choices, choice);
+          }
           ccount++;
         }
         choices[strlen(choices) - 1] = '\0';
