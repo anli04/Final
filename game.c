@@ -60,8 +60,9 @@ int main(){
         }
         int i = 0;
         for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
-        i = 0;
-        for (; i < 3; i++) write(fd, "0\n", strlen("0\n"));
+        write(fd, "0\n", strlen("0\n"));
+        write(fd, "1\n", strlen("1\n"));
+        write(fd, "2\n", strlen("2\n"));
         write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
         write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
         write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
@@ -102,8 +103,10 @@ int main(){
         if (input1 == 3){
           remove(choices);
           errcheck("deleting file");
+          boolean = 1;
         }
         else if (input1 = 3){
+          strcpy(player.NAME, names[input]);
           c = fopen(choices, "r");
           errcheck("opening character file");
         }
@@ -122,30 +125,26 @@ int main(){
   statarray[3] = player.stats.INT;
   player.stats.LUK = readInt(c);
   statarray[4] = player.stats.LUK;
-  printf("checkpoint\n");
   player.equipped.wep = readInt(c);
   player.equipped.armor = readInt(c);
   player.equipped.helm = readInt(c);
-  printf("checkpoint2\n");
-  char data[30];
+  char data[60];
   char ** args = parse_args(fgets(data, sizeof(data), c), ";");
   int i = 0;
-  printf("checkpoint3\n");
   for (; i < 5; i++) {
     sscanf(args[i], "%d", &player.skills[i]);
+    printf("%d\n", player.skills[i]);
     strcpy(skillnames[i], skillDict[player.skills[i]]);
   }
   free(args);
-  printf("checkpoint4\n");
   args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invI[i]);
   free(args);
-  printf("checkpoint5\n");
   args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invS[i]);
-  printf("checkpoint6\n");
   free(args);
   fclose(c);
+  sleep(1);
   while (1){
     printf("1) Character Info\n");
     printf("2) Training\n");
@@ -155,18 +154,21 @@ int main(){
     printf("6) PvP\n");
     printf("7) Save\n");
     printf("8) Exit Game\n");
+    printf("\n");
     strcpy(choices, "1;2;3;4;5;6;7;8");
     input = choose(choices);
     switch (input){
       case 1: //Display character info
         printf("%s\n", player.NAME);
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
-        printf("\nEquipment:\nWeapon: %c\nArmor: %c\nHelm: %c\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
+        printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", itemDict[player.equipped.wep], itemDict[player.equipped.armor], itemDict[player.equipped.helm]);
         printf("\nSkills:\n");
         int j = 0;
-        for (; j < sizeof(player.skills); j++){
-          printf("%d. %s\n", j, skillnames[j]);
+        for (; j < sizeof(player.skills) / sizeof(int); j++){
+          if (player.skills[j] != -1) printf("%d. %s\n", j, skillnames[j]);
+          else printf("%d.\n", j);
         }
+        sleep(1);
         break;
       case 2: // Training
         // Training
@@ -177,22 +179,22 @@ int main(){
         break;
       case 3: // Inventory (items)
         while (1){
-          int index = 1;
+          int index = 0;
           int n;
           char choices[32]; // max number storage is 15.
           strcpy(choices, "0;\0");
-          printf("0) Go Back\n\n");
+          printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invI); index++){
             if (player.inventory.invI[index] == -1) break;
-            printf("%d) %s", index, itemDict[player.inventory.invI[index]]);
-            sprintf(choice, "%d;", index);
+            printf("%d) %s\n", index + 1, itemDict[player.inventory.invI[index]]);
+            sprintf(choice, "%d;", index + 1);
             strcat(choices, choice);
           }
           choices[strlen(choices) - 1] = '\0';
           input = choose(choices);
           if (input == 0) break;
-          iteminfo(object, player.inventory.invI[input], player.stats);
+          iteminfo(object, player.inventory.invI[input - 1], player.stats);
           printf("%s: %s\n","Name", object.NAME);
           printf("%s: %c\n","Type", object.type);
           printf("%s: %lf\n","Hit Chance Modifier", object.HIT);
@@ -200,10 +202,12 @@ int main(){
           printf("%s: %lf\n","Damage Variance", object.VAR);
           printf("%s: %lf\n","Damage Reduction", object.DMGRED);
           printf("%s: %lf\n","Dodge Chance", object.DODGE);
+          printf("\n");
           printf("%s: \n", "Stat Bonuses (STR, DEX, END, INT, LUK)");
           for(n = 0; n < 5; n++) {
               printf("%d, ", object.STAT[n]);
           }
+          printf("\n");
           printf("%s: \n", "Stat Requirements (STR, DEX, END, INT, LUK)");
           for(n = 0; n < 5; n++) {
               printf("%d, ", object.REQ[n]);
@@ -228,7 +232,7 @@ int main(){
               else if (object.type == 'A') player.equipped.armor = object.type;
               else if (object.type == 'H') player.equipped.helm = object.type;
             case 2:
-              printf("Going Back...");
+              printf("Going Back...\n");
               break;
             case 3:
               n = player.inventory.invI[input2];
@@ -243,23 +247,23 @@ int main(){
         break;
       case 4: // manage skills
         while (1){
-          int index = 1;
+          int index = 0;
           int n;
           int exit = 0;
           char choices[32]; // max number storage is 15.
           strcpy(choices, "0;\0");
-          printf("0) Go Back\n\n");
+          printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invS); index++){
             if (player.inventory.invS[index] == -1) break;
-            printf("%d) %s", index, skillDict[player.inventory.invS[index]]);
-            sprintf(choice, "%d;", index);
+            printf("%d) %s\n", index + 1, skillDict[player.inventory.invS[index]]);
+            sprintf(choice, "%d;", index + 1);
             strcat(choices, choice);
           }
           choices[strlen(choices) - 1] = '\0';
           input = choose(choices);
           if (input == 0) break;
-          skillinfo(&move, player.inventory.invS[input], player.stats);
+          skillinfo(&move, player.inventory.invS[input - 1], player.stats);
           printf("%s: %s\n","Name", move.NAME);
           printf("%s: %lf\n","Hit Chance Modifier", move.HITMOD);
           printf("%s: %lf\n","Damage Modifier", move.DMGMOD);
@@ -305,7 +309,7 @@ int main(){
           switch(input) {
             case 1:
               for (n = 1; n < 5; n++){
-                if (player.skills[n] = -1) printf("%d) None", n);
+                if (player.skills[n] = -1) printf("%d) None\n", n);
                 else printf("%d) %s\n", n, skillDict[player.skills[n]]);
               }
               strcpy(choices, "1;2;3;4");
@@ -314,7 +318,7 @@ int main(){
               strcpy(skillnames[input], skillDict[player.skills[input]]);
               break;
             case 2:
-              printf("Going Back...");
+              printf("Going Back...\n");
               break;
             case 3:
               n = player.inventory.invS[input2];
@@ -437,6 +441,7 @@ int main(){
       case 7: //save
         save(player);
         printf("Progress saved!\n");
+        break;
       case 8: // exit
         save(player);
         free(player.NAME);
