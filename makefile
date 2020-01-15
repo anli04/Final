@@ -5,8 +5,8 @@ else
 endif
 
 all: game.o funcs.o combat.o
-	$(CC) -o game game.o funcs.o
-	$(CC) -o combat combat.o funcs.o
+	$(CC) -o game game.o funcs.o -lm
+	$(CC) -o combat combat.o funcs.o -lm
 
 game.o: game.c rpg.h
 	$(CC) -c game.c
