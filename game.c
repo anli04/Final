@@ -17,8 +17,8 @@ int main(){
   struct character player;
   player.NAME = malloc(sizeof(char) * 26);
   char skillnames[5][30];
-  char itemDict[6][30] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat"};
-  char skillDict[11][30] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate"};
+  char * itemDict[6] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat"};
+  char * skillDict[11] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate"};
   struct item object;
   object.NAME = malloc(sizeof(char) * 30);
   struct skill move;
@@ -154,7 +154,7 @@ int main(){
     printf("5) Random Encounter\n");
     printf("6) PvP\n");
     printf("7) Save\n");
-    printf("7) Exit Game\n");
+    printf("8) Exit Game\n");
     strcpy(choices, "1;2;3;4;5;6;7;8");
     input = choose(choices);
     switch (input){
