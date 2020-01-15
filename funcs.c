@@ -130,7 +130,7 @@ double solve(char * f, int idx, struct stats s){
   return ans;
 }
 
-void skillinfo(struct item * move, int id, struct stats s){
+void skillinfo(struct skill * move, int id, struct stats s){
   char buf[64];
   sprintf(buf, "%s%d", SPATH, id);
   FILE * f = fopen(buf, "r");
