@@ -90,7 +90,7 @@ int main(){
             strcat(choices, choice);
             ccount++;
           }
-          pc = readdir(pcs)
+          pc = readdir(pcs);
         }
         choices[strlen(choices) - 1] = '\0';
         input = choose(choices);
