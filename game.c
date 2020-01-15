@@ -66,7 +66,7 @@ int main(){
         write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
         errcheck("creating character file defaults");
         close(fd);
-        c = fopen(n, "r");
+        c = fopen(fn, "r");
         errcheck("opening character file");
         strcpy(player.NAME, n);
         break;
