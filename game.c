@@ -41,7 +41,7 @@ int main(){
     int input1 = input;
     char n[40];
     int i = 1;
-    nt fd;
+    int fd;
     switch (input1){ // Character creation/selection/deletion
       case 1: // Create character file
         while (i){
@@ -367,13 +367,13 @@ int main(){
                 loot = (int)(0.999999 + rand_double() * 10); // number of skills not including default.
                 int j = 0;
                 for (; j < sizeof(player.inventory.invI); j++){
-                  if (inventory.invI[j] == -1) break;
+                  if (player.inventory.invI[j] == -1) break;
                 }
                 if (j == sizeof(player.inventory.invI)){
                   printf("Your inventory is full.\n");
                 }
                 else{
-                  inventory.invI[j] = loot;
+                  player.inventory.invI[j] = loot;
                   iteminfo(object, loot, player.stats);
                   printf("You looted a %s!\n", object.NAME);
                 }
@@ -381,14 +381,14 @@ int main(){
               else{
                 loot = (int)(2.999999 + rand_double() * 3); // number of equipment not including default.
                 int j = 0;
-                for (; j < sizeof(inventory.invS); j++){
-                  if (inventory.invS[j] == -1) break;
+                for (; j < sizeof(player.inventory.invS); j++){
+                  if (player.inventory.invS[j] == -1) break;
                 }
-                if (j == sizeof(inventory.invS)){
+                if (j == sizeof(player.inventory.invS)){
                   printf("You know too many skills.\n");
                 }
                 else{
-                  inventory.invS[j] = loot;
+                  player.inventory.invS[j] = loot;
                   skillinfo(&move, loot, player.stats);
                   printf("You learned %s!\n", move.NAME);
                 }
