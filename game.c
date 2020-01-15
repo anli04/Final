@@ -39,9 +39,10 @@ int main(){
   while (boolean){
     boolean = 0;
     int input1 = input;
+    char n[40];
+    int x = 1;
     switch (input1){ // Character creation/selection/deletion
       case 1: // Create character file
-        char n[40];
         int x = 1;
         int fd;
         while (x){
@@ -122,15 +123,15 @@ int main(){
   char ** args = parse_args(fgets(data, sizeof(data), c), ";");
   int i = 0;
   for (; i < 5; i++) {
-    sscanf(args[i], "%d", player.skills[i]);
+    sscanf(args[i], "%d", &player.skills[i]);
     strcpy(skillnames[i], skillDict[player.skills[i]]);
   }
   free(args);
-  char ** args = parse_args(fgets(data, sizeof(data), c), ";");
+  args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", player.inventory.invI[i]);
   free(args);
-  char ** args = parse_args(fgets(data, sizeof(data), c), ";");
-  for (i = 0; i < 15; i++) sscanf(args[i], "%d", player.inventory.invS[i]);
+  args = parse_args(fgets(data, sizeof(data), c), ";");
+  for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invS[i]);
   free(args);
   fclose(c);
   while (1){
@@ -140,7 +141,7 @@ int main(){
     printf("4) Skills\n");
     printf("5) Random Encounter\n");
     printf("6) PvP\n");
-    printf("7) Save\n")
+    printf("7) Save\n");
     printf("7) Exit Game\n");
     strcpy(choices, "1;2;3;4;5;6;7;8");
     input = choose(choices);
@@ -148,7 +149,7 @@ int main(){
       case 1: //Display character info
         printf("%s\n", player.NAME);
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
-        printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
+        printf("\nEquipment:\nWeapon: %c\nArmor: %c\nHelm: %c\n", player.equipped.wep, player.equipped.armor, player.equipped.helm);
         printf("\nSkills:\n");
         int j = 0;
         for (; j < sizeof(player.skills); j++){
@@ -170,8 +171,8 @@ int main(){
           strcpy(choices, "0;\0");
           printf("0) Go Back\n\n");
           char choice[4];
-          for (; index < sizeof(inventory.invI); index++){
-            if (inventory.invI[index] == -1) break;
+          for (; index < sizeof(player.inventory.invI); index++){
+            if (player.inventory.invI[index] == -1) break;
             printf("%d) %s", index, itemDict[player.inventory.invI[index]]);
             sprintf(choice, "%d;", index);
             strcat(choices, choice);
@@ -181,7 +182,7 @@ int main(){
           if (input == 0) break;
           iteminfo(object, player.inventory.invI[input], player.stats);
           printf("%s: %s\n","Name", object.NAME);
-          printf("%s: %c\n","Type", object.TYPE);
+          printf("%s: %c\n","Type", object.type);
           printf("%s: %lf\n","Hit Chance Modifier", object.HIT);
           printf("%s: %lf\n","Damage Modifier", object.DMG);
           printf("%s: %lf\n","Damage Variance", object.VAR);
@@ -211,9 +212,9 @@ int main(){
                 printf("You do not meet the requirements\n");
                 break;
               }
-              if (object.TYPE == "W") player.equipped.wep = object.TYPE;
-              else if (object.TYPE == "A") player.equipped.armor = object.TYPE;
-              else if (object.TYPE == "H") player.equipped.helm = object.TYPE;
+              if (object.type == "W") player.equipped.wep = object.type;
+              else if (object.type == "A") player.equipped.armor = object.type;
+              else if (object.type == "H") player.equipped.helm = object.type;
             case 2:
               printf("Going Back...");
               break;
@@ -246,7 +247,7 @@ int main(){
           choices[strlen(choices) - 1] = '\0';
           input = choose(choices);
           if (input == 0) break;
-          skillinfo(move, player.inventory.invS[input], player.stats);
+          skillinfo(&move, player.inventory.invS[input], player.stats);
           printf("%s: %s\n","Name", move.NAME);
           printf("%s: %lf\n","Hit Chance Modifier", move.HITMOD);
           printf("%s: %lf\n","Damage Modifier", move.DMGMOD);
@@ -296,8 +297,8 @@ int main(){
                 else printf("%d) %s\n", n, skillDict[player.skills[n]]);
               }
               strcpy(choices, "1;2;3;4");
-              input = choices(choices);
-              player.skills[input] = player.inventory.invsS[input2];
+              input = choose(choices);
+              player.skills[input] = player.inventory.invS[input2];
               strcpy(skillnames[input], skillDict[player.skills[input]]);
               break;
             case 2:
@@ -341,11 +342,11 @@ int main(){
             int enc = (int)(rand_double() * 2); //unweighted random encounters.
             char encs[50];
             sprintf(encs, "%s%d", EPATH, enc);
-            int fenc = fopen(encs, "r");
+            FILE * fenc = fopen(encs, "r");
             fgets(encs, sizeof(encs), fenc);
             fclose(fenc);
             printf("You encounter a %s!\n", encs);
-            execlp("combat", "combat", enc, coin2, 1);
+            execlp("combat", "combat", enc, coin2, 1, NULL);
             errcheck("starting combat for cpu");
             return -1;
           }
@@ -361,7 +362,7 @@ int main(){
           else if (WEXITSTATUS(status) == 1){
             printf("You win!\n");
             sleep(1);
-            if (rand_double() < solve("L/250+0.2", 0, player.stats){ // 20% loot chance + Luck/2.5 %
+            if (rand_double() < solve("L/250+0.2", 0, player.stats)){ // 20% loot chance + Luck/2.5 %
               int loot = 0;
               if (rand_double() < 0.3){ // 30% for skill
                 loot = (int)(0.999999 + rand_double() * 10); // number of skills not including default.
@@ -404,7 +405,7 @@ int main(){
           sleep(1);
         }
         else{
-          execlp("combat", "combat", player.NAME, coin);
+          execlp("combat", "combat", player.NAME, coin, NULL);
           errcheck("starting combat for player");
           return -1;
         }
@@ -446,20 +447,17 @@ int readInt(FILE * c){ // Up to four digits
 }
 
 void iteminfo(struct item object, int id, struct stats s){
-  char buf[32];
-  sprintf(buf, "%d", id);
-
-  // Do the dirent Stuff
-
+  char buf[40];
+  sprintf(buf, "%s%d", IPATH, id);
   FILE * f = fopen(buf, "r");
   object.ID = id;
   fgets(object.NAME, sizeof(object.NAME), f);
-  sscanf(fgets(buf, sizeof(buf), f), "%c\n", object.type);
+  sscanf(fgets(buf, sizeof(buf), f), "%c\n", &object.type);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.HIT = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.DMG = solve(buf, 0, s);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", object.VAR);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", &object.VAR);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.DMGRED = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
