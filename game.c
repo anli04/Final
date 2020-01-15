@@ -81,7 +81,7 @@ int main(){
         strcpy(choices, "0;\0");
         printf("0) Go Back\n\n");
         char choice[4];
-        pc = readdir(pcs)
+        pc = readdir(pcs);
         while (pc){
           if (pc->d_name[0] != '.'){
             printf("%d) %s\n", ccount, pc->d_name);
