@@ -50,7 +50,7 @@ struct character{
 struct item{
   int ID;
   char * NAME;
-  int type; //wep, helm, armor. W, H, A respectively.
+  char type; //wep, helm, armor. W, H, A respectively.
   double HIT; // hit chance modifier. modifiers and variance are multiplicative
   double DMG; // average damage or modifier
   double VAR; // damage variance or modifier
