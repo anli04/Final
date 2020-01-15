@@ -43,7 +43,6 @@ int main(){
     int x = 1;
     switch (input1){ // Character creation/selection/deletion
       case 1: // Create character file
-        int x = 1;
         int fd;
         while (x){
           fgets(n, 26, stdin);
@@ -128,7 +127,7 @@ int main(){
   }
   free(args);
   args = parse_args(fgets(data, sizeof(data), c), ";");
-  for (i = 0; i < 15; i++) sscanf(args[i], "%d", player.inventory.invI[i]);
+  for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invI[i]);
   free(args);
   args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invS[i]);
@@ -212,9 +211,9 @@ int main(){
                 printf("You do not meet the requirements\n");
                 break;
               }
-              if (object.type == "W") player.equipped.wep = object.type;
-              else if (object.type == "A") player.equipped.armor = object.type;
-              else if (object.type == "H") player.equipped.helm = object.type;
+              if (object.type == 'W') player.equipped.wep = object.type;
+              else if (object.type == 'A') player.equipped.armor = object.type;
+              else if (object.type == 'H') player.equipped.helm = object.type;
             case 2:
               printf("Going Back...");
               break;
@@ -238,8 +237,8 @@ int main(){
           strcpy(choices, "0;\0");
           printf("0) Go Back\n\n");
           char choice[4];
-          for (; index < sizeof(inventory.invS); index++){
-            if (inventory.invS[index] == -1) break;
+          for (; index < sizeof(player.inventory.invS); index++){
+            if (player.inventory.invS[index] == -1) break;
             printf("%d) %s", index, skillDict[player.inventory.invS[index]]);
             sprintf(choice, "%d;", index);
             strcat(choices, choice);
@@ -390,7 +389,7 @@ int main(){
                 }
                 else{
                   inventory.invS[j] = loot;
-                  skillinfo(move, loot, player.stats);
+                  skillinfo(&move, loot, player.stats);
                   printf("You learned %s!\n", move.NAME);
                 }
               }
@@ -463,36 +462,24 @@ void iteminfo(struct item object, int id, struct stats s){
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.DODGE = solve(buf, 0, s);
   char * token;
-
-  int l[5];
-  // Do this parsing.
   int count = 0;
   fgets(buf, sizeof(buf), f);
   char * rest = buf;
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
       if(token[len-1] == '\n') token[len-1] = 0;
-      sscanf(token, "%d", &l[count]);
+      sscanf(token, "%d", &object.stat[count]);
       count++;
   }
-  object.STAT = l;
-  // int i;
-  // for (i = 0; i < 5; i++) {
-  //     printf("%d\n", object.STAT[i]);
-  // }
   count = 0;
   fgets(buf, sizeof(buf), f);
   rest = buf;
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
       if(token[len-1] == '\n') token[len-1] = 0;
-      sscanf(token, "%d", &l[count]);
+      sscanf(token, "%d", &objext.REQ[count]);
       count++;
   }
-  object.REQ = l;
-  // for (i = 0; i < 5; i++) {
-  //     printf("%d\n", object.REQ[i]);
-  // }
   fclose(f);
 }
 void save(struct character player){
