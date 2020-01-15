@@ -148,6 +148,7 @@ int main(){
   sleep(1);
   clear();
   while (1){
+    printf("Select an option:\n");
     printf("1) Character Info\n");
     printf("2) Training\n");
     printf("3) Inventory\n");
@@ -171,6 +172,7 @@ int main(){
           if (player.skills[j] != -1) printf("%d. %s\n", j, skillnames[j]);
           else printf("%d.\n", j);
         }
+        printf("\n");
         printf("0) Return to game\n");
         strcpy(choices, "0");
         input = choose(choices);
@@ -497,7 +499,7 @@ void iteminfo(struct item object, int id, struct stats s){
   char * rest = buf;
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
-      if(token[len-1] == '\n') token[len-1] = 0;
+      if(token[len-1] == '\n') token[len-1] = '\0';
       sscanf(token, "%d", &object.STAT[count]);
       count++;
   }
@@ -506,7 +508,7 @@ void iteminfo(struct item object, int id, struct stats s){
   rest = buf;
   while (token = strtok_r(rest, ";", &rest)) {
       int len = strlen(token);
-      if(token[len-1] == '\n') token[len-1] = 0;
+      if(token[len-1] == '\n') token[len-1] = '\0';
       sscanf(token, "%d", &object.REQ[count]);
       count++;
   }
@@ -537,7 +539,7 @@ void save(struct character player){
 void clear(){
   if (fork()){
     int status = 0;
-    wait(status);
+    wait(&status);
   }
   else{
     execlp("clear", "clear", NULL);
