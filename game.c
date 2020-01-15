@@ -16,7 +16,7 @@ int main(){
   srand(time(NULL));
   struct character player;
   player.NAME = malloc(sizeof(char) * 25);
-  char * skillnames[sizeof(player.skills)];
+  char * skillnames[30];
   char * itemDict[6] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat"};
   char * skillDict[11] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate"};
   struct item object;
@@ -121,7 +121,10 @@ int main(){
   char data[30];
   char ** args = parse_args(fgets(data, sizeof(data), c), ";");
   int i = 0;
-  for (; i < 5; i++) sscanf(args[i], "%d", player.skills[i]);
+  for (; i < 5; i++) {
+    sscanf(args[i], "%d", player.skills[i]);
+    strcpy(skillnames[i], skillDict[player.skills[i]]);
+  }
   free(args);
   char ** args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", player.inventory.invI[i]);
@@ -295,6 +298,7 @@ int main(){
               strcpy(choices, "1;2;3;4");
               input = choices(choices);
               player.skills[input] = player.inventory.invsS[input2];
+              strcpy(skillnames[input], skillDict[player.skills[input]]);
               break;
             case 2:
               printf("Going Back...");
