@@ -76,19 +76,21 @@ int main(){
         else printf("Select a character to delete:\n\n");
         struct dirent * pc;
         int ccount = 1;
-        char * names[30];
+        char names[25][30];
         char choices[52]; // max number of characters is 25.
         strcpy(choices, "0;\0");
         printf("0) Go Back\n\n");
         char choice[4];
-        while (pc = readdir(pcs)){
+        pc = readdir(pcs)
+        while (pc){
           if (pc->d_name[0] != '.'){
             printf("%d) %s\n", ccount, pc->d_name);
             strcpy(names[ccount], pc->d_name);
             sprintf(choice, "%d;", ccount);
             strcat(choices, choice);
+            ccount++;
           }
-          ccount++;
+          pc = readdir(pcs)
         }
         choices[strlen(choices) - 1] = '\0';
         input = choose(choices);
