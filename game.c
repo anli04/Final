@@ -20,9 +20,10 @@ int main(){
   char itemDict[6][30] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat"};
   char skillDict[11][30] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate"};
   struct item object;
-  object.NAME = malloc(sizeof(char) * 26);
+  object.NAME = malloc(sizeof(char) * 30);
   struct skill move;
-  move.NAME = malloc(sizeof(char) * 26);
+  move.NAME = malloc(sizeof(char) * 30);
+  move.EXA = malloc(sizeof(char) * 16);
   int statarray[5];
   int input = 0;
   FILE * c;
@@ -119,22 +120,28 @@ int main(){
   statarray[3] = player.stats.INT;
   player.stats.LUK = readInt(c);
   statarray[4] = player.stats.LUK;
+  printf("checkpoint\n");
   player.equipped.wep = readInt(c);
   player.equipped.armor = readInt(c);
   player.equipped.helm = readInt(c);
+  printf("checkpoint2\n");
   char data[30];
   char ** args = parse_args(fgets(data, sizeof(data), c), ";");
   int i = 0;
+  printf("checkpoint3\n");
   for (; i < 5; i++) {
     sscanf(args[i], "%d", &player.skills[i]);
     strcpy(skillnames[i], skillDict[player.skills[i]]);
   }
   free(args);
+  printf("checkpoint4\n");
   args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invI[i]);
   free(args);
+  printf("checkpoint5\n");
   args = parse_args(fgets(data, sizeof(data), c), ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invS[i]);
+  printf("checkpoint6\n");
   free(args);
   fclose(c);
   while (1){
@@ -433,6 +440,7 @@ int main(){
         free(player.NAME);
         free(object.NAME);
         free(move.NAME);
+        free(move.EXA);
         return 0;
       default: printf("ERROR IN GAME\n");
     }
