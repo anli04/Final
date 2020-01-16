@@ -380,7 +380,7 @@ int main(){
             fclose(fenc);
             printf("You encounter a(n) %s!\n", encs);
             sprintf(encs, "%s%d", EPATH, enc);
-            execlp("./combat", "./combat", enc, coin2, "1", NULL);
+            execlp("./combat", "./combat", encs, coin2, "1", NULL);
             errcheck("starting combat for cpu");
             return -1;
           }
