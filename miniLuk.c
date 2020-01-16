@@ -43,8 +43,10 @@ int lootbox(struct stats * stats) {
       printf("\n\n\n--------\t%d\t--------\n\n\n",l);
       usleep(d);
     }
-    printf("\n");
-
+    sleep(1);
+    system("clear");
+    printf("\n\n\nCongratulations! You got %d luk!\n",l);
+    sleep(1);
 
     stats->LUK += l;
   }
