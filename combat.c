@@ -400,6 +400,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sb.sem_op = 1;
     semop(sem, &sb, 1);
     errcheck("releasing semaphore");
+    sleep(1);
     if (update->end) break;
   }
   free(update->action);
