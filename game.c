@@ -354,15 +354,15 @@ int main(){
         errcheck("creating semaphore");
         semctl(sem, 0, SETVAL, su);
         errcheck("setting semaphore");
-        char coin;
-        char coin2;
+        char * coin;
+        char * coin2;
         if (rand_double() < 0.5){
-          coin2 = '0';
-          coin = '1';
+          coin2 = "0";
+          coin = "1";
         }
         else{
-          coin = '0';
-          coin2 = '1';
+          coin = "0";
+          coin2 = "1";
         }
         sleep(2);
         pid_t pidU = fork(); // player
@@ -377,7 +377,7 @@ int main(){
             *strchr(encs, '\n') = 0;
             fclose(fenc);
             printf("You encounter a(n) %s!\n", encs);
-            execlp("combat", "combat", enc, coin2, 1, NULL);
+            execlp("combat", "combat", enc, coin2, "1", NULL);
             errcheck("starting combat for cpu");
             return -1;
           }
