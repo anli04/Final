@@ -128,18 +128,22 @@ int main(){
   player.equipped.wep = readInt(c);
   player.equipped.armor = readInt(c);
   player.equipped.helm = readInt(c);
-  char data[60];
-  char ** args = parse_args(fgets(data, sizeof(data), c), ";");
+  char data[100];
+  fgets(data, sizeof(data), c)
+  *strchr(data, '\n') = 0;
+  char ** args = parse_args(data, ";");
   int i = 0;
   for (; i < 5; i++) {
     sscanf(args[i], "%d", &player.skills[i]);
     strcpy(skillnames[i], skillDict[player.skills[i]]);
   }
   free(args);
-  args = parse_args(fgets(data, sizeof(data), c), ";");
+  *strchr(data, '\n') = 0;
+  args = parse_args(data, ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invI[i]);
   free(args);
-  args = parse_args(fgets(data, sizeof(data), c), ";");
+  *strchr(data, '\n') = 0;
+  args = parse_args(data, ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invS[i]);
   free(args);
   fclose(c);
@@ -494,25 +498,16 @@ void iteminfo(struct item object, int id, struct stats s){
   object.DMGRED = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object.DODGE = solve(buf, 0, s);
-  char * token;
-  int count = 0;
   fgets(buf, sizeof(buf), f);
-  char * rest = buf;
-  while (token = strtok_r(rest, ";", &rest)) {
-      int len = strlen(token);
-      if(token[len-1] == '\n') token[len-1] = '\0';
-      sscanf(token, "%d", &object.STAT[count]);
-      count++;
-  }
-  count = 0;
+  *strchr(buf, '\n') = 0;
+  char ** args = parse_args(buf, ";");
+  for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object.STAT[i]);
+  free(args);
   fgets(buf, sizeof(buf), f);
-  rest = buf;
-  while (token = strtok_r(rest, ";", &rest)) {
-      int len = strlen(token);
-      if(token[len-1] == '\n') token[len-1] = '\0';
-      sscanf(token, "%d", &object.REQ[count]);
-      count++;
-  }
+  *strchr(buf, '\n') = 0;
+  char ** args = parse_args(buf, ";");
+  for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object.REQ[i]);
+  free(args);
   fclose(f);
 }
 void save(struct character player){

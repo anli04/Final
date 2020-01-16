@@ -3,6 +3,7 @@
 #define KEY 2473842
 
 int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. Fourth is if cpu controlled
+  printf("%s, %s, %d\n", argv[0], argv[1], argv[2]);
   if (argc == 3);
   int victory = 0; // win or lose. 1 or 0
   int sem;
