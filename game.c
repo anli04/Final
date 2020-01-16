@@ -431,7 +431,7 @@ int main(){
           else{
             // Anything for losing here.
           }
-          sleep(1);
+          sleep(2);
         }
         else{
           save(player);
@@ -457,6 +457,7 @@ int main(){
       case 7: //save
         save(player);
         printf("Progress saved!\n");
+        sleep(1);
         break;
       case 8: // exit
         save(player);
