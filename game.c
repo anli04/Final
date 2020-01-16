@@ -129,7 +129,7 @@ int main(){
   player.equipped.armor = readInt(c);
   player.equipped.helm = readInt(c);
   char data[100];
-  fgets(data, sizeof(data), c)
+  fgets(data, sizeof(data), c);
   *strchr(data, '\n') = 0;
   char ** args = parse_args(data, ";");
   int i = 0;
@@ -501,11 +501,12 @@ void iteminfo(struct item object, int id, struct stats s){
   fgets(buf, sizeof(buf), f);
   *strchr(buf, '\n') = 0;
   char ** args = parse_args(buf, ";");
+  int i;
   for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object.STAT[i]);
   free(args);
   fgets(buf, sizeof(buf), f);
   *strchr(buf, '\n') = 0;
-  char ** args = parse_args(buf, ";");
+  args = parse_args(buf, ";");
   for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object.REQ[i]);
   free(args);
   fclose(f);
