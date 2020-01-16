@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   double DMGRED;
   double DODGE;
   int skills[5];
-  char * skillnames[5];
+  char skillnames[5][50];
   int skillCD[5];
   double buffs[4]; // hitmod, dmgmod, dmgred add, dodge add.
   int bufftime[4]; // respective to buffs, how long it last.
