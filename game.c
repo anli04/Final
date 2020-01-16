@@ -138,10 +138,12 @@ int main(){
     strcpy(skillnames[i], skillDict[player.skills[i]]);
   }
   free(args);
+  fgets(data, sizeof(data), c);
   *strchr(data, '\n') = 0;
   args = parse_args(data, ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invI[i]);
   free(args);
+  fgets(data, sizeof(data), c);
   *strchr(data, '\n') = 0;
   args = parse_args(data, ";");
   for (i = 0; i < 15; i++) sscanf(args[i], "%d", &player.inventory.invS[i]);
