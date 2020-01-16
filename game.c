@@ -373,8 +373,6 @@ int main(){
             *strchr(encs, '\n') = 0;
             fclose(fenc);
             printf("You encounter a(n) %s!\n", encs);
-            char path[50];
-            sprintf(path, "%s%d", CPATH, enc);
             execlp("combat", "combat", enc, coin2, 1, NULL);
             errcheck("starting combat for cpu");
             return -1;
@@ -435,9 +433,7 @@ int main(){
         }
         else{
           save(player);
-          char path[50];
-          sprintf(path, "%s%s", CPATH, player.NAME);
-          execlp("combat", "combat", path, coin, NULL);
+          execlp("combat", "combat", player.NAME, coin, NULL);
           errcheck("starting combat for player");
           return -1;
         }
