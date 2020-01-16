@@ -9,7 +9,7 @@ union semun {
 };
 
 int readInt(FILE * c);
-void iteminfo(struct item object, int id, struct stats s);
+void iteminfo(struct item * object, int id, struct stats s);
 void save(struct character player);
 
 int main(){
@@ -32,88 +32,96 @@ int main(){
   char choices[100]; // note that this number will inhibit inventory size
   printf("Welcome to [game name]!\n");
   printf("Make selections by typing the number corresponding to your choice.\n");
-  printf("1) Create Character\n2) Select Character\n3) Delete Character\n");
-  strcpy(choices, "1;2;3");
-  input = choose(choices);
-  DIR * pcs = opendir("characters");
-  int boolean = 1;
-  while (boolean){
-    boolean = 0;
-    int input1 = input;
-    char cn[30];
-    char fn[40];
-    int i = 1;
-    int fd;
-    switch (input1){ // Character creation/selection/deletion
-      case 1: // Create character file
-        printf("Character name (max 25 alphanumerical letters):\n");
-        while (i){
-          fgets(cn, 26, stdin);
-          *strchr(cn, '\n') = 0;
-          sprintf(fn, "%s%s", CPATH, cn);
-          fd = open(fn, O_WRONLY | O_CREAT | O_EXCL, 0644);
-          if (errno){
-            printf("Character already exists.\n");
-            errno = 0;
+  int del = 1;;
+  while(del){
+    printf("1) Create Character\n2) Select Character\n3) Delete Character\n");
+    strcpy(choices, "1;2;3");
+    input = choose(choices);
+    int boolean = 1;
+    while (boolean){
+      DIR * pcs = opendir("characters");
+      boolean = 0;
+      int input1;
+      if (input != 0) input1 = input;
+      char cn[30];
+      char fn[40];
+      int i = 1;
+      int fd;
+      switch (input1){ // Character creation/selection/deletion
+        case 1: // Create character file
+          printf("Character name (max 25 alphanumerical letters):\n");
+          while (i){
+            fgets(cn, 26, stdin);
+            *strchr(cn, '\n') = 0;
+            sprintf(fn, "%s%s", CPATH, cn);
+            fd = open(fn, O_WRONLY | O_CREAT | O_EXCL, 0644);
+            if (errno){
+              printf("Character already exists.\n");
+              errno = 0;
+            }
+            else i = 0;
           }
-          else i = 0;
-        }
-        int i = 0;
-        for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
-        write(fd, "0\n", strlen("0\n"));
-        write(fd, "1\n", strlen("1\n"));
-        write(fd, "2\n", strlen("2\n"));
-        write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
-        write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
-        write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
-        errcheck("creating character file defaults");
-        close(fd);
-        c = fopen(fn, "r");
-        errcheck("opening character file");
-        strcpy(player.NAME, cn);
-        break;
-      default: // Select or delete character file
-        if (input1 == 2) printf("Select a character:\n\n");
-        else printf("Select a character to delete:\n\n");
-        struct dirent * pc;
-        int ccount = 1;
-        char names[25][30];
-        char choices[52]; // max number of characters is 25.
-        strcpy(choices, "0;\0");
-        printf("0) Go Back\n\n");
-        char choice[4];
-        pc = readdir(pcs);
-        while (pc){
-          if (pc->d_name[0] != '.'){
-            printf("%d) %s\n", ccount, pc->d_name);
-            strcpy(names[ccount], pc->d_name);
-            sprintf(choice, "%d;", ccount);
-            strcat(choices, choice);
-            ccount++;
-          }
-          pc = readdir(pcs);
-        }
-        choices[strlen(choices) - 1] = '\0';
-        input = choose(choices);
-        if (input == 0){
-          boolean = 1;
-          break;
-        }
-        sprintf(choices, "%s%s", CPATH, names[input]); // reusing choices
-        if (input1 == 3){
-          remove(choices);
-          errcheck("deleting file");
-          boolean = 1;
-        }
-        else if (input1 = 3){
-          strcpy(player.NAME, names[input]);
-          c = fopen(choices, "r");
+          int i = 0;
+          for (; i < 5; i++) write(fd, "1\n", strlen("1\n"));
+          write(fd, "0\n", strlen("0\n"));
+          write(fd, "1\n", strlen("1\n"));
+          write(fd, "2\n", strlen("2\n"));
+          write(fd, "0;-1;-1;-1;-1\n", strlen("0;-1;-1;-1;-1\n"));
+          write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
+          write(fd, "-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n", strlen("-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1;-1\n"));
+          errcheck("creating character file defaults");
+          close(fd);
+          c = fopen(fn, "r");
           errcheck("opening character file");
-        }
-        break;
+          strcpy(player.NAME, cn);
+          del = 0;
+          break;
+        default: // Select or delete character file
+          if (input1 == 2) printf("Select a character:\n\n");
+          else printf("Select a character to delete:\n\n");
+          struct dirent * pc;
+          int ccount = 1;
+          char names[25][30];
+          char choices[52]; // max number of characters is 25.
+          strcpy(choices, "0;\0");
+          printf("0) Go Back\n\n");
+          char choice[4];
+          pc = readdir(pcs);
+          while (pc){
+            if (pc->d_name[0] != '.'){
+              printf("%d) %s\n", ccount, pc->d_name);
+              strcpy(names[ccount], pc->d_name);
+              sprintf(choice, "%d;", ccount);
+              strcat(choices, choice);
+              ccount++;
+            }
+            pc = readdir(pcs);
+          }
+          choices[strlen(choices) - 1] = '\0';
+          input = choose(choices);
+          if (input == 0){
+            closedir(pcs);
+            system("clear");
+            break;
+          }
+          sprintf(choices, "%s%s", CPATH, names[input]); // reusing choices
+          if (input1 == 3){
+            remove(choices);
+            errcheck("deleting file");
+            boolean = 1;
+            closedir(pcs);
+          }
+          else if (input1 == 2){
+            strcpy(player.NAME, names[input]);
+            c = fopen(choices, "r");
+            errcheck("opening character file");
+            del = 0;
+            closedir(pcs);
+          }
+          break;
+      }
     }
   }
-  closedir(pcs);
   printf("Loading character...\n"); // update character struct
   player.stats.STR = readInt(c);
   statarray[0] = player.stats.STR;
@@ -206,7 +214,7 @@ int main(){
           input = choose(choices);
           if (input == 0) break;
           system("clear");
-          iteminfo(object, player.inventory.invI[input - 1], player.stats);
+          iteminfo(&object, player.inventory.invI[input - 1], player.stats);
           printf("%s: %s\n","Name", object.NAME);
           printf("%s: %c\n","Type", object.type);
           printf("%s: %lf\n","Hit Chance Modifier", object.HIT);
@@ -230,9 +238,9 @@ int main(){
           printf("3) Sell\n");
           strcpy(choices, "1;2;3");
           input = choose(choices);
+          int boolean = 1;
           switch(input) {
             case 1:
-              boolean = 1;
               for (n = 0; n < 5; n++){
                 if (object.REQ[n] > statarray[n]) boolean = 0;
               }
@@ -240,9 +248,11 @@ int main(){
                 printf("You do not meet the requirements\n");
                 break;
               }
-              if (object.type == 'W') player.equipped.wep = object.type;
-              else if (object.type == 'A') player.equipped.armor = object.type;
-              else if (object.type == 'H') player.equipped.helm = object.type;
+              if (object.type == 'W') player.equipped.wep = object.ID;
+              else if (object.type == 'A') player.equipped.armor = object.ID;
+              else if (object.type == 'H') player.equipped.helm = object.ID;
+              printf("Item equipped\n");
+              sleep(1);
             case 2:
               printf("Going Back...\n");
               break;
@@ -410,7 +420,7 @@ int main(){
                 }
                 else{
                   player.inventory.invI[j] = loot;
-                  iteminfo(object, loot, player.stats);
+                  iteminfo(&object, loot, player.stats);
                   printf("You looted a %s!\n", object.NAME);
                 }
               }
@@ -486,37 +496,39 @@ int readInt(FILE * c){ // Up to four digits
   return x;
 }
 
-void iteminfo(struct item object, int id, struct stats s){
+void iteminfo(struct item * object, int id, struct stats s){
   char buf[40];
   sprintf(buf, "%s%d", IPATH, id);
   FILE * f = fopen(buf, "r");
-  object.ID = id;
-  fgets(object.NAME, sizeof(object.NAME), f);
-  sscanf(fgets(buf, sizeof(buf), f), "%c\n", &object.type);
+  object->ID = id;
+  fgets(object->NAME, sizeof(object->NAME), f);
+  sscanf(fgets(buf, sizeof(buf), f), "%c\n", &object->type);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  object.HIT = solve(buf, 0, s);
+  object->HIT = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  object.DMG = solve(buf, 0, s);
-  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", &object.VAR);
+  object->DMG = solve(buf, 0, s);
+  sscanf(fgets(buf, sizeof(buf), f), "%lf\n", &object->VAR);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  object.DMGRED = solve(buf, 0, s);
+  object->DMGRED = solve(buf, 0, s);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  object.DODGE = solve(buf, 0, s);
+  object->DODGE = solve(buf, 0, s);
   fgets(buf, sizeof(buf), f);
   *strchr(buf, '\n') = 0;
   char ** args = parse_args(buf, ";");
   int i;
-  for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object.STAT[i]);
+  for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object->STAT[i]);
   free(args);
   fgets(buf, sizeof(buf), f);
   *strchr(buf, '\n') = 0;
   args = parse_args(buf, ";");
-  for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object.REQ[i]);
+  for (i = 0; i < 5; i++) sscanf(args[i], "%d", &object->REQ[i]);
   free(args);
   fclose(f);
 }
 void save(struct character player){
-  FILE * f = fopen(player.NAME, "w");
+  char buf[59];
+  sprintf(buf, "%s%s", CPATH, player.NAME);
+  FILE * f = fopen(buf, "w");
   fprintf(f, "%d\n", player.stats.STR);
   fprintf(f, "%d\n", player.stats.DEX);
   fprintf(f, "%d\n", player.stats.END);
@@ -527,13 +539,13 @@ void save(struct character player){
   fprintf(f, "%d\n", player.equipped.helm);
   int i = 1;
   fprintf(f, "%d", player.skills[0]);
-  for (; i < sizeof(player.skills); i++) fprintf(f, ";%d", player.skills[i]);
+  for (; i < sizeof(player.skills) / sizeof(int); i++) fprintf(f, ";%d", player.skills[i]);
   fprintf(f, "\n");
   fprintf(f, "%d", player.inventory.invI[0]);
-  for (i = 1; i < sizeof(player.inventory.invI); i++) fprintf(f, ";%d", player.inventory.invI[i]);
+  for (i = 1; i < sizeof(player.inventory.invI) / sizeof(int); i++) fprintf(f, ";%d", player.inventory.invI[i]);
   fprintf(f, "\n");
   fprintf(f, "%d", player.inventory.invS[0]);
-  for (i = 1; i < sizeof(player.inventory.invS); i++) fprintf(f, ";%d", player.inventory.invS[i]);
+  for (i = 1; i < sizeof(player.inventory.invS) / sizeof(int); i++) fprintf(f, ";%d", player.inventory.invS[i]);
   fprintf(f, "\n");
   fclose(f);
 }

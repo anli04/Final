@@ -143,6 +143,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     else {
       update = (struct turn *) malloc(sizeof(struct turn));
       update->action = malloc(sizeof(char) * 512);
+      strcpy(update->action, "\0");
       update->dmg = 0;
       update->heal = 0;
       for (i = 0; i < 4; i++) {
@@ -150,6 +151,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         update->t[i] = 0;
       }
       update->exa = malloc(sizeof(char) * 10);
+      strcpy(update->exa, "\0");
       update->end = 0;
       strcpy(argv[2], "0");
     }
@@ -232,7 +234,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         update->t[i] = 0;
         sleep(1);
       }
-      strcpy(update->exa, "");
+      strcpy(update->exa, "\0");
       printf("\n"); // start of interactable turn.
       if (argc == 3) printf("Current hp: %d.\n", hp);
       if (argc == 3) printf("Your turn:\n");
