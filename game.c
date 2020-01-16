@@ -11,7 +11,6 @@ union semun {
 int readInt(FILE * c);
 void iteminfo(struct item object, int id, struct stats s);
 void save(struct character player);
-void clear(); // clear terminal print
 
 int main(){
   srand(time(NULL));
@@ -145,7 +144,7 @@ int main(){
   free(args);
   fclose(c);
   sleep(1);
-  clear();
+  system("clear");
   while (1){
     printf("Select an option:\n");
     printf("1) Character Info\n");
@@ -159,7 +158,7 @@ int main(){
     printf("\n");
     strcpy(choices, "1;2;3;4;5;6;7;8");
     input = choose(choices);
-    clear();
+    system("clear");
     switch (input){
       case 1: //Display character info
         printf("%s\n", player.NAME);
@@ -200,7 +199,7 @@ int main(){
           choices[strlen(choices) - 1] = '\0';
           input = choose(choices);
           if (input == 0) break;
-          clear();
+          system("clear");
           iteminfo(object, player.inventory.invI[input - 1], player.stats);
           printf("%s: %s\n","Name", object.NAME);
           printf("%s: %c\n","Type", object.type);
@@ -250,7 +249,7 @@ int main(){
               printf("Item Sold.\n");
               break;
           }
-          clear();
+          system("clear");
         }
         break;
       case 4: // manage skills
@@ -328,7 +327,7 @@ int main(){
               break;
             case 2:
               printf("Going Back...\n");
-              clear();
+              system("clear");
               break;
             case 3:
               n = player.inventory.invS[input2];
@@ -339,7 +338,7 @@ int main(){
               printf("Skill forgotten.\n");
               break;
           }
-          clear();
+          system("clear");
         }
         break;
       case 5:
@@ -468,7 +467,7 @@ int main(){
         return 0;
       default: printf("ERROR IN GAME\n");
     }
-    clear();
+    system("clear");
   }
   return 0;
 }
@@ -540,14 +539,4 @@ void save(struct character player){
   for (i = 1; i < sizeof(player.inventory.invS); i++) fprintf(f, ";%d", player.inventory.invS[i]);
   fprintf(f, "\n");
   fclose(f);
-}
-void clear(){
-  if (fork()){
-    int status = 0;
-    wait(&status);
-  }
-  else{
-    execlp("clear", "clear", NULL);
-    if (errno) printf("ERROR CLEARING\n");
-  }
 }
