@@ -59,6 +59,14 @@ char ** parse_args(char * line, char * s) {
     return args;
 }
 
+int size_array(char ** arr) {
+  int i = 0;
+  while(arr[i]) {
+    i++;
+  }
+  return i;
+}
+
 double nextNum(char * f, int idx, struct stats s){ // For use in solve, mainly.
   char num[10];
   num[0] = '0';
