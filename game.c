@@ -379,7 +379,7 @@ int main(){
             *strchr(encs, '\n') = 0;
             fclose(fenc);
             printf("You encounter a(n) %s!\n", encs);
-            execlp("combat", "combat", enc, coin2, "1", NULL);
+            execlp("./combat", "./combat", enc, coin2, "1", NULL);
             errcheck("starting combat for cpu");
             return -1;
           }
@@ -439,7 +439,7 @@ int main(){
         }
         else{
           save(player);
-          execlp("combat", "combat", player.NAME, coin, NULL);
+          execlp("./combat", "./combat", player.NAME, coin, NULL);
           errcheck("starting combat for player");
           return -1;
         }
