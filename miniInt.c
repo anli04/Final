@@ -140,7 +140,11 @@ int mathGame() {
       }
       answer = a;
     }
-
+    printf("\n------------------------------------------------------\n");
+    printf("Welcome to Math Trial!");
+    printf("\n------------------------------------------------------\n");
+    printf("INSTRUCTIONS:\n");
+    printf("Type in the correct answer to the problem and hit Enter to submit. Type \'q\' to quit.\n");
     printf("%s",temp);
 
     fgets(buf,256,stdin);
