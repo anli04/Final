@@ -389,6 +389,7 @@ int main(){
           sleep(1);
           if (!WIFEXITED(status)){
             kill(pidC, SIGKILL);
+            kill(pidU, SIGKILL);
             printf("You flee the encounter.\n");
             // anything for fleeing here.
             sleep(1);

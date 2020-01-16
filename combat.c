@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     bufftime[i] = 0;
   }
   struct turn * update;
-  struct skill * move;
+  struct skill * move = (struct skill *) malloc(sizeof(struct skill));
   move->NAME = malloc(sizeof(char) * 30);
   move->EXA = malloc(sizeof(char) * 10);
   struct stats stat;
@@ -156,6 +156,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     if (argc == 3) printf("%s", update->action); // what happened
     if (update->end){
       printf("\n");
+      free(update->action);
+      free(update);
       victory = 1;
       break;
     }
@@ -403,8 +405,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sleep(1);
     if (update->end) break;
   }
-  free(update->action);
   free(move->NAME);
   free(move->EXA);
+  free(move);
   return victory;
 }
