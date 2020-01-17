@@ -150,18 +150,22 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.dmg);
       sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.heal);
       fgets(update.action, sizeof(update.action), f);
-      while (strchr("0123456789", fgets(temp, sizeof(temp)[0], f)) == 0){
+      fgets(temp, sizeof(temp);
+      char check = temp[0];
+      while (strchr("0123456789", check, f)) == 0){
         strcat(update.action, temp);
+        fgets(temp, sizeof(temp);
+        check = temp[0];
       }
-      sscanf(temp, "%d\n", &update.debuff[0]);
+      sscanf(temp, "%lf\n", &update.debuff[0]);
       for (i = 1; i < 4; i++){
-        sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.debuff[i]);
+        sscanf(fgets(temp, sizeof(temp), f), "%lf\n", &update.debuff[i]);
       }
       for (i = 0; i < 4; i++){
         sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.t[i]);
       }
       fgets(update.exa, sizeof(update.exa), f);
-      fclose(fd);
+      fclose(f);
     }
     else { // going first does not read from pipe
       strcpy(argv[2], "0");
@@ -172,7 +176,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       victory = 1;
       break;
     }
-    strcpy(update.action, ""); //overwrite action
+    strcpy(update.action, "\0"); //overwrite action
     sleep(1);
     if (update.dmg){
       if (rand_double() > min(DODGE + buffs[3], 0.7)){
@@ -276,6 +280,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       strcat(update.action, "Your opponent used ");
       strcat(update.action, move->NAME);
       strcat(update.action, ".\n");
+      strcpy(update.exa, move->EXA);
       if (argc == 3) printf("You used %s.\n", move->NAME);
       if (move->HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update.action, "Your opponent attacks!\n");
@@ -410,14 +415,14 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     f = fopen("CombatToCombat", "w");
     fprintf(f, "%d\n", update.dmg);
     fprintf(f, "%d\n", update.heal);
-    fprintf(f, update.action);
+    fprintf(f, "%s", update.action);
     for (i = 0; i < 4; i++){
-      fprintf(f, "%d\n", update.debuff[i]);
+      fprintf(f, "%lf\n", update.debuff[i]);
     }
     for (i = 0; i < 4; i++){
       fprintf(f, "%d\n", update.t[i]);
     }
-    fprintf(f, update.exa);
+    fprintf(f, "%s", update.exa);
     fprintf(f, "%d\n", update.end);
     fclose(fd);
     sb.sem_op = 1;
