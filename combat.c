@@ -1,7 +1,5 @@
 #include "rpg.h"
 
-#define KEY 2473842
-
 int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. Fourth is if cpu controlled
   if (strcmp(argv[3], "0") == 0) sleep(1); //get the semaphore second
   int victory = 0; // win or lose. 1 or 0
@@ -11,7 +9,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   struct sembuf sb;
   sb.sem_num = 0;
   int input;
-  char NAME[25];
+  char NAME[40];
   int HPMAX;
   int hp;
   double HIT;
@@ -47,6 +45,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   struct stats stat;
   FILE * f; // for all the fopens.
   char temp[512]; // for temporary string holding for functions
+  printf("%d\n", argc);
   if (argc != 3){ // cpu encounter
     sprintf(temp, "%s%s", EPATH, argv[1]);
     f = fopen(temp, "r");
@@ -76,6 +75,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   }
   else{
     sprintf(temp, "%s%s", CPATH, argv[1]);
+    printf("%s\n", temp);
     f = fopen(temp, "r");
     strcpy(NAME, argv[1]);
     struct equipped eq;
@@ -133,6 +133,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fclose(f);
   }
   fclose(f);
+  printf("checkpoint\n");
   input = 0;
   for (i = 0; i < 5; i++){ // set skill CDs.
     if (skills[i] >= 0){

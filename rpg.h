@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <math.h>
 
-#define KEY 2473842
+#define KEY 2473843
 #define CPATH "characters/"
 #define IPATH "items/"
 #define SPATH "skills/"

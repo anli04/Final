@@ -378,8 +378,9 @@ int main(){
         }
         sleep(2);
         pid_t pidU = fork(); // player
+        printf("%d\n", pidU);
         if (pidU > 0) { // main game process
-          pid_t pidC = fork(); // cpu
+          /*pid_t pidC = fork(); // cpu
           if (pidC <= 0){
             int enc = (int)(rand_double() * 2); //unweighted random encounters.
             char encs[50];
@@ -389,17 +390,18 @@ int main(){
             *strchr(encs, '\n') = 0;
             fclose(fenc);
             printf("You encounter a(n) %s!\n", encs);
-            sprintf(encs, "%s%d", EPATH, enc);
+            sprintf(encs, "%d", enc);
             execlp("./combat", "./combat", encs, coin2, "1", NULL);
             errcheck("starting combat for cpu");
             return -1;
-          }
+          }*/
           int status;
           wait(&status);
           sleep(1);
+          //kill(pidC, SIGKILL);
+          kill(pidU, SIGKILL);
           if (!WIFEXITED(status)){
-            kill(pidC, SIGKILL);
-            kill(pidU, SIGKILL);
+            printf("%d", WTERMSIG(status));
             printf("You flee the encounter.\n");
             // anything for fleeing here.
             sleep(1);
