@@ -150,11 +150,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.dmg);
       sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.heal);
       fgets(update.action, sizeof(update.action), f);
-      fgets(temp, sizeof(temp);
+      fgets(temp, sizeof(temp), f);
       char check = temp[0];
-      while (strchr("0123456789", check, f)) == 0){
+      while (strchr("0123456789", check) == 0){
         strcat(update.action, temp);
-        fgets(temp, sizeof(temp);
+        fgets(temp, sizeof(temp), f);
         check = temp[0];
       }
       sscanf(temp, "%lf\n", &update.debuff[0]);
@@ -424,7 +424,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     fprintf(f, "%s", update.exa);
     fprintf(f, "%d\n", update.end);
-    fclose(fd);
+    fclose(f);
     sb.sem_op = 1;
     semop(sem, &sb, 1);
     errcheck("releasing semaphore");
