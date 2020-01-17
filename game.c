@@ -175,7 +175,7 @@ int main(){
     system("clear");
     switch (input){
       case 1: //Display character info
-        printf("%s\n", player.NAME);
+        printf("%s\n\n", player.NAME);
         printf("STR: %d\nDEX: %d\nEND: %d\nINT: %d\nLUK: %d\n", player.stats.STR, player.stats.DEX, player.stats.END, player.stats.INT, player.stats.LUK);
         printf("\nEquipment:\nWeapon: %s\nArmor: %s\nHelm: %s\n", itemDict[player.equipped.wep], itemDict[player.equipped.armor], itemDict[player.equipped.helm]);
         printf("\nSkills:\n");
