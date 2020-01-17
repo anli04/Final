@@ -380,7 +380,7 @@ int main(){
         pid_t pidU = fork(); // player
         printf("%d\n", pidU);
         if (pidU > 0) { // main game process
-          /*pid_t pidC = fork(); // cpu
+          pid_t pidC = fork(); // cpu
           if (pidC <= 0){
             int enc = (int)(rand_double() * 2); //unweighted random encounters.
             char encs[50];
@@ -394,11 +394,11 @@ int main(){
             execlp("./combat", "./combat", encs, coin2, "1", NULL);
             errcheck("starting combat for cpu");
             return -1;
-          }*/
+          }
           int status;
           wait(&status);
           sleep(1);
-          //kill(pidC, SIGKILL);
+          kill(pidC, SIGKILL);
           kill(pidU, SIGKILL);
           if (!WIFEXITED(status)){
             printf("%d", WTERMSIG(status));
