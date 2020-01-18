@@ -337,9 +337,9 @@ int main(){
           printf("3) Forget Skill\n");
           strcpy(choices, "1;2;3");
           input = choose(choices);
+          int boolean = 0;
           switch(input) {
             case 1:
-              int boolean = 0;
               for (n = 1; n < 5; n++){
                 if (player.skills[n] == player.inventory.invS[input2]){
                   printf("Skill already equipped.\n");
