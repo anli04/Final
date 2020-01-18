@@ -374,6 +374,7 @@ int main(){
         sem = semget(KEY, 2, IPC_CREAT | 0644); // 0 is "minor," 1 is "major"
         errcheck("creating semaphore");
         semctl(sem, 0, SETVAL, su);
+        semctl(sem, 1, SETVAL, su);
         errcheck("setting semaphore");
         char * coin;
         char * coin2;

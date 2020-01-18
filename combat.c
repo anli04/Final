@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   struct stats stat;
   FILE * f; // for all the fopens.
   char temp[1024]; // for temporary string holding for functions
-  if (argc != 3){ // cpu encounter
+  if (argc == 4){ // cpu encounter
     sprintf(temp, "%s%s", EPATH, argv[1]);
     f = fopen(temp, "r");
     fgets(NAME, sizeof(NAME), f);
