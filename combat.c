@@ -166,7 +166,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       errcheck("getting minor semaphore");
     }
     if (sb.sem_num == 0){ // if holding minor
-      fd = open("CombatToCombat", O_RDONLY);
       sb.sem_num = 1;
       sb.sem_op = -1;
       semop(sem, &sb, 1);
