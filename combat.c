@@ -71,6 +71,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     stat.END = 50;
     stat.INT = 50;
     stat.LUK = 50;
+    fclose(f);
   }
   else{
     sprintf(temp, "%s%s", CPATH, argv[1]);
@@ -142,7 +143,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
   }
-  fclose(f);
   input = 0;
   printf("checkpoint9\n");
   for (i = 0; i < 5; i++){ // set skill CDs.
