@@ -369,7 +369,8 @@ int main(){
       case 5:
         save(player);
         printf("Preparing for combat...\n");
-        mkfifo("CombatToCombat", 0666);
+        mkfifo("CtoC1", 0666);
+        mkfifo("CtoC2", 0666);
         int sem;
         sem = semget(KEY, 2, IPC_CREAT | 0666); // 0 is "minor," 1 is "major"
         errcheck("creating semaphore");
@@ -465,7 +466,8 @@ int main(){
           errcheck("starting combat for player");
           return -1;
         }
-        unlink("CombatToCombat");
+        unlink("CtoC1");
+        unlink("CtoC2");
         semctl(sem, IPC_RMID, 0);
         errcheck("removing semaphore");
         break;

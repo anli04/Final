@@ -8,11 +8,17 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   int sem;
   sem = semget(KEY, 2, 0);
   errcheck("getting semaphore");
+  int fdr; // for read pipe
+  int fdw; // for write pipe
   if (strcmp(argv[2], "0") == 0){ //get the major semaphore (going second)
     sb.sem_num = 1;
+    fdr = open("CtoC1", O_RDONLY);
+    fdw = open("CtoC2", O_WRONLY);
   }
   else{ //get the minor semaphore (going first)
     sb.sem_num = 0;
+    fdw = open("CtoC1", O_WRONLY);
+    fdr = open("CtoC2", O_RDONLY)
   }
   semop(sem, &sb, 1);
   sleep(1); // help ensure that the sems are set up between the two
@@ -53,7 +59,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   move.EXA = malloc(sizeof(char) * 10);
   struct stats stat;
   FILE * f; // for all the fopens.
-  int fd; // for the pipe opens
   char temp[1024]; // for temporary string holding for functions
   if (argc == 4){ // cpu encounter
     sprintf(temp, "%s%s", EPATH, argv[1]);
@@ -186,35 +191,33 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     if (strcmp(argv[2], "0") == 0){
       char * line;
-      fd = open("CombatToCombat", O_RDONLY | O_NONBLOCK);
-      line = readline(fd);
+      line = readline(fdr);
       sscanf(line, "%d\n", &update.dmg);
       free(line);
-      line = readline(fd);
+      line = readline(fdr);
       sscanf(line, "%d\n", &update.heal);
       free(line);
       strcpy(update.action, "\0");
-      line = readline(fd);
+      line = readline(fdr);
       while (strchr(line, '|') == 0){
         strcat(update.action, line);
         free(line);
-        line = readline(fd);
+        line = readline(fdr);
       }
       free(line);
       for (i = 0; i < 4; i++){
-        line = readline(fd);
+        line = readline(fdr);
         sscanf(line, "%lf\n", &update.debuff[i]);
         free(line);
       }
       for (i = 0; i < 4; i++){
-        line = readline(fd);
+        line = readline(fdr);
         sscanf(line, "%d\n", &update.t[i]);
         free(line);
       }
-      line = readline(fd);
+      line = readline(fdr);
       strcpy(update.exa, line);
       free(line);
-      fclose(f);
     }
     else { // going first does not read from pipe
       strcpy(argv[2], "0");
@@ -480,34 +483,34 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
-    fd = open("CombatToCombat", O_WRONLY | O_NONBLOCK);
     printf("pipe check2\n");
     errcheck("opening pipe");
     sprintf(temp, "%d\n", update.dmg);
-    write(fd, temp, strlen(temp));
+    write(fdw, temp, strlen(temp));
     sprintf(temp, "%d\n", update.heal);
-    write(fd, temp, strlen(temp));
-    write(fd, update.action, strlen(update.action));
-    write(fd, "|\n", strlen("|\n")); // end of action
+    write(fdw, temp, strlen(temp));
+    write(fdw, update.action, strlen(update.action));
+    write(fdw, "|\n", strlen("|\n")); // end of action
     for (i = 0; i < 4; i++){
       sprintf(temp, "%lf\n", update.debuff[i]);
-      write(fd, temp, strlen(temp));
+      write(fdw, temp, strlen(temp));
     }
     for (i = 0; i < 4; i++){
       sprintf(temp, "%d\n", update.t[i]);
-      write(fd, temp, strlen(temp));
+      write(fdw, temp, strlen(temp));
     }
     sprintf(temp, "%s\n", update.exa);
-    write(fd, temp, strlen(temp));
+    write(fdw, temp, strlen(temp));
     sprintf(temp, "%d\n", update.end);
-    write(fd, temp, strlen(temp));
-    close(fd);
+    write(fdw, temp, strlen(temp));
     errcheck("something");
   }
   free(update.action);
   free(update.exa);
   free(move.NAME);
   free(move.EXA);
+  close(fdr);
+  close(fdw);
   return victory;
 }
 
