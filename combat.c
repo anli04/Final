@@ -100,20 +100,25 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     char ** list = parse_args(temp, ";");
     printf("checkpoint2\n");
     for (i = 0; i < 5; i++){
-      printf("checkpoint2-%d-%d-%s\n", i, skills[i], list[i]);
+      printf("checkpoint2.0-%d-%d-%s\n", i, skills[i], list[i]);
       sscanf(list[i], "%d", &skills[i]);
+      printf("checkpoint2.1-%d-%d-%s\n", i, skills[i], list[i]);
       if(skills[i] != -1){
+        printf("checkpoint2.2-%d-%d-%s\n", i, skills[i], list[i]);
         skillinfo(&move, skills[i], stat);
+        printf("checkpoint2.3-%d-%d-%s\n", i, skills[i], list[i]);
         strcpy(skillnames[i], move.NAME);
+        printf("checkpoint2.4-%d-%d-%s\n", i, skills[i], list[i]);
       }
       else strcpy(skillnames[i], "\0");
+      printf("checkpoint2.5-%d-%d-%s\n", i, skills[i], list[i]);
     }
     printf("checkpoint3\n");
     free(list);
     fclose(f);
     hp = stat.END * 5;
     HPMAX = hp;
-    sprintf(temp, "%s%d", EPATH, eq.wep);
+    sprintf(temp, "%s%d", IPATH, eq.wep);
     printf("checkpoint4\n");
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
@@ -127,7 +132,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fclose(f);
     printf("checkpoint6\n");
     double tempvar;
-    sprintf(temp, "%s%d", EPATH, eq.armor);
+    sprintf(temp, "%s%d", IPATH, eq.armor);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
@@ -139,7 +144,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     DMGRED += solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
-    sprintf(temp, "%s%d", EPATH, eq.helm);
+    sprintf(temp, "%s%d", IPATH, eq.helm);
     printf("checkpoint8: %s\n", temp);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
