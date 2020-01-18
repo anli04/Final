@@ -89,7 +89,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.helm);
     printf("checkpoint1\n");
     fgets(temp, sizeof(temp), f);
-    *strchr(temp, "\n") = 0;
+    *strchr(temp, '\n') = 0;
     char ** list = parse_args(temp, ";");
     printf("checkpoint2\n");
     for (i = 0; i < 5; i++){
