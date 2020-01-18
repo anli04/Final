@@ -186,7 +186,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     errcheck("getting semaphore");
     if (strcmp(argv[2], "0") == 0){
       char * line;
-      fd = open("CombatToCombat", O_RDONLY | O_NONBLOCK);
+      fd = open("CombatToCombat", O_RDONLY);
       line = readline(fd);
       sscanf(line, "%d\n", &update.dmg);
       free(line);
@@ -481,7 +481,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
-    fd = open("CombatToCombat", O_WRONLY | O_NONBLOCK);
+    fd = open("CombatToCombat", O_WRONLY);
     sprintf(temp, "%d\n", update.dmg);
     write(fd, temp, strlen(temp));
     sprintf(temp, "%d\n", update.heal);
@@ -501,6 +501,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sprintf(temp, "%d\n", update.end);
     write(fd, temp, strlen(temp));
     close(fd);
+    errcheck("something");
   }
   free(update.action);
   free(update.exa);
