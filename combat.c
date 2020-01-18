@@ -339,7 +339,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       strcat(update.action, skillnames[input]);
       strcat(update.action, ".\n");
       strcpy(update.exa, move.EXA);
-      skillCD[input] = move.CD;
+      if (move.CD) skillCD[input] = move.CD + 1;
       if (argc == 3) printf("You used %s.\n", skillnames[input]);
       if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update.action, "Your opponent attacks!\n");
