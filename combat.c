@@ -1,13 +1,20 @@
 #include "rpg.h"
 
 int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. Fourth is if cpu controlled
-  if (strcmp(argv[2], "0") == 0) sleep(1); //get the semaphore second
-  int victory = 0; // win or lose. 1 or 0
-  int sem;
-  sem = semget(KEY, 1, 0);
-  errcheck("getting semaphore");
   struct sembuf sb;
-  sb.sem_num = 0;
+  sb.sem_op = -1;
+  int sem;
+  sem = semget(KEY, 2, 0);
+  errcheck("getting semaphore");
+  if (strcmp(argv[2], "0") == 0){ //get the major semaphore (going second)
+    sb.sem_num = 1;
+  }
+  else{ //get the minor semaphore (going first)
+    sn.sem_num = 0;
+  }
+  semop(sem, &sb, 1);
+  sleep(1) // help ensure that the sems are set up between the two
+  int victory = 0; // win or lose. 1 or 0
   int input;
   char NAME[40];
   int HPMAX;
@@ -154,9 +161,34 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   }
   printf("checkpoint10\n");
   while (1){
-    sb.sem_op = -1;
     if (argc == 3) printf("Awaiting opponent...");
-    semop(sem, &sb, 1);
+    if (sb.sem_num == 1){ // if holding major
+      sb.sem_op = 1;
+      semop(sem, &sb, 1);
+      errcheck("releasing major semaphore");
+      sb.sem_num = 0;
+      sb.sem_op = -1;
+      semop(sem, &sb, 1);
+      errcheck("getting minor semaphore");
+    }
+    if (sb.sem_num == 0){ // if holding minor
+      sb.sem_num = 1;
+      sb.sem_op = -1;
+      semop(sem, &sb, 1);
+      errcheck("getting major semaphore");
+      sb.sem_num = 0;
+      sb.sem_op = 1;
+      semop(sem, &sb, 1);
+      errcheck("releasing minor semaphore");
+      sb.sem_num = 1; // set for next loop
+    }
+    if (update.end){ // for the last to exit
+      printf("\n");
+      victory = 1;
+      semop(sem, &sb, 1);
+      errcheck("releasing major semaphore");
+      break;
+    }
     errcheck("getting semaphore");
     if (strcmp(argv[2], "0") == 0){
       f = fopen("CombatToCombat", "r");
@@ -187,6 +219,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     if (update.end){
       printf("\n");
       victory = 1;
+      semop(sem, &sb, 1);
+      errcheck("releasing major semaphore");
       break;
     }
     strcpy(update.action, "\0"); //overwrite action
@@ -438,11 +472,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fprintf(f, "%s", update.exa);
     fprintf(f, "%d\n", update.end);
     fclose(f);
-    sb.sem_op = 1;
-    semop(sem, &sb, 1);
-    errcheck("releasing semaphore");
     sleep(1);
-    if (update.end) break;
   }
   free(update.action);
   free(update.exa);

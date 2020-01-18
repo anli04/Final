@@ -200,7 +200,7 @@ int main(){
         while (1){
           int index = 0;
           int n;
-          char choices[32]; // max number storage is 15.
+          char choices[60]; // max number storage is 15.
           strcpy(choices, "0;\0");
           printf("0) Go Back\n");
           char choice[4];
@@ -246,6 +246,7 @@ int main(){
               }
               if (boolean == 0){
                 printf("You do not meet the requirements\n");
+                sleep(1);
                 break;
               }
               if (object.type == 'W') player.equipped.wep = object.ID;
@@ -266,6 +267,7 @@ int main(){
               }
               player.inventory.invI[15] = -1;
               printf("Item Sold.\n");
+              sleep(1);
               break;
           }
           system("clear");
@@ -276,7 +278,7 @@ int main(){
           int index = 0;
           int n;
           int exit = 0;
-          char choices[32]; // max number storage is 15.
+          char choices[60]; // max number storage is 15.
           strcpy(choices, "0;\0");
           printf("0) Go Back\n");
           char choice[4];
@@ -358,6 +360,7 @@ int main(){
               }
               player.inventory.invS[15] = -1;
               printf("Skill forgotten.\n");
+              sleep(1);
               break;
           }
           system("clear");
@@ -368,7 +371,7 @@ int main(){
         printf("Preparing for combat...\n");
         mkfifo("CombatToCombat", 0666);
         int sem;
-        sem = semget(KEY, 1, IPC_CREAT | 0644);
+        sem = semget(KEY, 2, IPC_CREAT | 0644); // 0 is "minor," 1 is "major"
         errcheck("creating semaphore");
         semctl(sem, 0, SETVAL, su);
         errcheck("setting semaphore");
