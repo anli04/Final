@@ -19,7 +19,7 @@ Stuff in quotation marks are the strings being decoded.
 "n", "m" represents a number
 
 Algorithm notation and notes:
-For negative numbers, use _ instead of -
+For subtraction in functions, use the m-dash instead of minus. Minus represent negative.
 Order of operations does not exist, except for parentheses (implement recursively).
 Do not put in spaces. No implicit multiplication (e.g. "7n").
 Division returns the exact value (double).

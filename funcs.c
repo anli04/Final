@@ -73,7 +73,7 @@ double nextNum(char * f, int idx, struct stats s){ // For use in solve, mainly.
   num[1] = '\0';
   double n;
   while (f[idx]){
-    if (strchr("0123456789._", f[idx])) strncat(num, &f[idx], 1);
+    if (strchr("0123456789.-", f[idx])) strncat(num, &f[idx], 1);
     else if (strchr("S", f[idx])) return s.STR;
     else if (strchr("D", f[idx])) return s.DEX;
     else if (strchr("E", f[idx])) return s.END;
@@ -96,7 +96,7 @@ double solve(char * f, int idx, struct stats s){
     n = 0;
     op = '\0';
     if (idx == 0 && ans == 0) op = '+';
-    char * p = strchr("+-*/^", f[idx]);
+    char * p = strchr("+—*/^", f[idx]);
     if (p){
       op = *p;
       idx++;
@@ -128,7 +128,7 @@ double solve(char * f, int idx, struct stats s){
     }
     switch(op){
       case '+': ans += n; break;
-      case '-': ans -= n; break;
+      case '—': ans -= n; break;
       case '*': ans *= n; break;
       case '/': ans /= n; break;
       case '^': ans = pow(ans, n); break;
