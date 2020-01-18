@@ -354,9 +354,13 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
             hp = min(HPMAX, hp + update.heal);
             if (argc == 3) printf("You healed for %d.\n", update.heal);
           }
+          if (argc == 3) sleep(1);
         }
         else{
-          if (argc == 3) printf("You missed!\n");
+          if (argc == 3) {
+            printf("You missed!\n");
+            sleep(1);
+          }
           strcat(update.action, "Your opponent missed!\n");
         }
       }
@@ -378,9 +382,13 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
               if (argc == 3) printf("You healed for %d.\n", update.dmg - update.heal);
               update.heal += update.dmg;
             }
+            if (argc == 3) sleep(1);
           }
           else{
-            if (argc == 3) printf("You missed!\n");
+            if (argc == 3) {
+              printf("You missed!\n");
+              sleep(1);
+            }
             strcat(update.action, "Your opponent missed!\n");
           }
         }
@@ -388,58 +396,85 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       if (strchr(move.EXA, 'h')){
         update.heal = (int)(DMG * move.DMGMOD * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
         hp = min(HPMAX, hp + update.heal);
-        if (argc == 3) printf("You healed for %d.\n", update.heal);
+        if (argc == 3) {
+          printf("You healed for %d.\n", update.heal);
+          sleep(1);
+        }
       }
       if (move.HITBUFF){
         if (strchr(move.EXA, 'D')){
           update.debuff[0] = move.HITBUFF;
           update.t[0] = move.TURNS;
-          if (argc == 3) printf("You reduced your opponent's Hit Chance!\n");
+          if (argc == 3) {
+            printf("You reduced your opponent's Hit Chance!\n");
+            sleep(1);
+          }
         }
         else{
           buffs[0] = move.HITBUFF;
           bufftime[0] = move.TURNS + 1;
           strcat(update.action, "Your opponent increased their Hit Chance!\n");
-          if (argc == 3) printf("You increased your Hit Chance!\n");
+          if (argc == 3) {
+            printf("You increased your Hit Chance!\n");
+            sleep(1);
+          }
         }
       }
       if (move.DMGBUFF){
         if (strchr(move.EXA, 'D')){
           update.debuff[1] = move.DMGBUFF;
           update.t[1] = move.TURNS;
-          if (argc == 3) printf("You reduced your opponent's Outgoing Damage!\n");
+          if (argc == 3) {
+            printf("You reduced your opponent's Outgoing Damage!\n");
+            sleep(1);
+          }
         }
         else{
           buffs[1] = move.DMGBUFF;
           bufftime[1] = move.TURNS + 1;
           strcat(update.action, "Your opponent increased their Outgoing Damage!\n");
-          if (argc == 3) printf("You increased your Outgoing Damage!\n");
+          if (argc == 3) {
+            printf("You increased your Outgoing Damage!\n");
+            sleep(1);
+          }
         }
       }
       if (move.REDPLUS){
         if (strchr(move.EXA, 'D')){
           update.debuff[2] = move.REDPLUS;
           update.t[2] = move.TURNS;
-          if (argc == 3) printf("You reduced your opponent's Damage Resistance!\n");
+          if (argc == 3) {
+            printf("You reduced your opponent's Damage Resistance!\n");
+            sleep(1);
+          }
         }
         else{
           buffs[2] = move.REDPLUS;
           bufftime[2] = move.TURNS + 1;
           strcat(update.action, "Your opponent increased their Damage Resistance!\n");
-          if (argc == 3) printf("You increased your Damage Resistance!\n");
+          if (argc == 3) {
+            printf("You increased your Damage Resistance!\n");
+            sleep(1);
+          }
         }
       }
       if (move.DODGEPLUS){
         if (strchr(move.EXA, 'D')){
           update.debuff[3] = move.DODGEPLUS;
           update.t[3] = move.TURNS;
-          if (argc == 3) printf("You reduced your opponent's Dodge Chance!\n");
+          if (argc == 3) {
+            printf("You reduced your opponent's Dodge Chance!\n");
+            sleep(1);
+          }
         }
         else{
           buffs[3] = move.DODGEPLUS;
           bufftime[3] = move.TURNS + 1;
           strcat(update.action, "Your opponent increased their Dodge Chance!\n");
-          if (argc == 3) printf("You increased your Dodge Chance!\n");
+          if (argc == 3) {
+            printf("You increased your Dodge Chance!\n");
+            sleep(1);
+          }
         }
       }
       if (strchr(move.EXA, 'R')){

@@ -309,7 +309,7 @@ int main(){
               case '\n': break;
               case 'A':
                 n++;
-                printf("Makes %d attacks\n", move.EXA[n]);
+                printf("Makes %c attacks\n", move.EXA[n]);
                 break;
               case 'Q': printf("- Can be used from the beginning of combat\n");
                 break;
