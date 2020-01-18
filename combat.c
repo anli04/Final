@@ -319,10 +319,10 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       }
       skillinfo(&move, skills[input], stat);
       strcat(update.action, "Your opponent used ");
-      strcat(update.action, move.NAME);
+      strcat(update.action, skillnames[input]);
       strcat(update.action, ".\n");
       strcpy(update.exa, move.EXA);
-      if (argc == 3) printf("You used %s.\n", move.NAME);
+      if (argc == 3) printf("You used %s.\n", skillnames[input]);
       if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update.action, "Your opponent attacks!\n");
         if (argc == 3) printf("You attack.\n");
@@ -340,6 +340,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           strcat(update.action, "Your opponent missed!\n");
         }
       }
+      printf("EXA check1\n");
       if (strchr(move.EXA, 'A')){
         int attacks;
         sscanf(strchr(move.EXA, 'A') + 1, "%d", &attacks);
@@ -364,11 +365,13 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
       }
+      printf("EXA check2\n");
       if (strchr(move.EXA, 'H')){
         update.heal = (int)(DMG * move.DMGMOD * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
         hp = min(HPMAX, hp + update.heal);
         if (argc == 3) printf("You healed for %d.\n", update.heal);
       }
+      printf("buff check1\n");
       if (move.HITBUFF){
         if (strchr(move.EXA, 'D')){
           update.debuff[0] = move.HITBUFF;
@@ -382,6 +385,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You increased your Hit Chance!\n");
         }
       }
+      printf("buff check2\n");
       if (move.DMGBUFF){
         if (strchr(move.EXA, 'D')){
           update.debuff[1] = move.DMGBUFF;
@@ -389,12 +393,13 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You reduced your opponent's Outgoing Damage!\n");
         }
         else{
-          buffs[1] = move.HITBUFF;
+          buffs[1] = move.DMGBUFF;
           bufftime[1] = move.TURNS + 1;
           strcat(update.action, "Your opponent increased their Outgoing Damage!\n");
           if (argc == 3) printf("You increased your Outgoing Damage!\n");
         }
       }
+      printf("buff check3\n");
       if (move.REDPLUS){
         if (strchr(move.EXA, 'D')){
           update.debuff[2] = move.REDPLUS;
@@ -408,6 +413,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You increased your Damage Resistance!\n");
         }
       }
+      printf("buff check4\n");
       if (move.DODGEPLUS){
         if (strchr(move.EXA, 'D')){
           update.debuff[3] = move.DODGEPLUS;
@@ -422,6 +428,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         }
       }
       printf("\n");
+      printf("bufftime check\n");
       for (i = 0; i < 4; i++){ //resolve buffs/debuffs at end of turn
         if (bufftime[i] > 0){
           bufftime[i]--;
@@ -445,6 +452,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
       }
+      printf("skilltime check1\n");
       for (i = 0; i < 5; i++){ // resolve skill CD at end of turn
         if (skillCD[i] > 0){
           skillCD[i]--;
@@ -459,7 +467,9 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       }
     }
     // pipe out string of what you did, for opponent
+    printf("pipe check1\n");
     f = fopen("CombatToCombat", "w");
+    print("loop's near end\n");
     fprintf(f, "%d\n", update.dmg);
     fprintf(f, "%d\n", update.heal);
     fprintf(f, "%s", update.action);
@@ -472,7 +482,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fprintf(f, "%s", update.exa);
     fprintf(f, "%d\n", update.end);
     fclose(f);
-    sleep(1);
+    print("loop's end\n");
   }
   free(update.action);
   free(update.exa);
