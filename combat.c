@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sb.sem_num = 1;
   }
   else{ //get the minor semaphore (going first)
-    sn.sem_num = 0;
+    sb.sem_num = 0;
   }
   semop(sem, &sb, 1);
   sleep(1) // help ensure that the sems are set up between the two
