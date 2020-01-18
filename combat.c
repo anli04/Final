@@ -311,6 +311,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       else{ // cpu decision
         while (!boolean){
           input = (int) (rand_double() * 5);
+          printf("%d\n", input);
           if (skills[input] != -1 && skillCD[input] == 0) boolean = 1;
         }
       }
