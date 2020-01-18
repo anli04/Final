@@ -169,6 +169,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       semop(sem, &sb, 1);
       errcheck("getting minor semaphore");
     }
+    if (update.end){ // for the last to exit
+      printf("\n");
+      victory = 0;
+      break;
+    }
     if (sb.sem_num == 0){ // if holding minor
       sb.sem_num = 1;
       sb.sem_op = -1;
@@ -179,13 +184,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       semop(sem, &sb, 1);
       errcheck("releasing minor semaphore");
       sb.sem_num = 1; // set for next loop
-    }
-    if (update.end){ // for the last to exit
-      printf("\n");
-      victory = 1;
-      semop(sem, &sb, 1);
-      errcheck("releasing major semaphore");
-      break;
     }
     if (strcmp(argv[2], "0") == 0){
       char * line;
@@ -224,7 +222,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       strcpy(argv[2], "0");
     }
     if (argc == 3) printf("%s", update.action); // what happened
-    if (update.end){
+    if (update.end){ // opponent died
       printf("\n");
       victory = 1;
       semop(sem, &sb, 1);
@@ -273,6 +271,30 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       sleep(1);
     }
     update.heal = 0;
+    for (i = 0; i < 4; i++){ //debuff handling
+      if (update.debuff[i]){
+        buffs[i] = -update.debuff[i];
+        bufftime[i] = update.t[i];
+        if (argc == 3) printf("Your opponent has decreased your ");
+        switch (i){
+          case 0: if (argc == 3) printf("Hit Chance");
+            break;
+          case 1: if (argc == 3) printf("Outgoing Damage");
+            break;
+          case 2: if (argc == 3) printf("Damage Reduction");
+            break;
+          case 3: if (argc == 3) printf("Dodge Chance");
+            break;
+        }
+        if (argc == 3) {
+          printf(" by %lf%% for %d turns.\n", update.debuff[i] * 100, update.t[i]);
+          sleep(1);
+        }
+      }
+      update.debuff[i] = 0;
+      update.t[i] = 0;
+    }
+    strcpy(update.exa, "\0");
     if (hp <= 0){ // dead or alve
       if (argc == 3) printf("You died.\n");
       printf("\n");
@@ -281,30 +303,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       sleep(1);
     }
     else {
-      for (i = 0; i < 4; i++){ //debuff handling
-        if (update.debuff[i]){
-          buffs[i] = -update.debuff[i];
-          bufftime[i] = update.t[i];
-          if (argc == 3) printf("Your opponent has decreased your ");
-          switch (i){
-            case 0: if (argc == 3) printf("Hit Chance");
-              break;
-            case 1: if (argc == 3) printf("Outgoing Damage");
-              break;
-            case 2: if (argc == 3) printf("Damage Reduction");
-              break;
-            case 3: if (argc == 3) printf("Dodge Chance");
-              break;
-          }
-          if (argc == 3) {
-            printf(" by %lf%% for %d turns.\n", update.debuff[i] * 100, update.t[i]);
-            sleep(1);
-          }
-        }
-        update.debuff[i] = 0;
-        update.t[i] = 0;
-      }
-      strcpy(update.exa, "\0");
       printf("\n"); // start of interactable turn.
       if (argc == 3) printf("Current hp: %d.\n", hp);
       if (argc == 3) printf("Your turn:\n");
