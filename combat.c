@@ -1,5 +1,7 @@
 #include "rpg.h"
 
+char * readline(int fd);
+
 int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. Fourth is if cpu controlled
   struct sembuf sb;
   sb.sem_op = -1;
@@ -51,6 +53,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   move.EXA = malloc(sizeof(char) * 10);
   struct stats stat;
   FILE * f; // for all the fopens.
+  int fd; // for the pipe opens
   char temp[1024]; // for temporary string holding for functions
   if (argc == 4){ // cpu encounter
     sprintf(temp, "%s%s", EPATH, argv[1]);
@@ -182,25 +185,34 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     errcheck("getting semaphore");
     if (strcmp(argv[2], "0") == 0){
-      f = fopen("CombatToCombat", "r");
-      sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.dmg);
-      sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.heal);
-      fgets(update.action, sizeof(update.action), f);
-      fgets(temp, sizeof(temp), f);
-      char check = temp[0];
-      while (strchr("0123456789", check) == 0){
-        strcat(update.action, temp);
-        fgets(temp, sizeof(temp), f);
-        check = temp[0];
+      fd = open("CombatToCombat", O_RDONLY);
+      line = readline(fd);
+      sscanf(line, "%d\n", &update.dmg);
+      free(line);
+      line = readline(fd);
+      sscanf(line, "%d\n", &update.heal);
+      free(line);
+      strcpy(update.action, "\0");
+      line = readline(fd);
+      while (strchr(line, '|') == 0){
+        strcat(update.action, line);
+        free(line);
+        line = readline(fd);
       }
-      sscanf(temp, "%lf\n", &update.debuff[0]);
-      for (i = 1; i < 4; i++){
-        sscanf(fgets(temp, sizeof(temp), f), "%lf\n", &update.debuff[i]);
+      free(line);
+      for (i = 0; i < 4; i++){
+        line = readline(fd);
+        sscanf(line, "%lf\n", &update.debuff[i]);
+        free(line);
       }
       for (i = 0; i < 4; i++){
-        sscanf(fgets(temp, sizeof(temp), f), "%d\n", &update.t[i]);
+        line = readline(fd);
+        sscanf(line, "%d\n", &update.t[i]);
+        free(line);
       }
-      fgets(update.exa, sizeof(update.exa), f);
+      line = readline(fd);
+      strcpy(update.exa, line);
+      free(line);
       fclose(f);
     }
     else { // going first does not read from pipe
@@ -349,8 +361,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         for (; attacks > 0; attacks--){
           if (argc == 3) printf("You attack.\n");
           strcat(update.action, "Your opponent attacks again!\n");
-          if (rand_double() < HIT * move.HITMOD * buffs[0]){
-            dtemp = (int)(DMG * move.DMGMOD * buffs[1] * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+          if (rand_double() < HIT * move.HITMOD * (1 + buffs[0])){
+            dtemp = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
             update.dmg += dtemp;
             if (argc == 3) printf("You dealt %d damage!\n", dtemp);
             if (strchr(move.EXA, 'V')){
@@ -468,25 +480,40 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
-    f = fopen("CombatToCombat", "w");
-    printf("loop's near end\n");
-    fprintf(f, "%d\n", update.dmg);
-    fprintf(f, "%d\n", update.heal);
-    fprintf(f, "%s", update.action);
+    fd = open("CombatToCombat", O_WRONLY);
+    sprintf(temp, "%d\n", update.dmg);
+    write(fd, temp, strlen(temp));
+    sprintf(temp, "%d\n", update.heal);
+    write(fd, temp, strlen(temp));
+    write(fd, update.action, strlen(update.action));
+    write(fd, "|\n", strlen("|\n")); // end of action
     for (i = 0; i < 4; i++){
-      fprintf(f, "%lf\n", update.debuff[i]);
+      sprintf(temp, "%lf\n", update.debuff[i]);
+      write(fd, temp, strlen(temp));
     }
     for (i = 0; i < 4; i++){
-      fprintf(f, "%d\n", update.t[i]);
+      sprintf(temp, "%d\n", update.t[i]);
+      write(fd, temp, strlen(temp));
     }
-    fprintf(f, "%s", update.exa);
-    fprintf(f, "%d\n", update.end);
-    fclose(f);
-    printf("loop's end\n");
+    sprintf(temp, "%s\n", update.exa);
+    write(fd, temp, strlen(temp));
+    sprintf(temp, "%d\n", update.end);
+    write(fd, temp, strlen(temp));
+    close(fd);
   }
   free(update.action);
   free(update.exa);
   free(move.NAME);
   free(move.EXA);
   return victory;
+}
+
+char * readline(int fd){
+  char * line = malloc(sizeof(char) * 1024);
+  int i = 0;
+  while(1){
+    if (!read(fd, line[i], 1)) break;
+    if (line[i] == '\n') break;
+  }
+  return line;
 }
