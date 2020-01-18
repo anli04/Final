@@ -163,7 +163,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   printf("checkpoint10: %d\n", argc);
   while (1){
     printf("loop\n");
-    if (argc == 3) printf("Awaiting opponent...");
+    if (argc == 3) printf("Awaiting opponent...\n");
     if (sb.sem_num == 1){ // if holding major
       sb.sem_op = 1;
       semop(sem, &sb, 1);

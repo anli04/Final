@@ -371,7 +371,7 @@ int main(){
         printf("Preparing for combat...\n");
         mkfifo("CombatToCombat", 0666);
         int sem;
-        sem = semget(KEY, 2, IPC_CREAT | 0644); // 0 is "minor," 1 is "major"
+        sem = semget(KEY, 2, IPC_CREAT | 0666); // 0 is "minor," 1 is "major"
         errcheck("creating semaphore");
         semctl(sem, 0, SETVAL, su);
         semctl(sem, 1, SETVAL, su);
