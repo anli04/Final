@@ -161,6 +161,6 @@ void skillinfo(struct skill * move, int id, struct stats s){
   sscanf(fgets(buf, sizeof(buf), f), "%d\n", &move->TURNS);
   sscanf(fgets(buf, sizeof(buf), f), "%d\n", &move->CD);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
-  strcpy(move->NAME, buf);
+  strcpy(move->EXA, buf);
   fclose(f);
 }

@@ -252,9 +252,9 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     update.dmg = 0;
     if (update.heal && argc == 3){
       printf("Your opponent healed for %d.\n", update.heal);
-      update.heal = 0;
       sleep(1);
     }
+    update.heal = 0;
     if (hp <= 0){ // dead or alve
       if (argc == 3) printf("You died.\n");
       printf("\n");
@@ -308,7 +308,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         }
       }
       else{ // cpu decision
-        while (boolean){
+        while (!boolean){
           input = (int) (rand_double() * 5);
           if (skills[input] != -1 && skillCD[input] == 0) boolean = 1;
         }
