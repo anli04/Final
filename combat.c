@@ -221,6 +221,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     else { // going first does not read from pipe
       strcpy(argv[2], "0");
     }
+    printf("read check\n");
     if (argc == 3) printf("%s", update.action); // what happened
     if (update.end){
       printf("\n");
@@ -521,6 +522,7 @@ char * readline(int fd){
     if (!read(fd, buf, 1)) break;
     line[0] = buf[0];
     if (line[i] == '\n') break;
+    i++;
   }
   return line;
 }
