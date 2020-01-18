@@ -149,9 +149,9 @@ void skillinfo(struct skill * move, int id, struct stats s){
   fgets(move->NAME, sizeof(move->NAME), f);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   printf("test4 %d\n", id);
-  printf("%d\n", solve(buf, 0, s));
+  printf("%lf\n", solve(buf, 0, s));
   move->HITMOD = solve(buf, 0, s);
-  printf("%d\n", move->HITMOD);
+  printf("%lf\n", move->HITMOD);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   errcheck("something here\n");
   move->DMGMOD = solve(buf, 0, s);
