@@ -68,9 +68,8 @@ int size_array(char ** arr) {
 }
 
 double nextNum(char * f, int idx, struct stats s){ // For use in solve, mainly.
-  char num[10];
-  num[0] = '0';
-  num[1] = '\0';
+  char num[20];
+  num[0] = '\0';
   double n;
   while (f[idx]){
     if (strchr("0123456789.-", f[idx])) strncat(num, &f[idx], 1);
@@ -80,11 +79,13 @@ double nextNum(char * f, int idx, struct stats s){ // For use in solve, mainly.
     else if (strchr("I", f[idx])) return s.INT;
     else if (strchr("L", f[idx])) return s.LUK;
     else{
+      if (num[0] == '\0') strcpy(num, "0");
       sscanf(num, "%lf", &n);
       return n;
     }
     idx++;
   }
+  if (num[0] == '\0') strcpy(num, "0");
   sscanf(num, "%lf", &n);
   return n;
 }
