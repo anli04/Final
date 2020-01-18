@@ -186,7 +186,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     errcheck("getting semaphore");
     if (strcmp(argv[2], "0") == 0){
       char * line;
-      fd = open("CombatToCombat", O_RDONLY);
+      fd = open("CombatToCombat", O_RDONLY | O_NONBLOCK);
       line = readline(fd);
       sscanf(line, "%d\n", &update.dmg);
       free(line);
@@ -326,7 +326,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       else{ // cpu decision
         while (!boolean){
           input = (int) (rand_double() * 5);
-          printf("%d\n", input);
           if (skills[input] != -1 && skillCD[input] == 0) boolean = 1;
         }
       }
@@ -481,7 +480,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
-    fd = open("CombatToCombat", O_WRONLY);
+    fd = open("CombatToCombat", O_WRONLY | O_NONBLOCK);
+    errcheck("opening pipe");
     sprintf(temp, "%d\n", update.dmg);
     write(fd, temp, strlen(temp));
     sprintf(temp, "%d\n", update.heal);
