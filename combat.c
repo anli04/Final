@@ -162,7 +162,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
     }
   }
-  printf("checkpoint10: %d\n" argc);
+  printf("checkpoint10: %d\n", argc);
   while (1){
     if (argc == 3) printf("Awaiting opponent...");
     if (sb.sem_num == 1){ // if holding major
