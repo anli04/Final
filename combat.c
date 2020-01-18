@@ -182,7 +182,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       errcheck("releasing minor semaphore");
       sb.sem_num = 1; // set for next loop
     }
-    printf("sem check\n");
     if (update.end){ // for the last to exit
       printf("\n");
       victory = 1;
@@ -223,7 +222,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     else { // going first does not read from pipe
       strcpy(argv[2], "0");
     }
-    printf("read check\n");
     if (argc == 3) printf("%s", update.action); // what happened
     if (update.end){
       printf("\n");
@@ -358,7 +356,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           strcat(update.action, "Your opponent missed!\n");
         }
       }
-      printf("EXA check1\n");
       if (strchr(move.EXA, 'A')){
         int attacks;
         sscanf(strchr(move.EXA, 'A') + 1, "%d", &attacks);
@@ -383,7 +380,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
       }
-      printf("EXA check2\n");
       if (strchr(move.EXA, 'H')){
         update.heal = (int)(DMG * move.DMGMOD * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
         hp = min(HPMAX, hp + update.heal);
@@ -428,7 +424,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You increased your Damage Resistance!\n");
         }
       }
-      printf("buff check4\n");
       if (move.DODGEPLUS){
         if (strchr(move.EXA, 'D')){
           update.debuff[3] = move.DODGEPLUS;
