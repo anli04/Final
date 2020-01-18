@@ -331,7 +331,7 @@ int main(){
                 break;
             }
           }
-          int input2 = input;
+          int input2 = input - 1;
           printf("\n\n1) Use instead of...\n");
           printf("2) Go Back\n");
           printf("3) Forget Skill\n");
@@ -343,6 +343,7 @@ int main(){
               for (n = 1; n < 5; n++){
                 if (player.skills[n] == player.inventory.invS[input2]){
                   printf("Skill already equipped.\n");
+                  sleep(1);
                   boolean = 1;
                   break;
                 }
