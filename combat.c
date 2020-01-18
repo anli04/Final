@@ -75,6 +75,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   else{
     sprintf(temp, "%s%s", CPATH, argv[1]);
     f = fopen(temp, "r");
+    printf("checkpoint\n");
     strcpy(NAME, argv[1]);
     struct equipped eq;
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &stat.STR);
@@ -85,32 +86,42 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.wep);
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.armor);
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.helm);
+    printf("checkpoint1\n");
     fgets(temp, sizeof(temp), f);
     char ** list = parse_args(temp, ";");
+    printf("checkpoint2\n");
     for (i = 0; i < 5; i++){
       sscanf(list[i], "%d", &skills[i]);
-      skillinfo(&move, skills[i], stat);
-      strcpy(skillnames[i], move.NAME);
+      if(skills[i] != -1){
+        skillinfo(&move, skills[i], stat);
+        strcpy(skillnames[i], move.NAME);
+      }
+      else strcpy(skillnames[i], "\0");
     }
+    printf("checkpoint3\n");
     free(list);
     fclose(f);
     hp = stat.END * 5;
     HPMAX = hp;
     sprintf(temp, "%s%d", EPATH, eq.wep);
+    printf("checkpoint4\n");
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
+    printf("checkpoint5\n");
     HIT = solve(fgets(temp, sizeof(temp), f), 0, stat);
     DMG = solve(fgets(temp, sizeof(temp), f), 0, stat);
     sscanf(fgets(temp, sizeof(temp), f), "%lf", &VAR);
     DMGRED = solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE = solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
+    printf("checkpoint6\n");
     double tempvar;
     sprintf(temp, "%s%d", EPATH, eq.armor);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
+    printf("checkpoint7\n");
     HIT *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     DMG *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     sscanf(fgets(temp, sizeof(temp), f), "%lf", &tempvar);
@@ -118,6 +129,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     DMGRED += solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
+    printf("checkpoint8\n");
     sprintf(temp, "%s%d", EPATH, eq.helm);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
@@ -132,12 +144,14 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   }
   fclose(f);
   input = 0;
+  printf("checkpoint9\n");
   for (i = 0; i < 5; i++){ // set skill CDs.
-    if (skills[i] >= 0){
+    if (skills[i] != -1){
       skillinfo(&move, skills[i], stat);
       if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
     }
   }
+  printf("checkpoint10\n");
   while (1){
     sb.sem_op = -1;
     if (argc == 3) printf("Awaiting opponent...");
