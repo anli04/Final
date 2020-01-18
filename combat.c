@@ -83,7 +83,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   else{
     sprintf(temp, "%s%s", CPATH, argv[1]);
     f = fopen(temp, "r");
-    printf("checkpoint\n");
     strcpy(NAME, argv[1]);
     struct equipped eq;
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &stat.STR);
@@ -94,26 +93,17 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.wep);
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.armor);
     sscanf(fgets(temp, sizeof(temp), f), "%d\n", &eq.helm);
-    printf("checkpoint1\n");
     fgets(temp, sizeof(temp), f);
     *strchr(temp, '\n') = 0;
     char ** list = parse_args(temp, ";");
-    printf("checkpoint2\n");
     for (i = 0; i < 5; i++){
-      printf("checkpoint2.0-%d-%d-%s\n", i, skills[i], list[i]);
       sscanf(list[i], "%d", &skills[i]);
-      printf("checkpoint2.1-%d-%d-%s\n", i, skills[i], list[i]);
       if(skills[i] != -1){
-        printf("checkpoint2.2-%d-%d-%s\n", i, skills[i], list[i]);
         skillinfo(&move, skills[i], stat);
-        printf("checkpoint2.3-%d-%d-%s\n", i, skills[i], list[i]);
         strcpy(skillnames[i], move.NAME);
-        printf("checkpoint2.4-%d-%d-%s\n", i, skills[i], list[i]);
       }
       else strcpy(skillnames[i], "\0");
-      printf("checkpoint2.5-%d-%d-%s\n", i, skills[i], list[i]);
     }
-    printf("checkpoint3\n");
     free(list);
     fclose(f);
     hp = stat.END * 5;
@@ -153,14 +143,12 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fclose(f);
   }
   input = 0;
-  printf("checkpoint9: %d\n", argc);
   for (i = 0; i < 5; i++){ // set skill CDs.
     if (skills[i] != -1){
       skillinfo(&move, skills[i], stat);
       if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
     }
   }
-  printf("checkpoint10: %d\n", argc);
   while (1){
     printf("loop\n");
     if (argc == 3) printf("Awaiting opponent...\n");
@@ -313,7 +301,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
         choices[strlen(choices) - 1] = '\0';
-        while (boolean){
+        while (!boolean){
           input = choose(choices);
           if (skillCD[input] > 0) printf("Skill is recharging.\n");
           else boolean = 1;
@@ -334,8 +322,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update.action, "Your opponent attacks!\n");
         if (argc == 3) printf("You attack.\n");
-        if (rand_double() < HIT * move.HITMOD * buffs[0]){
-          update.dmg = (int)(DMG * move.DMGMOD * buffs[1] * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+        if (rand_double() < HIT * move.HITMOD * (1 + buffs[0])){
+          update.dmg = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
           if (argc == 3) printf("You dealt %d damage!\n", update.dmg);
           if (strchr(move.EXA, 'V')){
             update.heal = update.dmg;
