@@ -339,8 +339,17 @@ int main(){
           input = choose(choices);
           switch(input) {
             case 1:
+              int boolean = 0;
               for (n = 1; n < 5; n++){
-                if (player.skills[n] = -1) printf("%d) None\n", n);
+                if (player.skills[n] == player.inventory.invS[input2]){
+                  printf("Skill already equipped.\n");
+                  boolean = 1;
+                  break;
+                }
+              }
+              if (boolean) break;
+              for (n = 1; n < 5; n++){
+                if (player.skills[n] == -1) printf("%d) None\n", n);
                 else printf("%d) %s\n", n, skillDict[player.skills[n]]);
               }
               strcpy(choices, "1;2;3;4");
