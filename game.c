@@ -20,9 +20,9 @@ int main(){
   char * itemDict[9] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Robe", "Mage Hat"};
   char * skillDict[12] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge"};
   struct item object;
-  object.NAME = malloc(sizeof(char) * 30);
+  object.NAME = malloc(sizeof(char) * 100);
   struct skill move;
-  move.NAME = malloc(sizeof(char) * 30);
+  move.NAME = malloc(sizeof(char) * 100);
   move.EXA = malloc(sizeof(char) * 16);
   int statarray[5];
   int input = 0;
@@ -326,6 +326,7 @@ int main(){
               case 'P': printf("- Damage cannot be dodged or reduced\n");
                 break;
               case 'R': printf("- Reduces skill cooldowns by 1\n");
+                break;
               default: printf("ERROR Unknown\n");
                 break;
             }
@@ -510,7 +511,7 @@ int readInt(FILE * c){ // Up to four digits
 }
 
 void iteminfo(struct item * object, int id, struct stats s){
-  char buf[40];
+  char buf[1024];
   sprintf(buf, "%s%d", IPATH, id);
   FILE * f = fopen(buf, "r");
   object->ID = id;

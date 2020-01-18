@@ -445,12 +445,10 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         for (i = 0; i < 5; i++){ // resolve skill CD at end of turn
           if (skillCD[i] > 0){
             skillCD[i]--;
-            if (!skillCD[i]){
+            if (!skillCD[i] && argc == 3){
               printf("%s", skillnames[i]);
-              if (argc == 3) {
-                printf(" has recharged.\n");
-                sleep(1);
-              }
+              printf(" has recharged.\n");
+              sleep(1);
             }
           }
         }
@@ -460,18 +458,18 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         if (bufftime[i] > 0){
           bufftime[i]--;
           if (!bufftime[i]){
-            if (argc == 3) printf("Your ");
-            switch (i){
-              case 0: if (argc == 3) printf("Hit Chance");
-                break;
-              case 1: if (argc == 3) printf("Outgoing Damage");
-                break;
-              case 2: if (argc == 3) printf("Damage Reduction");
-                break;
-              case 3: if (argc == 3) printf("Dodge Chance");
-                break;
-            }
-            if (argc == 3) {
+            if (argc == 3){
+              printf("Your ");
+              switch (i){
+                case 0: printf("Hit Chance");
+                  break;
+                case 1: printf("Outgoing Damage");
+                  break;
+                case 2: printf("Damage Reduction");
+                  break;
+                case 3: printf("Dodge Chance");
+                  break;
+              }
               printf(" has returned to normal.\n");
               sleep(1);
             }
@@ -482,12 +480,10 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       for (i = 0; i < 5; i++){ // resolve skill CD at end of turn
         if (skillCD[i] > 0){
           skillCD[i]--;
-          if (!skillCD[i]){
+          if (!skillCD[i] && argc == 3){
             printf("%s", skillnames[i]);
-            if (argc == 3) {
-              printf(" has recharged.\n");
-              sleep(1);
-            }
+            printf(" has recharged.\n");
+            sleep(1);
           }
         }
       }
