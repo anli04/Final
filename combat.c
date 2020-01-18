@@ -166,6 +166,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       errcheck("getting minor semaphore");
     }
     if (sb.sem_num == 0){ // if holding minor
+      fd = open("CombatToCombat", O_RDONLY);
       sb.sem_num = 1;
       sb.sem_op = -1;
       semop(sem, &sb, 1);
@@ -175,6 +176,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       semop(sem, &sb, 1);
       errcheck("releasing minor semaphore");
       sb.sem_num = 1; // set for next loop
+      close(fd);
     }
     if (update.end){ // for the last to exit
       printf("\n");
@@ -480,7 +482,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
-    fd = open("CombatToCombat", O_WRONLY | O_NONBLOCK);
+    fd = open("CombatToCombat", O_WRONLY | NONBLOCK);
+    printf("pipe check2\n");
     errcheck("opening pipe");
     sprintf(temp, "%d\n", update.dmg);
     write(fd, temp, strlen(temp));
