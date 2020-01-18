@@ -119,24 +119,20 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     hp = stat.END * 5;
     HPMAX = hp;
     sprintf(temp, "%s%d", IPATH, eq.wep);
-    printf("checkpoint4\n");
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
-    printf("checkpoint5\n");
     HIT = solve(fgets(temp, sizeof(temp), f), 0, stat);
     DMG = solve(fgets(temp, sizeof(temp), f), 0, stat);
     sscanf(fgets(temp, sizeof(temp), f), "%lf", &VAR);
     DMGRED = solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE = solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
-    printf("checkpoint6\n");
     double tempvar;
     sprintf(temp, "%s%d", IPATH, eq.armor);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
-    printf("checkpoint7\n");
     HIT *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     DMG *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     sscanf(fgets(temp, sizeof(temp), f), "%lf", &tempvar);
@@ -145,15 +141,12 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
     sprintf(temp, "%s%d", IPATH, eq.helm);
-    printf("checkpoint8: %s\n", temp);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
-    printf("checkpoint8.5\n");
     HIT *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     DMG *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     sscanf(fgets(temp, sizeof(temp), f), "%lf", &tempvar);
-    printf("checkpoint8.75\n");
     VAR *= tempvar;
     DMGRED += solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
@@ -169,6 +162,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   }
   printf("checkpoint10: %d\n", argc);
   while (1){
+    printf("loop\n");
     if (argc == 3) printf("Awaiting opponent...");
     if (sb.sem_num == 1){ // if holding major
       sb.sem_op = 1;
