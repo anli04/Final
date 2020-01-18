@@ -96,7 +96,7 @@ double solve(char * f, int idx, struct stats s){
     n = 0;
     op = '\0';
     if (idx == 0 && ans == 0) op = '+';
-    char * p = strchr("+—*/^", f[idx]);
+    char * p = strchr("+_*/^", f[idx]);
     if (p){
       op = *p;
       idx++;
@@ -128,7 +128,7 @@ double solve(char * f, int idx, struct stats s){
     }
     switch(op){
       case '+': ans += n; break;
-      case '—': ans -= n; break;
+      case '_': ans -= n; break;
       case '*': ans *= n; break;
       case '/': ans /= n; break;
       case '^': ans = pow(ans, n); break;
