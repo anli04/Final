@@ -395,7 +395,7 @@ int main(){
             return -1;
           }
           int status;
-          waitpid(pidC, &status, 0); // wait for player to end
+          waitpid(pidU, &status, 0); // wait for player to end
           sleep(1);
           kill(pidC, SIGKILL);
           kill(pidU, SIGKILL);
@@ -450,11 +450,8 @@ int main(){
           sleep(2);
         }
         else{
-          printf("checkpoint\n");
           save(player);
-          printf("checkpoint1\n");
           execlp("./combat", "./combat", player.NAME, coin, NULL);
-          printf("checkpoint2\n");
           errcheck("starting combat for player");
           return -1;
         }
