@@ -167,7 +167,7 @@ void skillinfo(struct skill * move, int id, struct stats s){
   move->DODGEPLUS = solve(buf, 0, s);
   sscanf(fgets(buf, sizeof(buf), f), "%d\n", &move->TURNS);
   sscanf(fgets(buf, sizeof(buf), f), "%d\n", &move->CD);
-  ffgets(buf, sizeof(buf), f);
+  fgets(buf, sizeof(buf), f);
   sprintf(move->EXA, "%s\n", buf);
   fclose(f);
 }
