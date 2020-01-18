@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     bufftime[i] = 0;
   }
   struct turn update;
-  update.action = malloc(sizeof(char) * 512);
+  update.action = malloc(sizeof(char) * 1024);
   update.exa = malloc(sizeof(char) * 10);
   strcpy(update.action, "\0");
   update.dmg = 0;
@@ -44,8 +44,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   move.EXA = malloc(sizeof(char) * 10);
   struct stats stat;
   FILE * f; // for all the fopens.
-  char temp[512]; // for temporary string holding for functions
-  printf("%d\n", argc);
+  char temp[1024]; // for temporary string holding for functions
   if (argc != 3){ // cpu encounter
     sprintf(temp, "%s%s", EPATH, argv[1]);
     f = fopen(temp, "r");
@@ -75,7 +74,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   }
   else{
     sprintf(temp, "%s%s", CPATH, argv[1]);
-    printf("%s\n", temp);
     f = fopen(temp, "r");
     strcpy(NAME, argv[1]);
     struct equipped eq;
@@ -133,7 +131,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fclose(f);
   }
   fclose(f);
-  printf("checkpoint\n");
   input = 0;
   for (i = 0; i < 5; i++){ // set skill CDs.
     if (skills[i] >= 0){
