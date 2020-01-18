@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   else{ //get the minor semaphore (going first)
     sb.sem_num = 0;
     fdw = open("CtoC1", O_WRONLY);
-    fdr = open("CtoC2", O_RDONLY)
+    fdr = open("CtoC2", O_RDONLY);
   }
   semop(sem, &sb, 1);
   sleep(1); // help ensure that the sems are set up between the two
@@ -180,7 +180,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       semop(sem, &sb, 1);
       errcheck("releasing minor semaphore");
       sb.sem_num = 1; // set for next loop
-      close(fd);
     }
     if (update.end){ // for the last to exit
       printf("\n");
