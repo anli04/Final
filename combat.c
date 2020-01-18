@@ -158,6 +158,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       else skillCD[i] = move.CD;
     }
   }
+  printf("%lf, %lf, %lf, %lf, %lf\n", HIT, DMG, VAR, DMGRED, DODGE);
   while (1){
     printf("loop\n");
     if (argc == 3) printf("Awaiting opponent...\n");
@@ -338,11 +339,12 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       strcat(update.action, skillnames[input]);
       strcat(update.action, ".\n");
       strcpy(update.exa, move.EXA);
+      skillCD[input] = move.CD;
       if (argc == 3) printf("You used %s.\n", skillnames[input]);
       if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update.action, "Your opponent attacks!\n");
         if (argc == 3) printf("You attack.\n");
-        if (rand_double() > HIT * move.HITMOD * (1 + buffs[0])){
+        if (rand_double() < HIT * move.HITMOD * (1 + buffs[0])){
           update.dmg = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
           if (argc == 3) printf("You dealt %d damage!\n", update.dmg);
           if (strchr(move.EXA, 'V')){
@@ -387,7 +389,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         hp = min(HPMAX, hp + update.heal);
         if (argc == 3) printf("You healed for %d.\n", update.heal);
       }
-      printf("buff check1\n");
       if (move.HITBUFF){
         if (strchr(move.EXA, 'D')){
           update.debuff[0] = move.HITBUFF;
@@ -401,7 +402,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You increased your Hit Chance!\n");
         }
       }
-      printf("buff check2\n");
       if (move.DMGBUFF){
         if (strchr(move.EXA, 'D')){
           update.debuff[1] = move.DMGBUFF;
@@ -415,7 +415,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You increased your Outgoing Damage!\n");
         }
       }
-      printf("buff check3\n");
       if (move.REDPLUS){
         if (strchr(move.EXA, 'D')){
           update.debuff[2] = move.REDPLUS;
@@ -444,7 +443,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         }
       }
       printf("\n");
-      printf("bufftime check\n");
       for (i = 0; i < 4; i++){ //resolve buffs/debuffs at end of turn
         if (bufftime[i] > 0){
           bufftime[i]--;
@@ -468,7 +466,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
       }
-      printf("skilltime check1\n");
       for (i = 0; i < 5; i++){ // resolve skill CD at end of turn
         if (skillCD[i] > 0){
           skillCD[i]--;
@@ -483,9 +480,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       }
     }
     // pipe out string of what you did, for opponent
-    printf("pipe check1\n");
-    printf("pipe check2\n");
-    errcheck("opening pipe");
     sprintf(temp, "%d\n", update.dmg);
     write(fdw, temp, strlen(temp));
     sprintf(temp, "%d\n", update.heal);
@@ -525,5 +519,6 @@ char * readline(int fd){
     if (line[i] == '\n') break;
     i++;
   }
+  line[i + 1] = '\0';
   return line;
 }
