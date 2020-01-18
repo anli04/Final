@@ -100,7 +100,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     char ** list = parse_args(temp, ";");
     printf("checkpoint2\n");
     for (i = 0; i < 5; i++){
-      printf("checkpoint2-%d\n", i);
+      printf("checkpoint2-%d-%d-%s\n", i, skills[i], list[i]);
       sscanf(list[i], "%d", &skills[i]);
       if(skills[i] != -1){
         skillinfo(&move, skills[i], stat);
@@ -139,8 +139,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     DMGRED += solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
-    printf("checkpoint8\n");
     sprintf(temp, "%s%d", EPATH, eq.helm);
+    printf("checkpoint8: %s\n", temp);
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
