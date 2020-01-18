@@ -158,9 +158,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       else skillCD[i] = move.CD;
     }
   }
-  printf("%lf, %lf, %lf, %lf, %lf\n", HIT, DMG, VAR, DMGRED, DODGE);
   while (1){
-    printf("loop\n");
     if (argc == 3) printf("Awaiting opponent...\n");
     if (sb.sem_num == 1){ // if holding major
       sb.sem_op = 1;
@@ -217,6 +215,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       }
       line = readline(fdr);
       strcpy(update.exa, line);
+      free(line);
+      line = readline(fdr); // end of file
       free(line);
     }
     else { // going first does not read from pipe
@@ -321,7 +321,9 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         }
         choices[strlen(choices) - 1] = '\0';
         while (!boolean){
-          input = choose(choices);
+          char cpy[10];
+          strcpy(cpy, choices);
+          input = choose(cpy);
           if (skillCD[input] > 0) printf("Skill is recharging.\n");
           else boolean = 1;
         }
@@ -506,6 +508,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
 
 char * readline(int fd){
   char * line = malloc(sizeof(char) * 1024);
+  line[0] = '\0';
   char buf[3];
   int i = 0;
   while(1){
