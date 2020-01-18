@@ -100,6 +100,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     char ** list = parse_args(temp, ";");
     printf("checkpoint2\n");
     for (i = 0; i < 5; i++){
+      printf("checkpoint2-%d\n", i);
       sscanf(list[i], "%d", &skills[i]);
       if(skills[i] != -1){
         skillinfo(&move, skills[i], stat);
@@ -143,23 +144,25 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     f = fopen(temp, "r");
     fgets(temp, sizeof(temp), f);
     fgets(temp, sizeof(temp), f);
+    printf("checkpoint8.5\n");
     HIT *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     DMG *= solve(fgets(temp, sizeof(temp), f), 0, stat);
     sscanf(fgets(temp, sizeof(temp), f), "%lf", &tempvar);
+    printf("checkpoint8.75\n");
     VAR *= tempvar;
     DMGRED += solve(fgets(temp, sizeof(temp), f), 0, stat);
     DODGE += solve(fgets(temp, sizeof(temp), f), 0, stat);
     fclose(f);
   }
   input = 0;
-  printf("checkpoint9\n");
+  printf("checkpoint9: %d\n", argc);
   for (i = 0; i < 5; i++){ // set skill CDs.
     if (skills[i] != -1){
       skillinfo(&move, skills[i], stat);
       if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
     }
   }
-  printf("checkpoint10\n");
+  printf("checkpoint10: %d\n" argc);
   while (1){
     if (argc == 3) printf("Awaiting opponent...");
     if (sb.sem_num == 1){ // if holding major
