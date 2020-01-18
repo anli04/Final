@@ -185,6 +185,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     errcheck("getting semaphore");
     if (strcmp(argv[2], "0") == 0){
+      char * line;
       fd = open("CombatToCombat", O_RDONLY);
       line = readline(fd);
       sscanf(line, "%d\n", &update.dmg);
@@ -510,9 +511,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
 
 char * readline(int fd){
   char * line = malloc(sizeof(char) * 1024);
+  char buf[3];
   int i = 0;
   while(1){
-    if (!read(fd, line[i], 1)) break;
+    if (!read(fd, buf, 1)) break;
+    line[0] = buf[0];
     if (line[i] == '\n') break;
   }
   return line;
