@@ -279,11 +279,13 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
             case 3: if (argc == 3) printf("Dodge Chance");
               break;
           }
-          if (argc == 3) printf(" by %lf%% for %d turns.\n", update.debuff[i] * 100, update.t[i]);
+          if (argc == 3) {
+            printf(" by %lf%% for %d turns.\n", update.debuff[i] * 100, update.t[i]);
+            sleep(1);
+          }
         }
         update.debuff[i] = 0;
         update.t[i] = 0;
-        sleep(1);
       }
       strcpy(update.exa, "\0");
       printf("\n"); // start of interactable turn.
@@ -324,7 +326,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       if (move.HITMOD > 0.0001){ // in case of 0, 0.0, 10^-# etc. shenanigans.
         strcat(update.action, "Your opponent attacks!\n");
         if (argc == 3) printf("You attack.\n");
-        if (rand_double() < HIT * move.HITMOD * (1 + buffs[0])){
+        if (rand_double() > HIT * move.HITMOD * (1 + buffs[0])){
           update.dmg = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
           if (argc == 3) printf("You dealt %d damage!\n", update.dmg);
           if (strchr(move.EXA, 'V')){
@@ -435,7 +437,10 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
               case 3: if (argc == 3) printf("Dodge Chance");
                 break;
             }
-            if (argc == 3) printf(" has returned to normal.\n");
+            if (argc == 3) {
+              printf(" has returned to normal.\n");
+              sleep(1);
+            }
             buffs[i] = 0;
           }
         }
@@ -445,7 +450,10 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           skillCD[i]--;
           if (!skillCD[i]){
             printf("%s", skillnames[i]);
-            if (argc == 3) printf(" has recharged.\n");
+            if (argc == 3) {
+              printf(" has recharged.\n");
+              sleep(1);
+            }
           }
         }
       }
