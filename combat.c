@@ -384,7 +384,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
       }
-      if (strchr(move.EXA, 'H')){
+      if (strchr(move.EXA, 'h')){
         update.heal = (int)(DMG * move.DMGMOD * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
         hp = min(HPMAX, hp + update.heal);
         if (argc == 3) printf("You healed for %d.\n", update.heal);
