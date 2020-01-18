@@ -146,7 +146,8 @@ void skillinfo(struct skill * move, int id, struct stats s){
   printf("test2 %d\n", id);
   move->ID = id;
   printf("test3 %d\n", id);
-  fgets(move->NAME, sizeof(move->NAME), f);
+  fgets(buf, sizeof(buf), f);
+  sprintf(move->NAME, "%s\n", buf);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   printf("test4 %d\n", id);
   printf("%lf\n", solve(buf, 0, s));
@@ -166,6 +167,7 @@ void skillinfo(struct skill * move, int id, struct stats s){
   move->DODGEPLUS = solve(buf, 0, s);
   sscanf(fgets(buf, sizeof(buf), f), "%d\n", &move->TURNS);
   sscanf(fgets(buf, sizeof(buf), f), "%d\n", &move->CD);
-  fgets(move->EXA, sizeof(move->EXA), f);
+  ffgets(buf, sizeof(buf), f);
+  sprintf(move->EXA, "%s\n", buf);
   fclose(f);
 }
