@@ -469,7 +469,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
     f = fopen("CombatToCombat", "w");
-    print("loop's near end\n");
+    printf("loop's near end\n");
     fprintf(f, "%d\n", update.dmg);
     fprintf(f, "%d\n", update.heal);
     fprintf(f, "%s", update.action);
@@ -482,7 +482,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     fprintf(f, "%s", update.exa);
     fprintf(f, "%d\n", update.end);
     fclose(f);
-    print("loop's end\n");
+    printf("loop's end\n");
   }
   free(update.action);
   free(update.exa);
