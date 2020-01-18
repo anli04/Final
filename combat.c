@@ -2,6 +2,7 @@
 
 int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. Fourth is if cpu controlled
   if (strcmp(argv[3], "0") == 0) sleep(1); //get the semaphore second
+  printf("%d\n", argc);
   int victory = 0; // win or lose. 1 or 0
   int sem;
   sem = semget(KEY, 1, 0);

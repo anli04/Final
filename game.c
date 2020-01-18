@@ -378,7 +378,6 @@ int main(){
         }
         sleep(2);
         pid_t pidU = fork(); // player
-        printf("%d\n", pidU);
         if (pidU > 0) { // main game process
           pid_t pidC = fork(); // cpu
           if (pidC == 0){
@@ -453,7 +452,9 @@ int main(){
         else{
           printf("checkpoint\n");
           save(player);
+          printf("checkpoint1\n");
           execlp("./combat", "./combat", player.NAME, coin, NULL);
+          printf("checkpoint2\n");
           errcheck("starting combat for player");
           return -1;
         }
