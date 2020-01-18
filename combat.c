@@ -181,6 +181,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       errcheck("releasing minor semaphore");
       sb.sem_num = 1; // set for next loop
     }
+    printf("sem check\n");
     if (update.end){ // for the last to exit
       printf("\n");
       victory = 1;
@@ -520,7 +521,7 @@ char * readline(int fd){
   int i = 0;
   while(1){
     if (!read(fd, buf, 1)) break;
-    line[0] = buf[0];
+    line[i] = buf[0];
     if (line[i] == '\n') break;
     i++;
   }
