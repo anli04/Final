@@ -482,7 +482,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     }
     // pipe out string of what you did, for opponent
     printf("pipe check1\n");
-    fd = open("CombatToCombat", O_WRONLY | NONBLOCK);
+    fd = open("CombatToCombat", O_WRONLY | O_NONBLOCK);
     printf("pipe check2\n");
     errcheck("opening pipe");
     sprintf(temp, "%d\n", update.dmg);
