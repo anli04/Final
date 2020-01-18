@@ -216,7 +216,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       line = readline(fdr);
       strcpy(update.exa, line);
       free(line);
-      line = readline(fdr); // end of file
+      line = readline(fdr);
+      sscanf(line, "%d\n", &update.end);
       free(line);
     }
     else { // going first does not read from pipe
@@ -345,7 +346,9 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
         strcat(update.action, "Your opponent attacks!\n");
         if (argc == 3) printf("You attack.\n");
         if (rand_double() < HIT * move.HITMOD * (1 + buffs[0])){
-          update.dmg = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+          int dtemp = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+          if (dtemp < 1) dtemp = 1;
+          update.dmg = dtemp;
           if (argc == 3) printf("You dealt %d damage!\n", update.dmg);
           if (strchr(move.EXA, 'V')){
             update.heal = update.dmg;
@@ -368,6 +371,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           strcat(update.action, "Your opponent attacks again!\n");
           if (rand_double() < HIT * move.HITMOD * (1 + buffs[0])){
             dtemp = (int)(DMG * move.DMGMOD * (1 + buffs[1]) * (1 + VAR * move.VARMOD * (rand_double() * 2 - 1)));
+            if (dtemp < 1) dtemp = 1;
             update.dmg += dtemp;
             if (argc == 3) printf("You dealt %d damage!\n", dtemp);
             if (strchr(move.EXA, 'V')){
