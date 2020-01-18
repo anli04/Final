@@ -146,7 +146,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
   for (i = 0; i < 5; i++){ // set skill CDs.
     if (skills[i] != -1){
       skillinfo(&move, skills[i], stat);
-      if (strchr(move.EXA, 'Q')) skillCD[i] = move.CD;
+      if (strchr(move.EXA, 'Q')) skillCD[i] = 0;
+      else skillCD[i] = move.CD;
     }
   }
   while (1){
