@@ -184,7 +184,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       errcheck("releasing major semaphore");
       break;
     }
-    errcheck("getting semaphore");
     if (strcmp(argv[2], "0") == 0){
       char * line;
       fd = open("CombatToCombat", O_RDONLY | O_NONBLOCK);
