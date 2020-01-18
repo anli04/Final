@@ -17,8 +17,8 @@ int main(){
   struct character player;
   player.NAME = malloc(sizeof(char) * 26);
   char skillnames[5][30];
-  char * itemDict[6] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat"};
-  char * skillDict[11] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate"};
+  char * itemDict[9] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Robe", "Mage Hat"};
+  char * skillDict[12] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge"};
   struct item object;
   object.NAME = malloc(sizeof(char) * 30);
   struct skill move;
@@ -325,6 +325,7 @@ int main(){
                 break;
               case 'P': printf("- Damage cannot be dodged or reduced\n");
                 break;
+              case 'R': printf("- Reduces skill cooldowns by 1\n");
               default: printf("ERROR Unknown\n");
                 break;
             }
@@ -392,7 +393,7 @@ int main(){
         if (pidU > 0) { // main game process
           pid_t pidC = fork(); // cpu
           if (pidC == 0){
-            int enc = (int)(rand_double() * 2); //unweighted random encounters.
+            int enc = (int)(rand_double() * 6); //unweighted random encounters.
             char encs[50];
             sprintf(encs, "%s%d", EPATH, enc);
             FILE * fenc = fopen(encs, "r");
@@ -421,22 +422,7 @@ int main(){
             if (rand_double() < solve("L/250+0.2", 0, player.stats)){ // 20% loot chance + Luck/2.5 %
               int loot = 0;
               if (rand_double() < 0.3){ // 30% for skill
-                loot = (int)(0.999999 + rand_double() * 10); // number of skills not including default.
-                int j = 0;
-                for (; j < sizeof(player.inventory.invI); j++){
-                  if (player.inventory.invI[j] == -1) break;
-                }
-                if (j == sizeof(player.inventory.invI)){
-                  printf("Your inventory is full.\n");
-                }
-                else{
-                  player.inventory.invI[j] = loot;
-                  iteminfo(&object, loot, player.stats);
-                  printf("You looted a %s!\n", object.NAME);
-                }
-              }
-              else{
-                loot = (int)(2.999999 + rand_double() * 3); // number of equipment not including default.
+                loot = (int)(0.999999 + rand_double() * 11); // number of skills not including default.
                 int j = 0;
                 for (; j < sizeof(player.inventory.invS); j++){
                   if (player.inventory.invS[j] == -1) break;
@@ -450,9 +436,24 @@ int main(){
                   printf("You learned %s!\n", move.NAME);
                 }
               }
+              else{
+                loot = (int)(2.999999 + rand_double() * 6); // number of equipment not including default.
+                int j = 0;
+                for (; j < sizeof(player.inventory.invI); j++){
+                  if (player.inventory.invI[j] == -1) break;
+                }
+                if (j == sizeof(player.inventory.invI)){
+                  printf("Your inventory is full.\n");
+                }
+                else{
+                  player.inventory.invI[j] = loot;
+                  iteminfo(&object, loot, player.stats);
+                  printf("You looted a %s!\n", object.NAME);
+                }
+              }
             }
             else{
-              printf("You do not find any loot.");
+              printf("You do not find any loot.\n");
             }
           }
           else{

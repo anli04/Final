@@ -45,6 +45,7 @@ Skill "EXA" notation and notes:
 "H" = deals half damage when dodged.
 "F" = damage cannot be reduced.
 "P" = damage cannot be dodged or reduced.
+"R" = all skill cooldowns are reduced by 1.
 
 Item Compendium:
 0 = unarmed (weapon)
@@ -53,6 +54,9 @@ Item Compendium:
 3 = Knife (weapon)
 4 = Leather Armor (armor)
 5 = Hat (helm)
+6 = Wand (weapon)
+7 = Robe (armor)
+8 = Mage Hat (helm)
 
 Skill Compendium:
 0 = Strike
@@ -66,7 +70,12 @@ Skill Compendium:
 8 = Seeking Bolt
 9 = Fireball
 10 = Disintegrate
+11 = Recharge
 
 Encounter Compendium:
 0 = Insect
 1 = Rat
+2 = Peasant
+3 = Wolf
+4 = Knight
+5 = Mage

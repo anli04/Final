@@ -441,6 +441,20 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           if (argc == 3) printf("You increased your Dodge Chance!\n");
         }
       }
+      if (strchr(move.EXA, 'R')){
+        for (i = 0; i < 5; i++){ // resolve skill CD at end of turn
+          if (skillCD[i] > 0){
+            skillCD[i]--;
+            if (!skillCD[i]){
+              printf("%s", skillnames[i]);
+              if (argc == 3) {
+                printf(" has recharged.\n");
+                sleep(1);
+              }
+            }
+          }
+        }
+      }
       printf("\n");
       for (i = 0; i < 4; i++){ //resolve buffs/debuffs at end of turn
         if (bufftime[i] > 0){
