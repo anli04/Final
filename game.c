@@ -417,7 +417,7 @@ int main(){
           }
           else if (WEXITSTATUS(status) == 1){
             printf("You win!\n");
-            sleep(1);
+            sleep(2);
             if (rand_double() < solve("L/250+0.2", 0, player.stats)){ // 20% loot chance + Luck/2.5 %
               int loot = 0;
               if (rand_double() < 0.3){ // 30% for skill
