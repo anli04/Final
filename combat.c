@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     sb.sem_num = 0;
   }
   semop(sem, &sb, 1);
-  sleep(1) // help ensure that the sems are set up between the two
+  sleep(1); // help ensure that the sems are set up between the two
   int victory = 0; // win or lose. 1 or 0
   int input;
   char NAME[40];
