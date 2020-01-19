@@ -275,7 +275,7 @@ int main(){
             case 3:
 	      printf("\n");
               if (fork() == 0) {
-                lootbox(player.stats);
+                lootbox(&player.stats);
                 exit(5);
               }
               else {
