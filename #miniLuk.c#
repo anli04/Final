@@ -58,3 +58,10 @@ int lootbox(struct stats * stats) {
 }
 
 
+int main() {
+  srand(time(NULL));
+  struct stats stats;
+  stats.STR = 10;
+  stats.DEX = 10;
+  stats.END = 10;
+  stats.INT = 10

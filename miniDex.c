@@ -5,12 +5,11 @@
 #include <unistd.h>
 
 
-enum { MAXL = 100000, MAXC = 50 };
 int typeracer() {
-    srand(time(NULL));
+    enum { MAXL = 100000, MAXC = 50 };
     char (*lines)[MAXC] = NULL; /* pointer to array of type char [MAXC] */
     int i, x, n = 0, score = 0, count = 0;
-    FILE *fd = fopen("words", "r");
+    FILE *fd = fopen("/usr/share/dict/words", "r");
     if (!fd) {  /* valdiate file open for reading */
         fprintf (stderr, "error: file open failed '%s'.\n", "words");
         return 1;
@@ -164,8 +163,3 @@ int numbers() {
 }
 
 
-
-int main() {
-  srand(time(NULL));
-  numbers();
-}

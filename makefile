@@ -4,8 +4,8 @@ else
 	CC = gcc
 endif
 
-all: game.o funcs.o combat.o miniDex.o miniInt.o miniLuk.o miniSTR.o
-	$(CC) -o game game.o funcs.o miniDex.o miniInt.o miniLuk.o miniSTR.o -lm
+all: game.o funcs.o combat.o miniDex.o miniInt.o miniLuk.o MiniSTR.o
+	$(CC) -o game game.o funcs.o miniDex.o miniInt.o miniLuk.o MiniSTR.o -lm
 	$(CC) -o combat combat.o funcs.o -lm
 
 game.o: game.c rpg.h
@@ -27,7 +27,7 @@ miniLuk.o: miniLuk.c rpg.h
 	$(CC) -c miniLuk.c
 
 miniSTR.o: miniSTR.c rpg.h
-	$(CC) -c miniSTR.c
+	$(CC) -c MiniSTR.c
 
 run:
 	./game

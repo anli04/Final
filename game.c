@@ -220,6 +220,7 @@ int main(){
                 case 1:
                   if (fork() == 0) {
                     typeracer();
+		    exit(1);
                   }
                   else {
                     wait(NULL);
@@ -228,13 +229,14 @@ int main(){
                 case 2:
                   if (fork() == 0) {
                     numbers();
+		    exit(2);
                   }
                   else {
                     wait(NULL);
                     break;
                   }
               }
-
+	      break;
               printf("Item equipped\n");
               sleep(1);
             }

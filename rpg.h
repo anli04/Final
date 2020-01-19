@@ -115,3 +115,5 @@ int size_array(char ** arr);
 double nextNum(char * f, int idx, struct stats s); // mainly for use in solve
 double solve(char * f, int idx, struct stats s); // see info for info
 void skillinfo(struct skill * move, int id, struct stats s); // get skill info
+int typeracer();
+int numbers();
