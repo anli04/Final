@@ -93,7 +93,8 @@ int wordGame() {
 
   }
 
-
+  printf("Final Score: %d\n",score);
+  return score;
 
 
 }
@@ -172,6 +173,9 @@ int mathGame() {
     sleep(1);
 
   }
+
+  printf("Final Score: %d\n",score);
+  return score;
 
 
 }

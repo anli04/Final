@@ -48,7 +48,7 @@ int lootbox(struct stats * stats) {
     printf("\n\n\nCongratulations! You got %d luk!\n",l);
     sleep(1);
 
-    stats->LUK += l;
+    return l;
   }
   else {
     system("clear");

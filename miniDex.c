@@ -82,7 +82,7 @@ int typeracer() {
     printf("Speed: %d WPM", wpm);
     free (lines);
     free(l);   /* free allocated memory */
-    return 0;
+    return score;
 }
 
 
@@ -153,6 +153,9 @@ int numbers() {
 
 
   }
+
+  printf("\nFinal Score: %d\n",score);
+  return score;
 
 
 
