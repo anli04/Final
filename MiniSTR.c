@@ -48,6 +48,8 @@ int game() {
 
   }
 
+  return reps;
+
 
 }
 
