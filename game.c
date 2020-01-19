@@ -291,6 +291,7 @@ int main(){
           choices[strlen(choices) - 1] = '\0';
           input = choose(choices);
           if (input == 0) break;
+          system("clear");
           skillinfo(&move, player.inventory.invS[input - 1], player.stats);
           printf("%s: %s\n","Name", move.NAME);
           printf("%s: %lf\n","Hit Chance Modifier", move.HITMOD);
@@ -338,6 +339,7 @@ int main(){
           strcpy(choices, "1;2;3");
           input = choose(choices);
           int boolean = 0;
+          system("clear");
           switch(input) {
             case 1:
               for (n = 1; n < 5; n++){

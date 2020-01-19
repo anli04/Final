@@ -96,7 +96,7 @@ double solve(char * f, int idx, struct stats s){
   while (f[idx]){
     n = 0;
     op = '\0';
-    if (idx == 0 && ans == 0) op = '+';
+    if (ans == 0) op = '+';
     char * p = strchr("+_*/^", f[idx]);
     if (p){
       op = *p;
