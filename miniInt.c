@@ -34,7 +34,7 @@ int wordGame() {
     system("clear");
     r = (int)rand()%i;
     line = parse_args(lines[r],";");
-    s = size_array(line);
+    s = size_array(lines[r]);
     r_w = (int)rand()%s;
     r_w2 = (int)rand()%s;
     while(r_w2 == r_w) {

@@ -9,6 +9,7 @@ all: game.o funcs.o combat.o miniDex.o miniInt.o miniLuk.o MiniSTR.o
 	$(CC) -o combat combat.o funcs.o -lm
 
 game.o: game.c rpg.h
+	gcc rpg.h
 	$(CC) -c game.c
 
 funcs.o: funcs.c rpg.h
