@@ -111,7 +111,13 @@ double min(double n, double m); // returns smallest of two doubles
 void errcheck(char * m); //error checking
 int choose(char * choices); // handles player input
 char ** parse_args(char * line, char * s);
-int size_array(char ** arr);
+int size_array(char * line);
 double nextNum(char * f, int idx, struct stats s); // mainly for use in solve
 double solve(char * f, int idx, struct stats s); // see info for info
 void skillinfo(struct skill * move, int id, struct stats s); // get skill info
+int typeracer();
+int numbers();
+int lifting();
+int lootbox();
+int wordGame();
+int mathGame();

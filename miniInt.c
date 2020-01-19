@@ -8,26 +8,6 @@
 
 
 
-char ** parse_args(char * line, char * s) {
-    char * copy = strdup(line);
-    char ** args = malloc(sizeof(char)*1024);
-    int i = 0;
-    char * iter;
-    while((iter = strsep(&copy,s)) != NULL) {
-        args[i] = malloc(sizeof(char)*32);
-        strcpy(args[i],iter);
-        i++;
-    }
-    return args;
-}
-
-int size_array(char ** arr) {
-  int i = 0;
-  while(arr[i]) {
-    i++;
-  }
-  return i;
-}
 
 
 int wordGame() {
@@ -54,7 +34,7 @@ int wordGame() {
     system("clear");
     r = (int)rand()%i;
     line = parse_args(lines[r],";");
-    s = size_array(line);
+    s = size_array(lines[r]);
     r_w = (int)rand()%s;
     r_w2 = (int)rand()%s;
     while(r_w2 == r_w) {
@@ -62,7 +42,7 @@ int wordGame() {
     }
 
     printf("\n------------------------------------------------------\n");
-    printf("Welcome to Intelligence Trial!");
+    printf("Welcome to Word Trial!");
     printf("\n------------------------------------------------------\n");
     printf("INSTRUCTIONS:\n");
     printf("Answer the prompt in lowercase letters. Type \'q\' to quit the game.\n\n");
@@ -177,12 +157,5 @@ int mathGame() {
   printf("Final Score: %d\n",score);
   return score;
 
-
-}
-
-
-int main() {
-  srand(time(NULL));
-  mathGame();
 
 }

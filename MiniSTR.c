@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 
-int game() {
+int lifting() {
   char * f1 = "       ___\n      (   )\n       ‾|‾\n     /‾‾|‾‾\\\n❚█═════════════█❚\n        |\n       / \\\n      /   \\";
   char * f2 = "       ___\n      (   )\n❚█═════════════█❚\n     \\  |  /\n      ‾‾|‾‾\n        |\n       / \\\n      /   \\";
   char* clear[1];
@@ -51,8 +51,4 @@ int game() {
   return reps;
 
 
-}
-
-int main(){
-  game();
 }

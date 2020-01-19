@@ -208,36 +208,92 @@ int main(){
           switch(input) {
             case 1:
               while (1) {
-              strcpy(choices, "0;1;2;\0");
-              printf("0) Go Back\n");
-              printf("1) Type Trial\n");
-              printf("2) Type Trial: Numbers\n");
-              input = choose(choices);
-              if (input == 0) break;
-              system("clear");
-              pid_t p;
-              switch(input) {
-                case 1:
-                  if (fork() == 0) {
-                    typeracer();
+                strcpy(choices, "0;1;2;\0");
+                printf("0) Go Back\n");
+                printf("1) Type Trial\n");
+                printf("2) Type Trial: Numbers\n");
+                input = choose(choices);
+                if (input == 0) break;
+                system("clear");
+                pid_t p;
+                switch(input) {
+                  case 1:
+                    if (fork() == 0) {
+                      typeracer();
+  		      exit(1);
+                    }
+                    else {
+                      wait(NULL);
+                      break;
+                    }
+                  case 2:
+                    if (fork() == 0) {
+                      numbers();
+  		      exit(2);
+                    }
+                    else {
+                      wait(NULL);
+                      break;
+                    }
                   }
-                  else {
-                    wait(NULL);
-                    break;
-                  }
-                case 2:
-                  if (fork() == 0) {
-                    numbers();
-                  }
-                  else {
-                    wait(NULL);
-                    break;
-                  }
+		break;
               }
-
-              printf("Item equipped\n");
-              sleep(1);
+	      break;
+            case 2:
+              while (1) {
+                strcpy(choices, "0;1;2;\0");
+                printf("0) Go Back\n");
+                printf("1) Word Trial\n");
+                printf("2) Math Trial\n");
+                input = choose(choices);
+                if (input == 0) break;
+                system("clear");
+                pid_t p;
+                switch(input) {
+                  case 1:
+                    if (fork() == 0) {
+                      wordGame();
+                      exit(3);
+                    }
+                    else {
+                      wait(NULL);
+                      break;
+                    }
+                  case 2:
+                    if (fork() == 0) {
+                      mathGame();
+                      exit(4);
+                    }
+                    else {
+                      wait(NULL);
+                      break;
+                    }
+                  }
+                break;
+              }
+	      break;
+            case 3:
+	      printf("\n");
+              if (fork() == 0) {
+                lootbox(&player.stats);
+                exit(5);
+              }
+              else {
+                wait(NULL);
+		break;
+              }
+	      break;
+            case 4:
+	    printf("\n");
+            if (fork() == 0) {
+              lifting();
+              exit(6);
             }
+            else {
+              wait(NULL);
+	      break;
+            }
+	    break;
           }
           system("clear");
         }

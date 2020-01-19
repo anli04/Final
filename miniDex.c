@@ -5,12 +5,11 @@
 #include <unistd.h>
 
 
-enum { MAXL = 100000, MAXC = 50 };
 int typeracer() {
-    srand(time(NULL));
+    enum { MAXL = 100000, MAXC = 50 };
     char (*lines)[MAXC] = NULL; /* pointer to array of type char [MAXC] */
     int i, x, n = 0, score = 0, count = 0;
-    FILE *fd = fopen("words", "r");
+    FILE *fd = fopen("/usr/share/dict/words", "r");
     if (!fd) {  /* valdiate file open for reading */
         fprintf (stderr, "error: file open failed '%s'.\n", "words");
         return 1;
@@ -79,7 +78,9 @@ int typeracer() {
     }
     printf("Score: %d/60\n", score);
     int wpm = score * 60 / d;
-    printf("Speed: %d WPM", wpm);
+    printf("Speed: %d WPM\n", wpm);
+   
+    sleep(3);
     free (lines);
     free(l);   /* free allocated memory */
     return score;
@@ -106,7 +107,7 @@ int numbers() {
   char input[16];
   char history[4096];
   d = malloc(sizeof(char)*16);
-  while(1) {
+  while(strcmp(input,"q\n") != 0) {
     r = rand()%10000000;
     sprintf(n,"%d",r);
     *(n+strlen(n)-2) = '\0';
@@ -133,12 +134,14 @@ int numbers() {
     strcat(history,input);
     history[strlen(history)-1] = '\0';
 
-    if(strcmp(input,full) == 10) {
-      score += 1;
-      strcat(history," ✔");
-    }
-    else {
-      strcat(history," ✗");
+    if(strcmp(input,"q\n") != 0) {
+      if(strcmp(input,full) == 10) {
+        score += 1;
+        strcat(history," ✔");
+      }
+      else {
+        strcat(history," ✗");
+      }
     }
 
     strcat(history,"\n");
@@ -155,17 +158,11 @@ int numbers() {
   }
 
   printf("\nFinal Score: %d\n",score);
+  sleep(3);
   return score;
 
 
 
 
 
-}
-
-
-
-int main() {
-  srand(time(NULL));
-  numbers();
 }
