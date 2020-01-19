@@ -191,7 +191,56 @@ int main(){
         break;
       case 2: // Training
         // Training
+        while (1){
+          int index = 0;
+          int n;
+          char choices[60]; // max number storage is 15.
+          strcpy(choices, "0;1;2;3;4;\0");
+          printf("0) Go Back\n");
+          printf("1) Dexterity Training\n");
+          printf("2) Intelligence Training\n");
+          printf("3) Luck Training\n");
+          printf("4) Strength Training\n");
+          input = choose(choices);
+          if (input == 0) break;
+          system("clear");
+          int boolean = 1;
+          switch(input) {
+            case 1:
+              while (1) {
+              strcpy(choices, "0;1;2;\0");
+              printf("0) Go Back\n");
+              printf("1) Type Trial\n");
+              printf("2) Type Trial: Numbers\n");
+              input = choose(choices);
+              if (input == 0) break;
+              system("clear");
+              pid_t p;
+              switch(input) {
+                case 1:
+                  if (fork() == 0) {
+                    typeracer();
+                  }
+                  else {
+                    wait(NULL);
+                    break;
+                  }
+                case 2:
+                  if (fork() == 0) {
+                    numbers();
+                  }
+                  else {
+                    wait(NULL);
+                    break;
+                  }
+              }
 
+              printf("Item equipped\n");
+              sleep(1);
+            }
+          }
+          system("clear");
+        }
 
 
 
