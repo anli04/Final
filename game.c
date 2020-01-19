@@ -232,7 +232,7 @@ int main(){
           for(n = 0; n < 5; n++) {
               printf("%d, ", object.REQ[n]);
           }
-          int input2 = input;
+          int input2 = input - 1;
           printf("\n\n1) Equip\n");
           printf("2) Go Back\n");
           printf("3) Sell\n");
