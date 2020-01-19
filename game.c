@@ -521,11 +521,12 @@ int readInt(FILE * c){ // Up to four digits
 }
 
 void iteminfo(struct item * object, int id, struct stats s){
-  char buf[1024];
+  char buf[128];
   sprintf(buf, "%s%d", IPATH, id);
   FILE * f = fopen(buf, "r");
   object->ID = id;
-  fgets(object->NAME, sizeof(object->NAME), f);
+  *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
+  strcpy(object->NAME, buf);
   sscanf(fgets(buf, sizeof(buf), f), "%c\n", &object->type);
   *strchr(fgets(buf, sizeof(buf), f), '\n') = 0;
   object->HIT = solve(buf, 0, s);
