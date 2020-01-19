@@ -105,7 +105,7 @@ int numbers() {
   char input[16];
   char history[4096];
   d = malloc(sizeof(char)*16);
-  while(1) {
+  while(strcmp(input,"q\n") != 0) {
     r = rand()%10000000;
     sprintf(n,"%d",r);
     *(n+strlen(n)-2) = '\0';
@@ -132,12 +132,14 @@ int numbers() {
     strcat(history,input);
     history[strlen(history)-1] = '\0';
 
-    if(strcmp(input,full) == 10) {
-      score += 1;
-      strcat(history," ✔");
-    }
-    else {
-      strcat(history," ✗");
+    if(strcmp(input,"q\n") != 0) {
+      if(strcmp(input,full) == 10) {
+        score += 1;
+        strcat(history," ✔");
+      }
+      else {
+        strcat(history," ✗");
+      }
     }
 
     strcat(history,"\n");
@@ -161,5 +163,3 @@ int numbers() {
 
 
 }
-
-
