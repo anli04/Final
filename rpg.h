@@ -117,3 +117,7 @@ double solve(char * f, int idx, struct stats s); // see info for info
 void skillinfo(struct skill * move, int id, struct stats s); // get skill info
 int typeracer();
 int numbers();
+int lifting();
+int lootbox();
+int wordGame();
+int mathGame();
