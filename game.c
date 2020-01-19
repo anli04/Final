@@ -258,10 +258,10 @@ int main(){
               printf("Going Back...\n");
               break;
             case 3:
-              n = player.inventory.invI[input2];
-              if (player.equipped.wep == n) player.equipped.wep = 0; // unequip if deleting equipped stuff
-              if (player.equipped.armor == n) player.equipped.armor = 1;
-              if (player.equipped.helm == n) player.equipped.helm = 2;
+              n = input2;
+              if (player.equipped.wep == player.inventory.invI[n]) player.equipped.wep = 0; // unequip if deleting equipped stuff
+              if (player.equipped.armor == player.inventory.invI[n]) player.equipped.armor = 1;
+              if (player.equipped.helm == player.inventory.invI[n]) player.equipped.helm = 2;
               for (; n < 14; n++){
                 player.inventory.invI[n] = player.inventory.invI[n + 1];
               }
@@ -363,9 +363,9 @@ int main(){
               system("clear");
               break;
             case 3:
-              n = player.inventory.invS[input2];
+              n = input2;
               for (int i = 0; i < 5; i++){
-                if (player.skills[i] == n) player.skills[i] = -1;
+                if (player.skills[i] == player.inventory.invS[n]) player.skills[i] = -1;
               }
               for (; n < 14; n++){
                 player.inventory.invS[n] = player.inventory.invS[n + 1];
