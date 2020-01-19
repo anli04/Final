@@ -220,7 +220,7 @@ int main(){
                   case 1:
                     if (fork() == 0) {
                       typeracer();
-  		                exit(1);
+  		      exit(1);
                     }
                     else {
                       wait(NULL);
@@ -229,15 +229,16 @@ int main(){
                   case 2:
                     if (fork() == 0) {
                       numbers();
-  		                exit(2);
+  		      exit(2);
                     }
                     else {
                       wait(NULL);
                       break;
                     }
                   }
-    	          break;
+		break;
               }
+	      break;
             case 2:
               while (1) {
                 strcpy(choices, "0;1;2;\0");
@@ -252,7 +253,7 @@ int main(){
                   case 1:
                     if (fork() == 0) {
                       wordGame();
-                      exit(1);
+                      exit(3);
                     }
                     else {
                       wait(NULL);
@@ -261,7 +262,7 @@ int main(){
                   case 2:
                     if (fork() == 0) {
                       mathGame();
-                      exit(2);
+                      exit(4);
                     }
                     else {
                       wait(NULL);
@@ -270,26 +271,29 @@ int main(){
                   }
                 break;
               }
+	      break;
             case 3:
-              pid_t p;
+	      printf("\n");
               if (fork() == 0) {
                 lootbox(player.stats);
-                exit(1);
+                exit(5);
               }
               else {
                 wait(NULL);
-                break;
+		break;
               }
+	      break;
             case 4:
-            pid_t p;
+	    printf("\n");
             if (fork() == 0) {
               lifting();
-              exit(1);
+              exit(6);
             }
             else {
               wait(NULL);
-              break;
+	      break;
             }
+	    break;
           }
           system("clear");
         }
