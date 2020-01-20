@@ -14,7 +14,12 @@
   - (Calvin) attempted to implement stat/req parsing (Anthony fixed it)
 1/14/20:
   - (Calvin) wrote layout for itemInv printing in inventory
+  - (Anthony) completed a working combat program for player vs cpu
 1/15/20:
   - (Calvin) added instructions/directions to each minigame, added some words to words.txt
+1/18/20:
+  - (Anthony) fixed inventory management.
 1/19/20:
+  - (ALL) Testing and Bug fixing
+  - (Anthony) added more content
   - (Calvin) created initial layout for and linked minigame connection to game.c, fixed typeracer file reading, added sleep statements to games
