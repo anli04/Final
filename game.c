@@ -346,6 +346,7 @@ int main(){
 
 
 
+
               statCAP += inc;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
