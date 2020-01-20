@@ -209,9 +209,10 @@ int main(){
           input = choose(choices);
           if (input == 0) break;
           system("clear");
+          int inc = 0;
+          int delta = 0;
           switch(input){
             case 1:
-              int inc = 0;
               while (1) {
                 strcpy(choices, "0;1;2;\0");
                 printf("0) Go Back\n");
@@ -233,7 +234,6 @@ int main(){
                 break;
               }
               statCAP += inc;
-              int delta = 0;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
                 statCAP = 150;
@@ -252,7 +252,6 @@ int main(){
               statarray[1] = player.stats.DEX;
               break;
             case 2:
-              int inc = 0;
               while (1) {
                 strcpy(choices, "0;1;2;\0");
                 printf("0) Go Back\n");
@@ -274,7 +273,6 @@ int main(){
                 break;
               }
               statCAP += inc;
-              int delta = 0;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
                 statCAP = 150;
@@ -294,9 +292,8 @@ int main(){
               break;
             case 3:
               printf("\n");
-              int inc = lootbox(&player.stats);
+              inc = lootbox(&player.stats);
               statCAP += inc;
-              int delta = 0;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
                 statCAP = 150;
@@ -313,10 +310,9 @@ int main(){
               statarray[4] = player.stats.LUK;
               break;
             case 4:
-              int inc = lifting();
+              inc = lifting();
               inc /= 50;
               statCAP += inc;
-              int delta = 0;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
                 statCAP = 150;
@@ -336,7 +332,7 @@ int main(){
               break;
             case 5:
               // something
-              int inc = 0;
+              inc = 0;
 
 
 
@@ -351,7 +347,6 @@ int main(){
 
 
               statCAP += inc;
-              int delta = 0;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
                 statCAP = 150;
@@ -387,7 +382,7 @@ int main(){
                       break;
                     }
                     player.stats.DEX -= 1;
-                    statCap--;
+                    statCAP--;
                     printf("Your DEX has decreased by 1. Current DEX: %d\n", player.stats.DEX);
                     statarray[1] = player.stats.DEX;
                     break;
@@ -397,7 +392,7 @@ int main(){
                       break;
                     }
                     player.stats.INT -= 1;
-                    statCap--;
+                    statCAP--;
                     printf("Your INT has decreased by 1. Current INT: %d\n", player.stats.INT);
                     statarray[3] = player.stats.INT;
                     break;
@@ -407,7 +402,7 @@ int main(){
                       break;
                     }
                     player.stats.LUK -= 1;
-                    statCap--;
+                    statCAP--;
                     printf("Your LUK has decreased by 1. Current LUK: %d\n", player.stats.LUK);
                     statarray[4] = player.stats.LUK;
                     break;
@@ -417,7 +412,7 @@ int main(){
                       break;
                     }
                     player.stats.STR -= 1;
-                    statCap--;
+                    statCAP--;
                     printf("Your STR has decreased by 1. Current STR: %d\n", player.stats.STR);
                     statarray[0] = player.stats.STR;
                     break;
@@ -427,7 +422,7 @@ int main(){
                       break;
                     }
                     player.stats.END -= 1;
-                    statCap--;
+                    statCAP--;
                     printf("Your END has decreased by 1. Current END: %d\n", player.stats.END);
                     statarray[2] = player.stats.END;
                     break;
