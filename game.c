@@ -16,6 +16,10 @@ int main(){
   srand(time(NULL));
   struct character player;
   player.NAME = malloc(sizeof(char) * 26);
+  int statCAP; // max is 150.
+
+  int statbonus[5]; // [NOT YET IMPLEMENTED] from items, separate from normal stats
+
   char skillnames[5][30];
   char * itemDict[9] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Robe", "Mage Hat"};
   char * skillDict[12] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge"};
@@ -32,7 +36,7 @@ int main(){
   char choices[100]; // note that this number will inhibit inventory size
   printf("Welcome to [game name]!\n");
   printf("Make selections by typing the number corresponding to your choice.\n");
-  int del = 1;;
+  int del = 1;
   while(del){
     printf("1) Create Character\n2) Select Character\n3) Delete Character\n");
     strcpy(choices, "1;2;3");
@@ -133,6 +137,7 @@ int main(){
   statarray[3] = player.stats.INT;
   player.stats.LUK = readInt(c);
   statarray[4] = player.stats.LUK;
+  statCAP = player.stats.STR + player.stats.DEX + player.stats.END + player.stats.INT + player.stats.LUK;
   player.equipped.wep = readInt(c);
   player.equipped.armor = readInt(c);
   player.equipped.helm = readInt(c);
@@ -192,21 +197,21 @@ int main(){
       case 2: // Training
         // Training
         while (1){
-          int index = 0;
-          int n;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0;1;2;3;4;\0");
+          strcpy(choices, "0;1;2;3;4;5;6\0");
           printf("0) Go Back\n");
           printf("1) Dexterity Training\n");
           printf("2) Intelligence Training\n");
           printf("3) Luck Training\n");
           printf("4) Strength Training\n");
+          printf("5) Endurance Training\n");
+          printf("6) Remove Stats\n");
           input = choose(choices);
           if (input == 0) break;
           system("clear");
-          int boolean = 1;
-          switch(input) {
+          switch(input){
             case 1:
+              int inc = 0;
               while (1) {
                 strcpy(choices, "0;1;2;\0");
                 printf("0) Go Back\n");
@@ -215,31 +220,39 @@ int main(){
                 input = choose(choices);
                 if (input == 0) break;
                 system("clear");
-                pid_t p;
                 switch(input) {
                   case 1:
-                    if (fork() == 0) {
-                      typeracer();
-  		      exit(1);
-                    }
-                    else {
-                      wait(NULL);
-                      break;
-                    }
+                    inc = typeracer();
+                    inc /= 30;
+                    break;
                   case 2:
-                    if (fork() == 0) {
-                      numbers();
-  		      exit(2);
-                    }
-                    else {
-                      wait(NULL);
-                      break;
-                    }
-                  }
-		break;
+                    inc = numbers();
+                    inc /= 5;
+                    break;
+                }
+                break;
               }
-	      break;
+              statCAP += inc;
+              int delta = 0;
+              if (statCAP >= 150) {
+                delta = statCAP - 150;
+                statCAP = 150;
+                inc -= delta;
+                printf("You reached your stat distribution limit of 150\n");
+                sleep(1);
+              }
+              printf("You increased your DEX by %d!\n", inc);
+              player.stats.DEX += inc;
+              sleep(1);
+              if (player.stats.DEX >= 50){
+                printf("You maxed out your DEX at 50.\n");
+                player.stats.DEX = 50;
+              }
+              sleep(1);
+              statarray[1] = player.stats.DEX;
+              break;
             case 2:
+              int inc = 0;
               while (1) {
                 strcpy(choices, "0;1;2;\0");
                 printf("0) Go Back\n");
@@ -248,58 +261,184 @@ int main(){
                 input = choose(choices);
                 if (input == 0) break;
                 system("clear");
-                pid_t p;
                 switch(input) {
                   case 1:
-                    if (fork() == 0) {
-                      wordGame();
-                      exit(3);
-                    }
-                    else {
-                      wait(NULL);
-                      break;
-                    }
+                    inc = wordGame();
+                    inc /= 5;
+                    break;
                   case 2:
-                    if (fork() == 0) {
-                      mathGame();
-                      exit(4);
-                    }
-                    else {
-                      wait(NULL);
-                      break;
-                    }
+                    inc = mathGame();
+                    inc /= 50;
+                    break;
                   }
                 break;
               }
-	      break;
+              statCAP += inc;
+              int delta = 0;
+              if (statCAP >= 150) {
+                delta = statCAP - 150;
+                statCAP = 150;
+                inc -= delta;
+                printf("You reached your stat distribution limit of 150\n");
+                sleep(1);
+              }
+              printf("You increased your INT by %d!\n", inc);
+              player.stats.INT += inc;
+              sleep(1);
+              if (player.stats.INT >= 50){
+                printf("You maxed out your INT at 50.\n");
+                player.stats.INT = 50;
+              }
+              sleep(1);
+              statarray[3] = player.stats.INT;
+              break;
             case 3:
-	      printf("\n");
-              if (fork() == 0) {
-                lootbox(&player.stats);
-                exit(5);
+              printf("\n");
+              int inc = lootbox(&player.stats);
+              statCAP += inc;
+              int delta = 0;
+              if (statCAP >= 150) {
+                delta = statCAP - 150;
+                statCAP = 150;
+                inc -= delta;
+                printf("You reached your stat distribution limit of 150\n");
+                sleep(1);
               }
-              else {
-                wait(NULL);
-		break;
+              player.stats.INT += inc;
+              if (player.stats.LUK >= 50){
+                printf("You maxed out your LUK at 50.\n");
+                player.stats.LUK = 50;
               }
-	      break;
+              sleep(1);
+              statarray[4] = player.stats.LUK;
+              break;
             case 4:
-	    printf("\n");
-            if (fork() == 0) {
-              lifting();
-              exit(6);
-            }
-            else {
-              wait(NULL);
-	      break;
-            }
-	    break;
+              int inc = lifting();
+              inc /= 50;
+              statCAP += inc;
+              int delta = 0;
+              if (statCAP >= 150) {
+                delta = statCAP - 150;
+                statCAP = 150;
+                inc -= delta;
+                printf("You reached your stat distribution limit of 150\n");
+                sleep(1);
+              }
+              printf("You increased your STR by %d!\n", inc);
+              player.stats.STR += inc;
+              sleep(1);
+              if (player.stats.STR >= 50){
+                printf("You maxed out your STR at 50.\n");
+                player.stats.STR = 50;
+              }
+              sleep(1);
+              statarray[0] = player.stats.STR;
+              break;
+            case 5:
+              // something
+              int inc = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+              statCAP += inc;
+              int delta = 0;
+              if (statCAP >= 150) {
+                delta = statCAP - 150;
+                statCAP = 150;
+                inc -= delta;
+                printf("You reached your stat distribution limit of 150\n");
+                sleep(1);
+              }
+              printf("You increased your END by %d!\n", inc);
+              player.stats.END += inc;
+              sleep(1);
+              if (player.stats.END >= 50){
+                printf("You maxed out your END at 50.\n");
+                player.stats.END = 50;
+              }
+              sleep(1);
+              statarray[2] = player.stats.END;
+              break;
+            case 6:
+              while (1){
+                strcpy(choices, "0;1;2;3;4;5\0");
+                printf("0) Go Back\n");
+                printf("1) DEX\n");
+                printf("2) INT\n");
+                printf("3) LUK\n");
+                printf("4) STR\n");
+                printf("5) END\n");
+                input = choose(choices);
+                if (input == 0) break;
+                switch (input){
+                  case 1:
+                    if (player.stats.DEX == 1){
+                      printf("Cannot decrease DEX below 1\n");
+                      break;
+                    }
+                    player.stats.DEX -= 1;
+                    statCap--;
+                    printf("Your DEX has decreased by 1. Current DEX: %d\n", player.stats.DEX);
+                    statarray[1] = player.stats.DEX;
+                    break;
+                  case 2:
+                    if (player.stats.INT == 1){
+                      printf("Cannot decrease INT below 1\n");
+                      break;
+                    }
+                    player.stats.INT -= 1;
+                    statCap--;
+                    printf("Your INT has decreased by 1. Current INT: %d\n", player.stats.INT);
+                    statarray[3] = player.stats.INT;
+                    break;
+                  case 3:
+                    if (player.stats.LUK == 1){
+                      printf("Cannot decrease LUK below 1\n");
+                      break;
+                    }
+                    player.stats.LUK -= 1;
+                    statCap--;
+                    printf("Your LUK has decreased by 1. Current LUK: %d\n", player.stats.LUK);
+                    statarray[4] = player.stats.LUK;
+                    break;
+                  case 4:
+                    if (player.stats.STR == 1){
+                      printf("Cannot decrease STR below 1\n");
+                      break;
+                    }
+                    player.stats.STR -= 1;
+                    statCap--;
+                    printf("Your STR has decreased by 1. Current STR: %d\n", player.stats.STR);
+                    statarray[0] = player.stats.STR;
+                    break;
+                  case 5:
+                    if (player.stats.END == 1){
+                      printf("Cannot decrease END below 1\n");
+                      break;
+                    }
+                    player.stats.END -= 1;
+                    statCap--;
+                    printf("Your END has decreased by 1. Current END: %d\n", player.stats.END);
+                    statarray[2] = player.stats.END;
+                    break;
+                }
+                sleep(1);
+                system("clear");
+              }
+              break;
           }
           system("clear");
         }
-
-
-
         break;
       case 3: // Inventory (items)
         while (1){

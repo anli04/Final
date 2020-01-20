@@ -13,7 +13,7 @@
 int wordGame() {
   system("clear");
   char * lines[256];
-  FILE *f = fopen("words.txt","r");
+  FILE *f = fopen("synonyms","r");
   char buf[256];
   int i = 0;
   int score = 0;
