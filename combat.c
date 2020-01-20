@@ -158,7 +158,6 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
       else skillCD[i] = move.CD;
     }
   }
-  printf("%lf\n", DODGE);
   while (1){
     if (argc == 3) printf("Awaiting opponent...\n");
     if (sb.sem_num == 1){ // if holding major

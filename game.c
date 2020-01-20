@@ -672,7 +672,7 @@ int main(){
         if (pidU > 0) { // main game process
           pid_t pidC = fork(); // cpu
           if (pidC == 0){
-            int enc = (int)(min(rand_double() * 10 - 0.05, 0)); //unweighted random encounters except for Lich.
+            int enc = (int)(max(rand_double() * 10 - 0.5, 0)); //unweighted random encounters except for Lich.
             char encs[50];
             sprintf(encs, "%s%d", EPATH, enc);
             FILE * fenc = fopen(encs, "r");

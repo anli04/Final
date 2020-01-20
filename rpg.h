@@ -108,6 +108,7 @@ struct turn{ // transmit this info through combat.
 
 double rand_double(); // returns a value from 0 to 1.
 double min(double n, double m); // returns smallest of two doubles
+double max(double n, double m); // returns largest of two doubles
 void errcheck(char * m); //error checking
 int choose(char * choices); // handles player input
 char ** parse_args(char * line, char * s);

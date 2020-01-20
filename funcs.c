@@ -9,6 +9,11 @@ double min(double n, double m){
   return m;
 }
 
+double max(double n, double m){
+  if (n > m) return n;
+  return m;
+}
+
 void errcheck(char * m){
   if (errno){
     printf("Error %s: %d - %s\n", m, errno, strerror(errno));
