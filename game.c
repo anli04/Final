@@ -339,22 +339,8 @@ int main(){
               statarray[0] = player.stats.STR;
               break;
             case 5:
-              // something
-              inc = 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+              inc = lifting();
+              inc /= 50;
               statCAP += inc;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
