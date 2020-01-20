@@ -274,8 +274,22 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
     update.heal = 0;
     for (i = 0; i < 4; i++){ //debuff handling
       if (update.debuff[i]){
-        buffs[i] = -update.debuff[i];
-        bufftime[i] = update.t[i];
+        if (strchr(update.exa,'C')){
+          switch (i){
+            case 0: HIT *= (1 - update.debuff[i]);
+              break;
+            case 1: DMG *= (1 - update.debuff[i]);
+              break;
+            case 2: DMGRED -= update.debuff[i];
+              break;
+            case 3: DODGE -= update.debuff[i];
+              break;
+          }
+        }
+        else{
+          buffs[i] = -update.debuff[i];
+          bufftime[i] = update.t[i];
+        }
         if (argc == 3) printf("Your opponent has decreased your ");
         switch (i){
           case 0: if (argc == 3) printf("Hit Chance");
@@ -288,7 +302,8 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
             break;
         }
         if (argc == 3) {
-          printf(" by %lf%% for %d turns.\n", update.debuff[i] * 100, update.t[i]);
+          if (strchr(update.exa,'C')) printf(" by %lf%% for the remainder of the battle.\n", update.debuff[i] * 100);
+          else printf(" by %lf%% for %d turns.\n", update.debuff[i] * 100, update.t[i]);
           sleep(1);
         }
       }
@@ -411,8 +426,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
         else{
-          buffs[0] = move.HITBUFF;
-          bufftime[0] = move.TURNS + 1;
+          if (strchr(move.EXA,'C')) HIT *= (1 + move.HITBUFF);
+          else{
+            buffs[0] = move.HITBUFF;
+            bufftime[0] = move.TURNS + 1;
+          }
           strcat(update.action, "Your opponent increased their Hit Chance!\n");
           if (argc == 3) {
             printf("You increased your Hit Chance!\n");
@@ -430,8 +448,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
         else{
-          buffs[1] = move.DMGBUFF;
-          bufftime[1] = move.TURNS + 1;
+          if (strchr(move.EXA,'C')) DMG *= (1 + move.DMGBUFF);
+          else{
+            buffs[1] = move.DMGBUFF;
+            bufftime[1] = move.TURNS + 1;
+          }
           strcat(update.action, "Your opponent increased their Outgoing Damage!\n");
           if (argc == 3) {
             printf("You increased your Outgoing Damage!\n");
@@ -449,8 +470,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
         else{
-          buffs[2] = move.REDPLUS;
-          bufftime[2] = move.TURNS + 1;
+          if (strchr(move.EXA,'C')) DMGRED += move.REDPLUS;
+          else{
+            buffs[2] = move.REDPLUS;
+            bufftime[2] = move.TURNS + 1;
+          }
           strcat(update.action, "Your opponent increased their Damage Resistance!\n");
           if (argc == 3) {
             printf("You increased your Damage Resistance!\n");
@@ -468,8 +492,11 @@ int main(int argc, char *argv[]){ // second is file, third is 0 or 1, 1 starts. 
           }
         }
         else{
-          buffs[3] = move.DODGEPLUS;
-          bufftime[3] = move.TURNS + 1;
+          if (strchr(move.EXA,'C')) DODGE += move.DODGEPLUS;
+          else{
+            buffs[3] = move.DODGEPLUS;
+            bufftime[3] = move.TURNS + 1;
+          }
           strcat(update.action, "Your opponent increased their Dodge Chance!\n");
           if (argc == 3) {
             printf("You increased your Dodge Chance!\n");

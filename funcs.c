@@ -111,6 +111,10 @@ double solve(char * f, int idx, struct stats s){
         n = log(solve(f, idx + 2, s));
         while (f[idx] != ')') idx++;
         break;
+      case 's':
+        n = sin(solve(f, idx + 2, s));
+        while (f[idx] != ')') idx++;
+        break;
       case ')':
         return ans;
         break;

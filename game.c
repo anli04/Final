@@ -21,8 +21,8 @@ int main(){
   int statbonus[5]; // [NOT YET IMPLEMENTED] from items, separate from normal stats
 
   char skillnames[5][30];
-  char * itemDict[9] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Robe", "Mage Hat"};
-  char * skillDict[12] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge"};
+  char * itemDict[9] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Cloak", "Mage Hat", "Sword", "Chainmail", "Helmet", "Staff", "Robe", "Circlet", "Sword of Waves", "Staff of Prejudice"};
+  char * skillDict[12] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge", "Eviscerate", "Curse"};
   struct item object;
   object.NAME = malloc(sizeof(char) * 100);
   struct skill move;
@@ -425,6 +425,30 @@ int main(){
                     break;
                 }
                 sleep(1);
+                iteminfo(&object, player.equipped.wep, player.stats);
+                for (i = 0; i < 5; i++){
+                  if (object.REQ[i] < player.stats[i]){
+                    printf("You no longer meet the requirements for your weapon\n");
+                    sleep(1);
+                    break;
+                  }
+                }
+                iteminfo(&object, player.equipped.armor, player.stats);
+                for (i = 0; i < 5; i++){
+                  if (object.REQ[i] < player.stats[i]){
+                    printf("You no longer meet the requirements for your armor\n");
+                    sleep(1);
+                    break;
+                  }
+                }
+                for (i = 0; i < 5; i++){
+                  iteminfo(&object, player.equipped.helm, player.stats);
+                  if (object.REQ[i] < player.stats[i]){
+                    printf("You no longer meet the requirements for your helm\n");
+                    sleep(1);
+                    break;
+                  }
+                }
                 system("clear");
               }
               break;
@@ -564,6 +588,8 @@ int main(){
                 break;
               case 'R': printf("- Reduces skill cooldowns by 1\n");
                 break;
+              case 'C': printf("- Buffs/Debuffs last for the remainder of the battle\n");
+                break;
               default: printf("ERROR Unknown\n");
                 break;
             }
@@ -642,7 +668,7 @@ int main(){
         if (pidU > 0) { // main game process
           pid_t pidC = fork(); // cpu
           if (pidC == 0){
-            int enc = (int)(rand_double() * 6); //unweighted random encounters.
+            int enc = (int)(min(rand_double() * 10 - 0.05, 0)); //unweighted random encounters except for Lich.
             char encs[50];
             sprintf(encs, "%s%d", EPATH, enc);
             FILE * fenc = fopen(encs, "r");
@@ -671,7 +697,7 @@ int main(){
             if (rand_double() < solve("L/250+0.2", 0, player.stats)){ // 20% loot chance + Luck/2.5 %
               int loot = 0;
               if (rand_double() < 0.3){ // 30% for skill
-                loot = (int)(0.999999 + rand_double() * 11); // number of skills not including default.
+                loot = (int)(0.999999 + rand_double() * 13); // number of skills not including default.
                 int j = 0;
                 for (; j < sizeof(player.inventory.invS); j++){
                   if (player.inventory.invS[j] == -1) break;
@@ -686,7 +712,7 @@ int main(){
                 }
               }
               else{
-                loot = (int)(2.999999 + rand_double() * 6); // number of equipment not including default.
+                loot = (int)(2.999999 + rand_double() * 14); // number of equipment not including default.
                 int j = 0;
                 for (; j < sizeof(player.inventory.invI); j++){
                   if (player.inventory.invI[j] == -1) break;

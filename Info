@@ -25,7 +25,8 @@ Order of operations does not exist, except for parentheses (implement recursivel
 Do not put in spaces. No implicit multiplication (e.g. "7n").
 Division returns the exact value (double).
 "l(n)" = log(n); // which is ln(n)
-Always follow logs with parentheses. Do not place parentheses in logs', though.
+"s(n)" = sin(n); // n is always in radians.
+Always follow logs and sins with parentheses. Do not place parentheses in logs', though.
 "(n^m)" = pow(n, m);
 "S" = STR
 "D" = DEX
@@ -47,6 +48,7 @@ Skill "EXA" notation and notes:
 "F" = damage cannot be reduced.
 "P" = damage cannot be dodged or reduced.
 "R" = all skill cooldowns are reduced by 1.
+"C" = permanently affects stats
 
 Item Compendium:
 0 = unarmed (weapon)
@@ -56,8 +58,16 @@ Item Compendium:
 4 = Leather Armor (armor)
 5 = Hat (helm)
 6 = Wand (weapon)
-7 = Robe (armor)
+7 = Cloak (armor)
 8 = Mage Hat (helm)
+9 = Sword (weapon)
+10 = Chainmail (armor)
+11 = Helmet (helm)
+12 = Staff (weapon)
+13 = Robe (armor)
+14 = Circlet (helm)
+15 = Blade of Waves (weapon)
+16 = Staff of Prejudice (weapon)
 
 Skill Compendium:
 0 = Strike
@@ -72,6 +82,8 @@ Skill Compendium:
 9 = Fireball
 10 = Disintegrate
 11 = Recharge
+12 = Eviscerate
+13 = Curse
 
 Encounter Compendium:
 0 = Insect
@@ -80,3 +92,7 @@ Encounter Compendium:
 3 = Wolf
 4 = Knight
 5 = Mage
+6 = Skeleton
+7 = Crusader
+8 = Cleric
+9 = Lich
