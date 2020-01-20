@@ -427,24 +427,27 @@ int main(){
                 sleep(1);
                 iteminfo(&object, player.equipped.wep, player.stats);
                 for (i = 0; i < 5; i++){
-                  if (object.REQ[i] < statarray[i]){
+                  if (object.REQ[i] > statarray[i]){
                     printf("You no longer meet the requirements for your weapon\n");
+                    player.equipped.wep = 0;
                     sleep(1);
                     break;
                   }
                 }
                 iteminfo(&object, player.equipped.armor, player.stats);
                 for (i = 0; i < 5; i++){
-                  if (object.REQ[i] < statarray[i]){
+                  if (object.REQ[i] > statarray[i]){
                     printf("You no longer meet the requirements for your armor\n");
+                    player.equipped.armor = 1;
                     sleep(1);
                     break;
                   }
                 }
                 for (i = 0; i < 5; i++){
                   iteminfo(&object, player.equipped.helm, player.stats);
-                  if (object.REQ[i] < statarray[i]){
+                  if (object.REQ[i] > statarray[i]){
                     printf("You no longer meet the requirements for your helm\n");
+                    player.equipped.helm = 2;
                     sleep(1);
                     break;
                   }
