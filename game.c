@@ -297,6 +297,7 @@ int main(){
             case 3:
               printf("\n");
               inc = lootbox(&player.stats);
+              save(player);
               statCAP += inc;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
