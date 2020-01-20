@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
+#include "rpg.h"
 
 
 int typeracer() {
@@ -79,7 +75,7 @@ int typeracer() {
     printf("Score: %d/60\n", score);
     int wpm = score * 60 / d;
     printf("Speed: %d WPM\n", wpm);
-   
+
     sleep(3);
     free (lines);
     free(l);   /* free allocated memory */
