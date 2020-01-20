@@ -228,7 +228,7 @@ int main(){
                     break;
                   case 2:
                     inc = numbers();
-                    inc /= 5;
+                    inc /= 15;
                     break;
                 }
                 break;
@@ -306,7 +306,7 @@ int main(){
                 printf("You reached your stat distribution limit of 150\n");
                 sleep(1);
               }
-              player.stats.INT += inc;
+              player.stats.LUK += inc;
               if (player.stats.LUK >= 50){
                 printf("You maxed out your LUK at 50.\n");
                 delta = player.stats.LUK - 50;
@@ -318,7 +318,7 @@ int main(){
               break;
             case 4:
               inc = lifting();
-              inc /= 50;
+              inc /= 25;
               statCAP += inc;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
@@ -341,7 +341,7 @@ int main(){
               break;
             case 5:
               inc = lifting();
-              inc /= 50;
+              inc /= 25;
               statCAP += inc;
               if (statCAP >= 150) {
                 delta = statCAP - 150;
