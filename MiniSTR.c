@@ -10,9 +10,7 @@ int lifting() {
   char temp[32];
   char t;
   int reps = 0;
-
-
-
+  
   while(1) {
     system("clear");
     printf("\n------------------------------------------------------\n");
