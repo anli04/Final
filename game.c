@@ -21,8 +21,8 @@ int main(){
   int statbonus[5]; // [NOT YET IMPLEMENTED] from items, separate from normal stats
 
   char skillnames[5][30];
-  char * itemDict[9] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Cloak", "Mage Hat", "Sword", "Chainmail", "Helmet", "Staff", "Robe", "Circlet", "Sword of Waves", "Staff of Prejudice"};
-  char * skillDict[12] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge", "Eviscerate", "Curse"};
+  char * itemDict[17] = {"unarmed", "unarmored", "helmless", "Knife", "Leather Armor", "Hat", "Wand", "Cloak", "Mage Hat", "Sword", "Chainmail", "Helmet", "Staff", "Robe", "Circlet", "Sword of Waves", "Staff of Prejudice"};
+  char * skillDict[14] = {"Strike", "Double Strike", "Defend", "Heal", "Leech Life", "Rage", "Quadruple Strike", "Frighten", "Seeking Bolt", "Fireball", "Disintegrate", "Recharge", "Eviscerate", "Curse"};
   struct item object;
   object.NAME = malloc(sizeof(char) * 100);
   struct skill move;
@@ -427,7 +427,7 @@ int main(){
                 sleep(1);
                 iteminfo(&object, player.equipped.wep, player.stats);
                 for (i = 0; i < 5; i++){
-                  if (object.REQ[i] < player.stats[i]){
+                  if (object.REQ[i] < statarray[i]){
                     printf("You no longer meet the requirements for your weapon\n");
                     sleep(1);
                     break;
@@ -435,7 +435,7 @@ int main(){
                 }
                 iteminfo(&object, player.equipped.armor, player.stats);
                 for (i = 0; i < 5; i++){
-                  if (object.REQ[i] < player.stats[i]){
+                  if (object.REQ[i] < statarray[i]){
                     printf("You no longer meet the requirements for your armor\n");
                     sleep(1);
                     break;
@@ -443,7 +443,7 @@ int main(){
                 }
                 for (i = 0; i < 5; i++){
                   iteminfo(&object, player.equipped.helm, player.stats);
-                  if (object.REQ[i] < player.stats[i]){
+                  if (object.REQ[i] < statarray[i]){
                     printf("You no longer meet the requirements for your helm\n");
                     sleep(1);
                     break;
