@@ -246,7 +246,9 @@ int main(){
               sleep(1);
               if (player.stats.DEX >= 50){
                 printf("You maxed out your DEX at 50.\n");
+                delta = player.stats.DEX - 50;
                 player.stats.DEX = 50;
+                statCAP -= delta;
               }
               sleep(1);
               statarray[1] = player.stats.DEX;
@@ -285,7 +287,9 @@ int main(){
               sleep(1);
               if (player.stats.INT >= 50){
                 printf("You maxed out your INT at 50.\n");
+                delta = player.stats.INT - 50;
                 player.stats.INT = 50;
+                statCAP -= delta;
               }
               sleep(1);
               statarray[3] = player.stats.INT;
@@ -304,7 +308,9 @@ int main(){
               player.stats.INT += inc;
               if (player.stats.LUK >= 50){
                 printf("You maxed out your LUK at 50.\n");
+                delta = player.stats.LUK - 50;
                 player.stats.LUK = 50;
+                statCAP -= delta;
               }
               sleep(1);
               statarray[4] = player.stats.LUK;
@@ -325,7 +331,9 @@ int main(){
               sleep(1);
               if (player.stats.STR >= 50){
                 printf("You maxed out your STR at 50.\n");
+                delta = player.stats.STR - 50;
                 player.stats.STR = 50;
+                statCAP -= delta;
               }
               sleep(1);
               statarray[0] = player.stats.STR;
@@ -360,7 +368,9 @@ int main(){
               sleep(1);
               if (player.stats.END >= 50){
                 printf("You maxed out your END at 50.\n");
+                delta = player.stats.END - 50;
                 player.stats.END = 50;
+                statCAP -= delta;
               }
               sleep(1);
               statarray[2] = player.stats.END;
