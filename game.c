@@ -252,6 +252,7 @@ int main(){
                 }
                 sleep(1);
                 statarray[1] = player.stats.DEX;
+                system("clear");
               }
               break;
             case 2:
@@ -292,6 +293,7 @@ int main(){
                 }
                 sleep(1);
                 statarray[3] = player.stats.INT;
+                system("clear");
               }
               break;
             case 3:
