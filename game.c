@@ -226,11 +226,11 @@ int main(){
                 switch(input) {
                   case 1:
                     inc = typeracer();
-                    inc /= 30;
+                    inc /= 5;
                     break;
                   case 2:
                     inc = numbers();
-                    inc /= 15;
+                    inc /= 5;
                     break;
                 }
                 break;
