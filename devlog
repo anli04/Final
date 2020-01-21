@@ -15,17 +15,23 @@
   - (Jerry) strength game complete with instructions, number typing game coded
 1/12/20:
   - (Calvin) attempted to implement stat/req parsing (Anthony fixed it)
-1/14/20:
-  - (Calvin) wrote layout for itemInv printing in inventory
+1/13/20:
+  - (Anthony) added saving and QoL sleeps
   - (Anthony) completed a working combat program for player vs cpu
+1/14/20:
+  - (Anthony) fixed inventory and skill management.
+  - (Calvin) wrote layout for itemInv printing in inventory
   - (Jerry) lootbox luck minigame complete with animation for rolling, int game for word naming complete
 1/15/20:
   - (Calvin) added instructions/directions to each minigame, added some words to words.txt
   - (Jerry) math arithmetic game complete, added a few more general functions, fixed some transitions between screens to have more time to read
+  - (ALL) Bug fixing
+1/16/20:
+  - (Anthony) Remade combat pipes and semaphores
 1/17/20:
   - (Anthony) completed character creation, selection, deletion.
 1/18/20:
-  - (Anthony) implemented combat into game and fixed inventory and skill management.
+  - (Anthony) true combat program completion
 1/19/20:
   - (ALL) Testing and Bug fixing
   - (Calvin) created initial layout for and linked minigame connection to game.c, fixed typeracer file reading, added sleep statements to games
