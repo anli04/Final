@@ -35,9 +35,11 @@ $ make run
 
 ### Work Citation
 <b>Anthony:</b> </br>
+File writing/reading: formatting save files, minigame files, item files </br>
+Character creation, selection, and deletion </br>
 Developing the main game program </br>
 Creating the Inventory and Skills portions of the game process </br>
-Creating the combat program </br>
+Creating the combat program and its connections</br>
 Writing descriptions for items and skills; algorithms for gameplay </br>
 <b>Jerry:</b> </br>
 File writing/reading: formatting save files, minigame files, item files </br>
@@ -46,6 +48,7 @@ Character info: basic framework for putting relevant data for each character in 
 Minigames: doing planning and coding for many of them </br>
 Writing: questions in minigames, descriptions for items </br>
 <b>Calvin:</b> </br>
+Creating the Inventory and Skills portions of the game process </br>
 Writing descriptions for items and skills; algorithms for gameplay </br>
 Minigames: doing planning and coding; instructions </br>
 Connections </br>
