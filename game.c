@@ -88,7 +88,7 @@ int main(){
           int ccount = 1;
           char names[25][30];
           char choices[52]; // max number of characters is 25.
-          strcpy(choices, "0");
+          strcpy(choices, "0;");
           printf("0) Go Back\n\n");
           char choice[4];
           pc = readdir(pcs);
@@ -233,27 +233,27 @@ int main(){
                     inc /= 5;
                     break;
                 }
-                break;
-              }
-              statCAP += inc;
-              if (statCAP >= 150) {
-                delta = statCAP - 150;
-                statCAP = 150;
-                inc -= delta;
-                printf("You reached your stat distribution limit of 150\n");
+                statCAP += inc;
+                if (statCAP >= 150) {
+                  delta = statCAP - 150;
+                  statCAP = 150;
+                  inc -= delta;
+                  printf("You reached your stat distribution limit of 150\n");
+                  sleep(1);
+                }
+                printf("You increased your DEX by %d!\n", inc);
+                player.stats.DEX += inc;
                 sleep(1);
+                if (player.stats.DEX >= 50){
+                  printf("You maxed out your DEX at 50.\n");
+                  delta = player.stats.DEX - 50;
+                  player.stats.DEX = 50;
+                  statCAP -= delta;
+                }
+                sleep(1);
+                statarray[1] = player.stats.DEX;
+                system("clear");
               }
-              printf("You increased your DEX by %d!\n", inc);
-              player.stats.DEX += inc;
-              sleep(1);
-              if (player.stats.DEX >= 50){
-                printf("You maxed out your DEX at 50.\n");
-                delta = player.stats.DEX - 50;
-                player.stats.DEX = 50;
-                statCAP -= delta;
-              }
-              sleep(1);
-              statarray[1] = player.stats.DEX;
               break;
             case 2:
               while (1) {
@@ -273,28 +273,28 @@ int main(){
                     inc = mathGame();
                     inc /= 50;
                     break;
-                  }
-                break;
-              }
-              statCAP += inc;
-              if (statCAP >= 150) {
-                delta = statCAP - 150;
-                statCAP = 150;
-                inc -= delta;
-                printf("You reached your stat distribution limit of 150\n");
+                }
+                statCAP += inc;
+                if (statCAP >= 150) {
+                  delta = statCAP - 150;
+                  statCAP = 150;
+                  inc -= delta;
+                  printf("You reached your stat distribution limit of 150\n");
+                  sleep(1);
+                }
+                printf("You increased your INT by %d!\n", inc);
+                player.stats.INT += inc;
                 sleep(1);
+                if (player.stats.INT >= 50){
+                  printf("You maxed out your INT at 50.\n");
+                  delta = player.stats.INT - 50;
+                  player.stats.INT = 50;
+                  statCAP -= delta;
+                }
+                sleep(1);
+                statarray[3] = player.stats.INT;
+                system("clear");
               }
-              printf("You increased your INT by %d!\n", inc);
-              player.stats.INT += inc;
-              sleep(1);
-              if (player.stats.INT >= 50){
-                printf("You maxed out your INT at 50.\n");
-                delta = player.stats.INT - 50;
-                player.stats.INT = 50;
-                statCAP -= delta;
-              }
-              sleep(1);
-              statarray[3] = player.stats.INT;
               break;
             case 3:
               printf("\n");
@@ -466,7 +466,7 @@ int main(){
           int index = 0;
           int n;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0");
+          strcpy(choices, "0;");
           printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invI); index++){
@@ -544,7 +544,7 @@ int main(){
           int n;
           int exit = 0;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0");
+          strcpy(choices, "0;");
           printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invS); index++){

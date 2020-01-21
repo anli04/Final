@@ -2,7 +2,7 @@
 
 
 int typeracer() {
-    enum { MAXL = 100000, MAXC = 50 };
+    enum { MAXL = 2000, MAXC = 50 };
     char (*lines)[MAXC] = NULL; /* pointer to array of type char [MAXC] */
     int i, x, n = 0, score = 0, count = 0;
     FILE *fd = fopen("/usr/share/dict/words", "r");
@@ -103,17 +103,18 @@ int numbers() {
   char input[16];
   char history[4096];
   d = malloc(sizeof(char)*16);
+  char * p;
   while(strcmp(input,"q\n") != 0) {
     r = rand()%10000000;
     sprintf(n,"%d",r);
     *(n+strlen(n)-2) = '\0';
 
     sprintf(d,"%d",r);
-    d += strlen(d)-2;
+    p = d + strlen(d)-2;
 
     strcpy(full,n);
     strcat(full,".");
-    strcat(full,d);
+    strcat(full,p);
 
     printf("%s\t\t",full);
     if(strlen(full)<8) {
@@ -152,7 +153,7 @@ int numbers() {
 
 
   }
-
+  free(d);
   printf("\nFinal Score: %d\n",score);
   sleep(3);
   return score;

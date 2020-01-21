@@ -86,7 +86,7 @@ int mathGame() {
   while(strcmp(buf,"q\n") != 0) {
     system("clear");
     n = (int)rand()%20;
-    n2 = (int)rand()%10;
+    n2 = (int)rand()%10 + 1;
     answer = 0;
     op = (int)rand()%5;
     char temp[64];
