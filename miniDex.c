@@ -114,7 +114,7 @@ int numbers() {
 
     strcpy(full,n);
     strcat(full,".");
-    strcat(full,d);
+    strcat(full,p);
 
     printf("%s\t\t",full);
     if(strlen(full)<8) {
