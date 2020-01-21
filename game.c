@@ -49,7 +49,7 @@ int main(){
       else input1 = input;
       boolean = 0;
       char cn[30];
-      char fn[40];
+      char fn[41];
       int i = 1;
       int fd;
       switch (input1){ // Character creation/selection/deletion
