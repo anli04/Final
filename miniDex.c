@@ -110,7 +110,7 @@ int numbers() {
     *(n+strlen(n)-2) = '\0';
 
     sprintf(d,"%d",r);
-    p = &d + strlen(d)-2;
+    p = d + strlen(d)-2;
 
     strcpy(full,n);
     strcat(full,".");
