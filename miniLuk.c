@@ -48,5 +48,5 @@ int lootbox(struct stats * stats) {
     system("clear");
     printf("You don't have enough to roll.\n");
   }
-
+  return 0;
 }
