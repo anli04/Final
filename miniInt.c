@@ -46,7 +46,7 @@ int wordGame() {
     if(strcmp(buf,"q\n") != 0) {
       system("clear");
       printf("\n------------------------------------------------------\n");
-      printf("Welcome to Intelligence Trial!");
+      printf("Welcome to Word Trial!");
       printf("\n------------------------------------------------------\n");
       printf("INSTRUCTIONS:\n");
       printf("Answer the prompt in lowercase letters. Type \'q\' to quit the game.\n\n");
