@@ -152,7 +152,7 @@ int numbers() {
 
 
   }
-  d -= strlen(n);
+  d -= strlen(n)-1;
   free(d);
   printf("\nFinal Score: %d\n",score);
   sleep(3);
