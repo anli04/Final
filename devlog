@@ -17,11 +17,15 @@
   - (Anthony) completed a working combat program for player vs cpu
 1/15/20:
   - (Calvin) added instructions/directions to each minigame, added some words to words.txt
+1/17/20:
+  - (Anthony) completed character creation, selection, deletion.
 1/18/20:
-  - (Anthony) fixed inventory and skill management.
+  - (Anthony) implemented combat into game and fixed inventory and skill management.
 1/19/20:
   - (ALL) Testing and Bug fixing
   - (Calvin) created initial layout for and linked minigame connection to game.c, fixed typeracer file reading, added sleep statements to games
   - (Anthony) added stat-related changes of minigames.
-1/20/20"
+1/20/20:
   - (Anthony) added more content
+1/21/20:
+  - (All) Bug fixes
