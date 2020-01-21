@@ -34,7 +34,7 @@ int main(){
   union semun su;
   su.val = 1;
   char choices[100]; // note that this number will inhibit inventory size
-  printf("Welcome to [game name]!\n");
+  printf("Welcome to Ant and Hony!\n");
   printf("Make selections by typing the number corresponding to your choice.\n");
   int del = 1;
   while(del){
