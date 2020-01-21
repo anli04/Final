@@ -103,13 +103,14 @@ int numbers() {
   char input[16];
   char history[4096];
   d = malloc(sizeof(char)*16);
+  char * p;
   while(strcmp(input,"q\n") != 0) {
     r = rand()%10000000;
     sprintf(n,"%d",r);
     *(n+strlen(n)-2) = '\0';
 
     sprintf(d,"%d",r);
-    d += strlen(d)-2;
+    p = &d + strlen(d)-2;
 
     strcpy(full,n);
     strcat(full,".");
@@ -152,7 +153,6 @@ int numbers() {
 
 
   }
-  d -= strlen(n)-2;
   free(d);
   printf("\nFinal Score: %d\n",score);
   sleep(3);
