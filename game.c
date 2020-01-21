@@ -148,7 +148,8 @@ int main(){
   int i = 0;
   for (; i < 5; i++) {
     sscanf(args[i], "%d", &player.skills[i]);
-    strcpy(skillnames[i], skillDict[player.skills[i]]);
+    if (player.skills[i] == -1) strcpy(skillnames[i], "None");
+    else strcpy(skillnames[i], skillDict[player.skills[i]]);
   }
   free(args);
   fgets(data, sizeof(data), c);
