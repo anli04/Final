@@ -49,7 +49,7 @@ int typeracer() {
     fgets(buf, sizeof(buf), stdin);
     time_t end = time(NULL);
     double d = difftime(end, start);
-    printf("\n---------------------------main---------------------------\n");
+    printf("\n------------------------------------------------------\n");
     printf("RESULTS");
     printf("\n------------------------------------------------------\n\n");
     printf("Time Taken: %f seconds\n", d);
