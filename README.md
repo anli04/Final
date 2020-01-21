@@ -30,8 +30,9 @@ $ make run
 8) Have fun!
 
 ## Other Information
-- We were unable to implement PvP
+- We ran out of time to implement PvP
 - A lot of the useful information and jargon in our code is described in the Info file in the root directory of our repository for reference
+
 ### Work Citation
 <b>Anthony:</b> </br>
 Developing the main game program </br>
