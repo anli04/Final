@@ -88,7 +88,7 @@ int main(){
           int ccount = 1;
           char names[25][30];
           char choices[52]; // max number of characters is 25.
-          strcpy(choices, "0");
+          strcpy(choices, "0;");
           printf("0) Go Back\n\n");
           char choice[4];
           pc = readdir(pcs);
@@ -466,7 +466,7 @@ int main(){
           int index = 0;
           int n;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0");
+          strcpy(choices, "0;");
           printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invI); index++){
@@ -544,7 +544,7 @@ int main(){
           int n;
           int exit = 0;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0");
+          strcpy(choices, "0;");
           printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invS); index++){
