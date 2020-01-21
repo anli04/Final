@@ -44,9 +44,10 @@ int main(){
     int boolean = 1;
     while (boolean){
       DIR * pcs = opendir("characters");
-      boolean = 0;
       int input1;
-      if (input != 0) input1 = input;
+      if (boolean == 2) input1 = 3;
+      else input1 = 2;
+      boolean = 0;
       char cn[30];
       char fn[40];
       int i = 1;
@@ -112,7 +113,7 @@ int main(){
           if (input1 == 3){
             remove(choices);
             errcheck("deleting file");
-            boolean = 1;
+            boolean = 2;
             closedir(pcs);
           }
           else if (input1 == 2){
