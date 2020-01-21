@@ -46,5 +46,5 @@ Minigames: doing planning and coding for many of them </br>
 Writing: questions in minigames, descriptions for items </br>
 <b>Calvin:</b> </br>
 Writing descriptions for items and skills; algorithms for gameplay </br>
-Minigames: doing planning and coding </br>
+Minigames: doing planning and coding; instructions </br>
 Connections </br>
