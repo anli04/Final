@@ -2,10 +2,13 @@
 Team Members: Calvin Chu, Anthony Li, Jerry Lin </br>
 Period: 4 </br>
 
-# Description
+## Description
 A text-based rpg game with stat & equipment management, and player vs computer combat. It also includes minigames for stat improvements. </br>
 
-# Instructions
+## Required Libraries
+Our project only uses libraries already found in the C standard library.
+
+## Instructions
 1) Type into console:
 ```
 $ git clone https://github.com/anli04/Final.git
@@ -26,7 +29,7 @@ $ make run
 7) In order to save your progress, you must select the save option in the in-game menu before exiting the game.
 8) Have fun!
 
-# Other Information
+## Other Information
 - We were unable to implement PvP
 - A lot of the useful information and jargon in our code is described in the Info file in the root directory of our repository for reference
 ### Work Citation
