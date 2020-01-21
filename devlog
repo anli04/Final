@@ -6,17 +6,22 @@
   - (Anthony) began framework of the game, i.e. what the program does.
 1/7/20:
   - (Anthony) created function-from-string calculator function.
+  - (Jerry) worked on character struct info organization, added some general functions to help with some basic processes
 1/9/20:
   - (Calvin) experimented with combat connection
+  - (Jerry) starting working on strength minigame, ascii art made and code to come
 1/10/20:
   - (Calvin) created/added a typeracer dex game
+  - (Jerry) strength game complete with instructions, number typing game coded
 1/12/20:
   - (Calvin) attempted to implement stat/req parsing (Anthony fixed it)
 1/14/20:
   - (Calvin) wrote layout for itemInv printing in inventory
   - (Anthony) completed a working combat program for player vs cpu
+  - (Jerry) lootbox luck minigame complete with animation for rolling, int game for word naming complete
 1/15/20:
   - (Calvin) added instructions/directions to each minigame, added some words to words.txt
+  - (Jerry) math arithmetic game complete, added a few more general functions, fixed some transitions between screens to have more time to read
 1/17/20:
   - (Anthony) completed character creation, selection, deletion.
 1/18/20:
@@ -25,7 +30,9 @@
   - (ALL) Testing and Bug fixing
   - (Calvin) created initial layout for and linked minigame connection to game.c, fixed typeracer file reading, added sleep statements to games
   - (Anthony) added stat-related changes of minigames.
+  - (Jerry) made small adjustments to minigames to complete user interface
 1/20/20:
   - (Anthony) added more content
 1/21/20:
   - (All) Bug fixes
+  - (Jerry) small changes made to fix big bugs
