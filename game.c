@@ -88,7 +88,7 @@ int main(){
           int ccount = 1;
           char names[25][30];
           char choices[52]; // max number of characters is 25.
-          strcpy(choices, "0;\0");
+          strcpy(choices, "0");
           printf("0) Go Back\n\n");
           char choice[4];
           pc = readdir(pcs);
@@ -200,7 +200,7 @@ int main(){
         // Training
         while (1){
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0;1;2;3;4;5;6\0");
+          strcpy(choices, "0;1;2;3;4;5;6");
           printf("0) Go Back\n");
           printf("1) Dexterity Training\n");
           printf("2) Intelligence Training\n");
@@ -216,7 +216,7 @@ int main(){
           switch(input){
             case 1:
               while (1) {
-                strcpy(choices, "0;1;2;\0");
+                strcpy(choices, "0;1;2");
                 printf("0) Go Back\n");
                 printf("1) Type Trial\n");
                 printf("2) Type Trial: Numbers\n");
@@ -257,7 +257,7 @@ int main(){
               break;
             case 2:
               while (1) {
-                strcpy(choices, "0;1;2;\0");
+                strcpy(choices, "0;1;2");
                 printf("0) Go Back\n");
                 printf("1) Word Trial\n");
                 printf("2) Math Trial\n");
@@ -366,7 +366,7 @@ int main(){
               break;
             case 6:
               while (1){
-                strcpy(choices, "0;1;2;3;4;5\0");
+                strcpy(choices, "0;1;2;3;4;5");
                 printf("0) Go Back\n");
                 printf("1) DEX\n");
                 printf("2) INT\n");
@@ -467,7 +467,7 @@ int main(){
           int index = 0;
           int n;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0;\0");
+          strcpy(choices, "0");
           printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invI); index++){
@@ -545,7 +545,7 @@ int main(){
           int n;
           int exit = 0;
           char choices[60]; // max number storage is 15.
-          strcpy(choices, "0;\0");
+          strcpy(choices, "0");
           printf("0) Go Back\n");
           char choice[4];
           for (; index < sizeof(player.inventory.invS); index++){
