@@ -46,7 +46,7 @@ int main(){
       DIR * pcs = opendir("characters");
       int input1;
       if (boolean == 2) input1 = 3;
-      else input1 = 2;
+      else input1 = input;
       boolean = 0;
       char cn[30];
       char fn[40];
