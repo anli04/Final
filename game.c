@@ -753,6 +753,8 @@ int main(){
         break;
       case 6:
         //Networking & PvP
+        printf("Coming Soon...\n");
+        sleep(1);
 
 
 
